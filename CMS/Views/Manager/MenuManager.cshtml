@@ -1,0 +1,45 @@
+﻿@using W1400.DataAccess.DTO
+
+@{
+    var permission = ((UserFunction)Session[W1400.Utility.SessionsManager.SESSION_PERMISSION]);
+}
+
+@if (permission != null || permission.IsGrant)
+{
+    <!-- /.row -->
+    <div class="row">
+        <div class="col-lg-12">
+            <div class="panel panel-primary">
+                <div class="panel-heading"><span class="glyphicon glyphicon-user"></span>Danh Sách Menu</div>
+                <div class="panel-body">
+                    <div class="row" id="form">
+                        <div class="col-md-12">
+
+                            <div class="form-group col-md-4 submit" style="text-align:center">
+
+                                @if (permission.IsInsert)
+                                {<a href="@Url.Action("MenuDetail")" class="btn btn-success"><i class="fa fa-user-plus"></i>Thêm mới</a>}
+                            </div>
+                        </div>
+                    </div>
+                    <div class="table-responsive">
+                        <div id="dgrid" class="dataTables_wrapper form-inline" role="grid">
+                            <div id="BannerPartial">
+                                @Html.Action("MenuGetList", "Manager")
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+}
+else
+{
+    <h2 style="color:red">ErrorPermission</h2>
+
+    <h4>Bạn không có quyền truy cập . Xin hãy liên hệ Admin để được cấp quyền vào hệ thống CMS</h4>
+
+    <a href="@Html.Raw(ViewBag.UrlLogin)?act=out" style="color:#005bff; font-size:13px;text-decoration:underline">Logout</a>
+}
+

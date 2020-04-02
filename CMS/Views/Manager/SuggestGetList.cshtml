@@ -1,0 +1,112 @@
+﻿@using W1400.DataAccess.DTO
+@model List<Suggest>
+
+@{var permission = ((UserFunction)Session[W1400.Utility.SessionsManager.SESSION_PERMISSION]);}
+
+@if (permission != null && permission.IsGrant)
+{
+    <table class="table table-striped table-bordered dataTable" border="1" role="grid" aria-describedby="example_info" width="100%" style="width: 100%;" id="dataTables">
+        <thead>
+            <tr class="info">
+                <th style="text-align:center; width: 5%">STT</th>
+                <th style="text-align:center;width: 17%">Mail</th>
+                <th style="text-align:center;width: 8%">SĐT</th>
+                <th style="text-align:center;">Lời góp ý</th>
+                <th style="text-align:center;width: 8%">Ngày gửi</th>
+                <th style="text-align:center;width: 8%">Trạng thái</th>
+                @*<th style="text-align:center;">Nội dung trả lời</th>*@
+                <th style="text-align:center;width: 10%">Người trả lời</th>
+                <th style="text-align:center; width: 8%">Thao tác</th>
+            </tr>
+        </thead>
+        <tbody>
+            @if (Model != null && Model.Count > 0)
+            {
+                var i = 0;
+                foreach (var obj in Model)
+                {
+                    i++;
+                    <tr role="row">
+                        <td>@obj.STT</td>
+                        <td>
+                            @obj.Email
+                        </td>
+                        <td>
+                            @obj.Mobile
+                        </td>
+                        <td style="">
+                            @obj.Suggestion
+                        </td>
+                        <td>
+                            @obj.CreateDate
+                        </td>
+                        <td>
+                            @if (obj.Status == 1)
+                            {
+                                <span>Chưa trả lời</span>
+                            }
+                            else if (obj.Status == 2)
+                            {
+                                <span style="color: green">Đã trả lời</span>
+                            }
+                            else if (obj.Status == 3)
+                            {
+                                <span style="color: red">Không trả lời</span>
+                            }
+                        </td>
+                        @*<td>
+                                @Html.Raw(obj.Answer)
+                            </td>*@
+                        <td>
+                            @obj.CreateUser <br />
+                            Ngày: @obj.ConfirmDate
+
+                        </td>
+                        <td>
+                            @if (permission.IsUpdate && obj.Status == 1)
+                            {
+                                <a href="@Url.Action("SuggestiReply", "Manager", new { ID = obj.SuggestionID })" class="btn link-success" data-trigger="hover" data-container="body" data-toggle="popover" data-placement="top" data-content="Trả lời"><i class="fa fa-edit"></i></a>
+
+                                <a href="javascript:;" class="btn link-delete" onclick="SuggetCtrl.RemoveAns(@obj.SuggestionID)" data-trigger="hover" data-container="body" data-toggle="popover" data-placement="top" data-content="Không trả lời"><i class="fa fa-remove"></i></a>
+                            }
+
+                            @if (obj.Status == 2)
+                            {
+                                <a href="javascript:;" onclick="SuggetCtrl.GetContentAns(@obj.SuggestionID)" class="btn link-hover" data-trigger="hover" data-container="body" data-toggle="popover" data-placement="top" data-content="Nội dung trả lời"><i class="fa fa-eye"></i></a>
+                            }
+
+                        </td>
+
+                    </tr>
+                }
+            }
+        </tbody>
+    </table>
+    <div class="dataTables_paginate" id="pagerx"></div>
+
+    <script type="text/javascript">
+        $(document).ready(function () {
+            $('[data-toggle="popover"]').popover();
+
+            var PageOnSize = '@ViewBag.PageSize';
+            var CurrentPage = '@ViewBag.CurrentPage';
+
+            $("#pagerx").pager({
+                pagenumber: CurrentPage,
+                pagecount: Math.ceil('@ViewBag.TotalRecord' / PageOnSize),
+                buttonClickCallback: function (page) {
+                    SuggetCtrl.GetList(page);
+                }
+            });
+        });
+    </script>
+}
+else
+{
+    <h2 style="color:red">ErrorPermission</h2>
+
+    <h4>Bạn không có quyền truy cập . Xin hãy liên hệ Admin để được cấp quyền vào hệ thống CMS</h4>
+
+    <a href="@Html.Raw(ViewBag.UrlLogin)?act=out" style="color:#005bff; font-size:13px;text-decoration:underline">Logout</a>
+}
+

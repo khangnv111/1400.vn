@@ -1,0 +1,38 @@
+﻿@model List<W1400.DataAccess.DTO.Article>
+@if (Model != null && Model.Count > 0)
+{
+    W1400.Utility.NoMark rw = new W1400.Utility.NoMark();
+    <div class="box_noidung_trai">
+        <div class="row">
+@for (int i = 0; i < Model.Count; i++)
+            {
+            <div class="col-lg-6 col-md-6 col-sx-8 col-sm-12">
+                @{string rewrite = rw.ReWrite(Model[i].Title, Model[i].ArticleID);}
+                @if (i % 2 == 0)
+                {
+                <div class="box_img_link_tintuc">
+                    <div class="box_img_tin_tuc"><a href="@rewrite"><img src="@Model[i].Image.360.220.cache" alt="@Model[i].Title"></a></div>
+                    <a class="text_tieude_ud" href="@rewrite">@W1400.Utility.DBCommon.SubString(Model[i].Title, 85)</a>
+                    <span>@Model[i].CreateDate.ToString("dd/MM/yyyy HH:mm")</span>
+                    <p>@W1400.Utility.DBCommon.SubString(Model[i].Description, 150)</p>
+                </div>
+                }
+                else
+                {
+                    <div class="box_img_link_tintuc">
+                        <div class="box_img_tin_tuc"><a href="@rewrite"><img src="@Model[i].Image.360.220.cache" alt="@Model[i].Title"></a></div>
+                        <a class="text_tieude_ud" href="@rewrite">@W1400.Utility.DBCommon.SubString(Model[i].Title, 85)</a>
+                        <span>@Model[i].CreateDate.ToString("dd/MM/yyyy HH:mm")</span>
+                        <p>@W1400.Utility.DBCommon.SubString(Model[i].Description, 150)</p>
+                    </div>
+    
+                }
+            </div>
+                if (i % 2 != 0)
+                {
+                    <div class="clear"></div>
+                }
+            }
+        </div>
+    </div>
+}

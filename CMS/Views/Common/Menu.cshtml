@@ -1,0 +1,63 @@
+﻿@using W1400.DataAccess.DTO
+@using W1400.Utility;
+@model List<Functions>
+
+@if (Model != null && Model.Count > 0)
+{
+    var fathers = Model.FindAll(f => f.ParentID == 0);
+    fathers.Sort((f1, f2) => f1.Order.CompareTo(f2.Order));
+
+    <ul class="nav navbar-nav">
+        @foreach (var father in fathers)
+        {
+            var listChirl = Model.FindAll(f => f.ParentID == father.FunctionID && f.IsDisplay);
+            listChirl.Sort((f1, f2) => f1.Order.CompareTo(f2.Order));
+            if (listChirl.Count > 0)
+            {
+                <li class="dropdown" style="float:left">
+                    <button class="btn btn-primary dropdown-toggle" data-hover="dropdown" data-animations="zoomIn fadeInLeft fadeInUp fadeInRight" data-toggle="dropdown" type="button" style="padding: 5px 10px;margin: 10px 10px 0 0;" aria-expanded="false">
+                        <i class="@father.CssIcon"></i> @father.FunctionName <span class="caret"></span>
+                    </button>
+                    <ul class="dropdown-menu" role="menu">
+                        @foreach (var function in listChirl)
+                        {
+
+                            @Html.Raw(CMS.Controllers.CommonController.GetChildMenu(function, Model))
+
+                        }
+                    </ul>
+                </li>
+            }
+        }
+    </ul>
+    <script type="text/javascript">
+        $(document).ready(function () {
+
+            var widthScreen = $(window).width();
+
+            if (widthScreen <= 1024) {
+                $("ul.navbar-nav button").click(function (e) {
+                    // Avoid following the href location when clicking
+                    e.preventDefault();
+                    // Avoid having the menu to close when clicking
+                    e.stopPropagation();
+                    // If a menu is already open we close it
+                    $(this).parent().parent().find("li.dropdown").removeClass('open');
+                    // opening the one you clicked on
+                    $(this).parent().addClass('open');
+                });
+                $('ul.dropdown-menu [data-toggle=dropdown]').on('click', function (e) {
+                    // Avoid following the href location when clicking
+                    e.preventDefault();
+                    // Avoid having the menu to close when clicking
+                    e.stopPropagation();
+                    // If a menu is already open we close it
+                    $('ul.dropdown-menu [data-toggle=dropdown]').parent().removeClass('open');
+                    // opening the one you clicked on
+                    $(this).parent().addClass('open');
+                });
+            }
+        });
+
+    </script>
+}

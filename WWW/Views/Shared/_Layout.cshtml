@@ -1,0 +1,276 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    
+
+    <link href="https://fonts.googleapis.com/css?family=Open+Sans:300,400,600,700&amp;subset=vietnamese" rel="stylesheet">
+    <link href="@System.Configuration.ConfigurationManager.AppSettings["URL_ROOT"]content/css/bootstrap.min.css" rel="stylesheet" type="text/css" />
+    <link href="@System.Configuration.ConfigurationManager.AppSettings["URL_ROOT"]content/css/owl.carousel.css" rel="stylesheet" type="text/css" />
+    <link href="@System.Configuration.ConfigurationManager.AppSettings["URL_ROOT"]Content/css/lightslider.css" rel="stylesheet" type="text/css" />
+    <link href="@System.Configuration.ConfigurationManager.AppSettings["URL_ROOT"]content/css/1400.css" rel="stylesheet" type="text/css" />
+    <link href="@System.Configuration.ConfigurationManager.AppSettings["URL_ROOT"]Content/css/jquery-ui.css" rel="stylesheet" />
+
+    <script type="text/javascript" src="@System.Configuration.ConfigurationManager.AppSettings["URL_ROOT"]js/jquery-1.9.1.min.js"></script>
+    <script type="text/javascript" src="@System.Configuration.ConfigurationManager.AppSettings["URL_ROOT"]js/bootstrap.min.js"></script>
+    <script type="text/javascript" src="@System.Configuration.ConfigurationManager.AppSettings["URL_ROOT"]js/owl.carousel.min.js"></script>
+    <script type="text/javascript" src="@System.Configuration.ConfigurationManager.AppSettings["URL_ROOT"]js/lightslider.js"></script>
+    <script type="text/javascript" src="@System.Configuration.ConfigurationManager.AppSettings["URL_ROOT"]js/utility.js"></script>
+    <script type="text/javascript" src="@System.Configuration.ConfigurationManager.AppSettings["URL_ROOT"]js/jquery-ui.js"></script>
+    <script type="text/javascript" src="@System.Configuration.ConfigurationManager.AppSettings["URL_ROOT"]js/bootbox.js"></script>
+
+    @{
+        var port = Request.Url.Port.ToString();
+        var Url_ = Request.Url.ToString();
+        Url_ = Url_.Replace(":" + port, "");
+        string output = Url_.Substring(Url_.Length - 1, 1);
+        if (output == "/")
+        {
+            Url_ = Url_.Substring(0, Url_.Length - 1) + "";
+        }
+        int len=System.Configuration.ConfigurationManager.AppSettings["URL_ROOT"].Length-1;
+        string Root = System.Configuration.ConfigurationManager.AppSettings["URL_ROOT"].Substring(0, len);
+    }
+    @if (Request.Url.ToString() == "http://1400.vn:8003/" || Request.Url.ToString() == "http://1400.vn:8003")
+    {
+        <title>1400 - Cổng thông tin nhân đạo Quốc gia</title>
+        <meta name="Description" content="Cổng thông tin nhân đạo quốc gia, bộ thông tin và truyền thông" />
+        <meta name="Keywords" content="1400,140x, 1400.vn, từ thiện,Tết, mùa xuân, mùa xuân ấm áp, thiện nguyện, thi logo, trái tim, lũ lụt, nhân ái, tri ân, liệt sỹ, liệt sĩ, người nghèo,khó khăn, thiên tai, hỏa hoạn, nạn nhân da cam, da cam, nỗi đau, tấm lưới nghĩa tình, trẻ em, trẻ em nghèo, bất hạnh, người già, trường sa, biển đông, chữ thập đỏ, lục lạc vàng, miền quê, tin nhắn, nhắn tin, hiểu về trái tim, hiểm nghèo, nhân đạo, cổng nhân đạo, quốc gia, VTC, Bộ thông tin và truyền thông" />
+        <meta property='og:type' content='article' />
+        <meta property='og:url' content='http://1400.vn' />
+        <meta property='og:site_name' content='Cổng thông tin nhân đạo quốc gia' />
+        <meta property='og:image' content='http://1400.vn/media/1400/2015/10/05/Logo_Cong_1400.jpg' />
+        <meta property='og:image:type' content='image/jpeg'>
+        <meta property='og:image:width' content='200'>
+        <meta property='og:image:height' content='200'>
+        <meta property='og:title' content='Cổng thông tin nhân đạo quốc gia' />
+        <meta property='og:description' content='Cổng thông tin nhân đạo quốc gia, bộ thông tin và truyền thông' />
+    }
+    else
+    {
+        <title>@Html.Raw(ViewBag.Title)</title>
+        <meta name="description" content="@Html.Raw(ViewBag.Summary)">
+        <meta name="keywords" content="@Html.Raw(ViewBag.Keyword)">
+        <meta name="news_keywords" content="@Html.Raw(ViewBag.Keyword)">
+        <meta property="og:title" content='@Html.Raw(ViewBag.Title)' />
+        <meta property="og:description" content='@Html.Raw(ViewBag.Summary)' />
+        <meta property="og:type" content="article" />
+        <meta property="og:url" content="@Url_" />
+        <meta property="og:site_name" content="Cổng thông tin Game8.vn" />
+        <meta property="og:image" content='@ViewBag.Image' />
+        <meta property="og:image:type" content="image/jpeg">
+        <link rel="canonical" href="@Url_" />
+    }
+</head>
+<body>
+    <script type="text/javascript">
+    var appPath = '@System.Configuration.ConfigurationManager.AppSettings["URL_ROOT"]';
+    </script>
+
+
+
+    <a class="scrollup" href=""></a>
+    <div class="box_header">
+        <div class="box_top_header">
+            <div class="container">
+                <ul>
+                    <li><a href="@System.Configuration.ConfigurationManager.AppSettings["URL_ROOT"]gop-y"><img src="@System.Configuration.ConfigurationManager.AppSettings["URL_ROOT"]images/icon_gopy.png" alt="">Gửi góp ý</a></li>
+                    <li><a href="javascript:;"><img src="@System.Configuration.ConfigurationManager.AppSettings["URL_ROOT"]images/icon_phone.png" alt="">024.44501107</a></li>
+                    <li><a target="_blank" href="https://www.facebook.com/1400.vn/"><img src="@System.Configuration.ConfigurationManager.AppSettings["URL_ROOT"]images/icon_face.png" alt="">Tham gia</a></li>
+                    <li><a href="#tinnhan"><img src="@System.Configuration.ConfigurationManager.AppSettings["URL_ROOT"]images/icon_tracuu.png" alt="">Tra cứu nhắn tin 140x</a></li>
+                </ul>
+            </div>
+        </div>
+        <nav class="navbar navbar-default">
+            <div class="container">
+                <div class="navbar-header">
+                    <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1" aria-expanded="false">
+                        <span class="sr-only">Toggle navigation</span>
+                        <span class="icon-bar"></span>
+                        <span class="icon-bar"></span>
+                        <span class="icon-bar"></span>
+                    </button>
+                    <a class="navbar-brand" href="@System.Configuration.ConfigurationManager.AppSettings["URL_ROOT"]"><img class="img-responsive" src="@System.Configuration.ConfigurationManager.AppSettings["URL_ROOT"]images/logo_header.png" alt=""></a>
+                </div>
+                <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+                    <div class="box_all_timkiem_input">
+                        <ul>
+                            <li><input type="text" placeholder="Tìm kiếm" id="Keyword" onkeypress="return EnterSearch(event)"><a href="javascript:;" onclick="GoToSearch(1)"></a></li>
+                            <li><img src="@System.Configuration.ConfigurationManager.AppSettings["URL_ROOT"]images/img_hotline.png" alt=""></li>
+                        </ul>
+                    </div>
+
+                    @Html.Action("MenuPartial", "Partial")
+                </div>
+            </div>  
+        </nav>
+    </div>
+    <div class="noidung_site">
+        <div class="container">
+
+            @if (Request.Url.ToString() == "http://1400.vn:8003/" || Request.Url.ToString() == "http://1400.vn:8003")
+            {
+                @Html.Action("ArticleHotPartial", "Home")
+            }
+            <div class="row">
+                <div id="ContentSearch">
+                    @RenderBody()
+                </div>
+                <div class="col-lg-4 col-md-4 col-sx-4 col-sm-12">
+
+                    @Html.Action("ProgramPartial", "Partial")
+
+                    
+                    @Html.Action("MessageHistory", "Partial")
+
+
+                    @Html.Action("FeedbackPartial", "Partial")
+                    <select class="lien_ket_ngoai" id="IdLink" onchange="GoToLink()">
+                        <option value="#">Link liên kết</option>
+                        <option value="http://www.mic.gov.vn">Bộ Thông tin Truyền thông</option>
+                        <option value="http://www.redcross.org.vn">Hội chữ thập đỏ VN</option>
+                        <option value="http://vava.org.vn">Hội nạn nhân da cam</option>
+                        <option value="http://www.mattran.org.vn">UB TƯ MTTQ VN</option>
+                        <option value="http://nhandaovtv.vn">Truyền hình nhân đạo</option>
+                        <option value="http://www.go.vn">Mạng xã hội Việt Nam </option>
+                        <option value="http://ngaymaituoisang.vn/">Quỹ Hỗ trợ bệnh nhân ung thư </option>
+                        <option value="http://trianlietsi.vn">Hội Hỗ trợ gia đình liệt sĩ Việt Nam </option>
+                        <option value="http://tamlongvang.laodong.com.vn/">Quỹ Tấm Lòng Vàng báo Lao Động</option>
+                    </select>
+                </div>
+            </div>
+        </div>
+    </div>
+    @Html.Action("MenuFooterPartial", "Partial")
+    
+    <div class="box_footer">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-6 col-md-6 col-sm-12 col-sm-12">
+                    <div class="box_left_footer">
+                        <div class="row">
+                            <div class="col-lg-2 col-md-2 col-sm-12 col-sm-12"><a href="@System.Configuration.ConfigurationManager.AppSettings["URL_ROOT"]"><img class="img-responsive" src="@System.Configuration.ConfigurationManager.AppSettings["URL_ROOT"]images/img_logo_footer.png" alt=""></a></div>
+                            <div class="col-lg-10 col-md-10 col-sm-12 col-sm-12">
+                                <span>Cổng thông tin điện tử nhân đạo quốc gia</span>
+                                <p>Địa chỉ: tầng 17, Tòa nhà VTC, 23 Lạc Trung, Hai Bà Trưng, Hà Nội</p>
+                                <ul>
+                                    <li>Điện  thoại: 024.44501107</li>
+                                    <li>Email: cong1400@vtc.vn</li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-lg-6 col-md-6 col-sm-12 col-sm-12">
+                    <div class="box_right_footer">
+                        <span>Đơn vị quản lý và vận hành:</span>
+                        <p>
+                            Tổng công ty Truyền thông đa phương tiện<br>
+                            Cơ quan thuộc Bộ Thông tin và Truyền thông
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    
+    <script>
+        $('.box_slide').owlCarousel({
+            loop: true,
+            autoWidth: false,
+            nav: true,
+            navText: false,
+            mouseDrag: false,
+            items: true,
+            autoplay:800,
+        });
+    </script>
+    
+
+    <script type="text/javascript">
+        function EnterSearch(e) {
+            if (e.keyCode == 13) {
+                GoToSearch(1);
+            }
+        }
+        function GoToLink() {
+            var url = $("#IdLink").val();
+            window.open(url);
+        }
+        function GoToSearch(page) {
+            var Keyword = $("#Keyword").val();
+            if (Keyword.length < 2)
+            {
+                bootbox.alert("Từ khóa tìm kiếm phải từ 2 ký tự trở lên");
+                return;
+            }
+            $.ajax({
+                type: "POST",
+                url: '@Url.Action("ArticleSearch", "Article")',
+                cache: false,
+                data: {
+                    Keyword: Keyword,
+                    CurrentPage: page,
+
+                },
+                dataType: "html",
+                success: function (data) {
+                    $("#ContentSearch").html(data);
+                    $("#Text").html(Keyword);
+                    $(".box_slide").html('');
+                    //location.href = appPath + "#ContentSearch";
+                },
+            });
+        }
+        $(document).ready(function () {
+            $(".scrollup").hide();
+            $(window).scroll(function () {
+                if ($(this).scrollTop() > 100) {
+                    $('.scrollup').fadeIn();
+                } else {
+                    $('.scrollup').fadeOut();
+                }
+            });
+            $('.scrollup').click(function () {
+                $("html, body").animate({
+                    scrollTop: 0
+                }, 600);
+                return false;
+            });
+
+        });
+    </script>
+    <script>
+        $(document).ready(function () {
+            $('#image-gallery').lightSlider({
+                gallery: true,
+                item: 1,
+                thumbItem: 9,
+                slideMargin: 0,
+                speed: 500,
+                pause: 5000,
+                auto: true,
+                loop: true,
+                onSliderLoad: function () {
+                    $('#image-gallery').removeClass('cS-hidden');
+                }
+            });
+        });
+    </script>
+
+
+
+    <div id="fb-root"></div>
+    <script>
+        (function (d, s, id) {
+            var js, fjs = d.getElementsByTagName(s)[0];
+            if (d.getElementById(id)) return;
+            js = d.createElement(s); js.id = id;
+            js.src = "//connect.facebook.net/en_US/sdk.js#xfbml=1&version=v2.9&appId=1658420914443713";
+            fjs.parentNode.insertBefore(js, fjs);
+        }(document, 'script', 'facebook-jssdk'));</script>
+</body>
+</html>

@@ -1,0 +1,100 @@
+﻿@using W1400.DataAccess.DTO
+@model ArticleImage
+
+<script src="~/ckfinder/ckfinder.js"></script>
+
+<div class="well">
+    <span class="label label-danger">
+        Chú ý!
+    </span>
+    <span>
+        Hãy chắc chắn nhập vào đầy đủ thông tin tại các mục bắt buộc đánh dấu (*)
+    </span>
+</div>
+<div class="row">
+    <div class="col-md-12">
+        <div class="panel panel-primary">
+            <div class="panel-heading">
+                
+                    <i class="fa fa-fw fa-user-md"></i><span>Cập Nhật Ảnh trong Album</span>
+                
+            </div>
+            <form id="defaultForm" method="post" class="form-horizontal">
+                <div class="panel-group" id="steps">
+                    <div class="messager-body">
+                        <div class="alert alert-success display-hide alert-dismissable">
+                            <button type="button" class="close" data-close="alert" aria-hidden="true">×</button>
+                            <span class="glyphicon glyphicon-ok"></span>
+                            <label>Đã lưu dữ liệu thành công !!!</label>
+                        </div>
+                        <div class="alert alert-danger display-hide alert-dismissable">
+                            <button type="button" class="close" data-close="alert" aria-hidden="true">×</button>
+                            <span class="glyphicon glyphicon-warning-sign"></span>
+                            <label id="ErrorMessage">Có một vài lỗi trong khung nhập liệu dưới đây ! kiểm tra lại</label>
+                        </div>
+                    </div>
+                    <div class="panel panel-info">
+                        <div class="panel-heading">
+                            <h4 class="panel-title"><i class="fa fa-wrench" style="margin-right:7px"></i>Thông Tin Cơ Bản</h4>
+                        </div>
+                        <input type="hidden" value="1" id="total_img" />
+                        <div class="panel-body list_img_album">
+
+
+                            <div class="form-group box_img1">
+                                <label id="labanh" for="txtImageUrl" class="control-label col-md-1">Ảnh 1 (750x420) *</label>
+                                <div class="col-md-8">
+                                    <div class="input-icon right">
+                                        <input type="text" id="txtImage1" name="txtImage" value="" class="form-control" placeholder="" />
+                                    </div>
+                                </div>
+                                <div class="col-md-1">
+                                    <a href="javascript:;" onclick="upload_image(1)"><i class="fa fa-file"></i></a>
+                                </div>
+                                <img src="" id="img_show1" style="max-width: 100px; max-height: 50px" />
+                            </div>
+
+                            <div class="form-group box_img1">
+                                <label for="txtTitle" class="control-label col-md-1">Chú thích:  </label>
+                                <div class="col-md-8">
+                                    <div class="input-icon right">
+                                        <textarea id="txtDescription1" maxlength="150" name="txtDescription" class="form-control" rows="3" placeholder="Tối đa 150 ký tự"></textarea>
+                                    </div>
+                                </div>
+                            </div>
+
+
+                        </div>
+                        <div class="panel-footer form-horizontal">
+                            <div class="form-group submit">
+                               
+                                <button type="button" class="btn btn-info" onclick="AlbumCtrl.MoreImg();"><i class="fa fa-plus"></i>Thêm ảnh</button>
+                                <button type="button" class="btn btn-danger" onclick="AlbumCtrl.RemoveImg();"><i class="fa fa-remove"></i>Bớt ảnh</button>
+
+                                <button type="button" class="btn btn-primary" onclick="AlbumCtrl.SaveImgAlbum(@ViewBag.ArtId);"><i class="fa fa-save"></i>Lưu lại</button>
+                                
+                                <button type="button" class="btn btn-default" onclick="AlbumCtrl.BtnBack(@ViewBag.ArtId);"><i class="fa fa-backward"></i>Back</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+<script type="text/javascript">
+
+    var finder = new CKFinder();
+
+    function upload_image(id) {
+        finder.selectActionFunction = function (fileUrl) {
+            $('#txtImage' + id).val(fileUrl);
+            $('#img_show' + id).prop("src", fileUrl);
+        };
+        finder.popup();
+    }
+</script>
+
+
+

@@ -1,0 +1,193 @@
+﻿@using W1400.Utility
+@using W1400.DataAccess.DTO
+@model List<UserFunction>
+@{var permission = ViewBag.permission;}
+@if (ViewBag.IsAdmin || permission != null)
+{
+    <div class="row">
+        <div class="col-md-12">
+            <div class="panel-body form-horizontal">
+                <div class="table-responsive">
+                    <div class="dataTables_wrapper form-inline" role="grid">
+                        <table class="table table-striped table-bordered table-hover dataTable no-footer" id="tableUserRole">
+                            <thead>
+                                <tr>
+                                    <th style="text-align:center">Mã User</th>
+                                    <th style="text-align:center">Tên User</th>
+                                    <th style="text-align:center">Tên chức năng</th>
+                                    <th style="text-align:center">Xem</th>
+                                    <th style="text-align:center">Thêm</th>
+                                    <th style="text-align:center">Sửa</th>
+                                    <th style="text-align:center">Xóa</th>
+                                </tr>
+                            </thead>
+                            @if (Model != null && Model.Count > 0)
+                            {
+                                foreach (var function in Model)
+                                {
+                                    <tr class="fc_parent">
+                                        <td align="center">@function.UserID</td>
+                                        <td align="center">@function.UserName</td>
+                                        <td style="text-align:center">@ViewBag.FunctionName</td>
+                                        @if (ViewBag.IsAdmin || permission.IsDelete || permission.IsInsert)
+                                        {
+                                            <td align="center"><input class="grantUFRead" onchange="grantReadClick($(this));" type="checkbox" checked="@(function.IsRead ? true : false)" id="cbIsRead_@function.UserID" /></td>
+                                        }
+                                        else
+                                        {
+                                            <td align="center"><input class="grantUFRead" onchange="grantReadClick($(this));" type="checkbox" disabled checked="@(function.IsRead ? true : false)" id="cbIsRead_@function.UserID" /></td>
+                                        }
+                                        @if (ViewBag.IsAdmin || permission.IsUpdate || permission.IsInsert)
+                                        {
+                                            <td align="center"><input class="grantUFInsert" onchange="roleClick($(this));" type="checkbox" checked="@(function.IsInsert ? true : false)" id="cbIsInsert_@function.UserID" /></td>
+                                            <td align="center"><input class="grantUFUpdate" onchange="roleClick($(this));" type="checkbox" checked="@(function.IsUpdate ? true : false)" id="cbIsUpdate_@function.UserID" /></td>
+                                            <td align="center"><input class="grantUFDelete" onchange="roleClick($(this));" type="checkbox" checked="@(function.IsDelete ? true : false)" id="cbIsDelete_@function.UserID" /></td>
+                                        }
+                                        else
+                                        {
+                                            <td align="center"><input class="grantUFInsert" onchange="roleClick($(this));" type="checkbox" disabled checked="@(function.IsInsert ? true : false)" id="cbIsInsert_@function.UserID" /></td>
+                                            <td align="center"><input class="grantUFUpdate" onchange="roleClick($(this));" type="checkbox" disabled checked="@(function.IsUpdate ? true : false)" id="cbIsUpdate_@function.UserID" /></td>
+                                            <td align="center"><input class="grantUFDelete" onchange="roleClick($(this));" type="checkbox" disabled checked="@(function.IsDelete ? true : false)" id="cbIsDelete_@function.UserID" /></td>
+                                        }
+                                    </tr>
+
+                                }
+                            }
+
+                        </table>
+                    </div>
+                </div>
+            </div>
+            <div class="panel-footer">
+                <div class="submit">
+                    @if (ViewBag.IsAdmin || permission.IsInsert || permission.IsUpdate || permission.IsDelete)
+                    {
+                        <button type="submit" class="btn btn-primary" id="btnSave"><i class="fa fa-save"></i>Lưu lại</button>
+                    }
+                    <button type="button" class="btn btn-default" id="btnBack" onclick="ListFunction();"><i class="fa fa-backward"></i>Quay lại</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script type="text/javascript">
+        $(document).ready(function () {
+            var table = $('#tableUserRole').DataTable({
+                ordering: false,
+                dom: 'Bfrtp',
+                lengthMenu: [
+               [10, 20, 50],
+               ['10 rows', '20 rows', '50 rows']
+                ],
+                buttons: [
+                     'pageLength',
+                    {
+                        extend: "colvis",
+                        text: "<i class='fa fa-eye-slash'></i>Ẩn/hiện cột"
+                    }
+                ],
+                "bAutoWidth": true,
+                "aaSorting": [[0, 'desc']],
+                "bSort": true,
+                searching: true,
+                pageLength: 20,
+                reponsive: true
+            });
+            table.buttons().container().appendTo('#example_wrapper .col-sm-6:eq(0)');
+            $('#tableUserRole').on('page.dt', function () {
+                $("html,body").animate({ scrollTop: $('#tableUserRole').offset().top - 100 }, 'fast');
+            });
+
+            var ListGrantFirst = [];
+            var ListGrantEnd = [];
+            var rowList = $("#tableUserRole").dataTable().fnGetNodes();
+            $.each(rowList,function () {
+                var UserID = $(this).find(".grantUFRead").attr("id").split('_')[1];
+                var IsRead = $("#cbIsRead_" + UserID, $("#tableUserRole").dataTable().fnGetNodes()).is(":checked") ? true : false;
+                var IsInsert = $("#cbIsInsert_" + UserID, $("#tableUserRole").dataTable().fnGetNodes()).is(":checked") ? true : false;
+                var IsUpdate = $("#cbIsUpdate_" + UserID, $("#tableUserRole").dataTable().fnGetNodes()).is(":checked") ? true : false;
+                var IsDelete = $("#cbIsDelete_" + UserID, $("#tableUserRole").dataTable().fnGetNodes()).is(":checked") ? true : false;
+                ListGrantFirst.push({ userID: UserID, isRead: IsRead, isInsert: IsInsert, isUpdate: IsUpdate, isDelete: IsDelete })
+            });
+            $("#btnSave").click(function () {
+                if (ListGrantFirst.length <= 0)
+                {
+                    bootbox.alert("không tìm thấy user cần phân quyền");
+                    return;
+                }
+                $.each(ListGrantFirst, function () {
+                    var UserID = this.userID;
+                    var IsRead = $("#cbIsRead_" + UserID, $("#tableUserRole").dataTable().fnGetNodes()).is(":checked") ? true : false;
+                    var IsInsert = $("#cbIsInsert_" + UserID, $("#tableUserRole").dataTable().fnGetNodes()).is(":checked") ? true : false;
+                    var IsUpdate = $("#cbIsUpdate_" + UserID, $("#tableUserRole").dataTable().fnGetNodes()).is(":checked") ? true : false;
+                    var IsDelete = $("#cbIsDelete_" + UserID, $("#tableUserRole").dataTable().fnGetNodes()).is(":checked") ? true : false;
+                    if (IsRead != this.isRead) {
+                        ListGrantEnd.push({ userID: UserID, functionID: parseInt('@ViewBag.FunctionID'), isRead: IsRead, isInsert: IsInsert, isUpdate: IsUpdate, isDelete: IsDelete });
+                    }
+                    else if (IsInsert != this.isInsert || IsUpdate != this.isUpdate || IsDelete != this.isDelete) {
+                        ListGrantEnd.push({ userID: UserID, functionID: parseInt('@ViewBag.FunctionID'), isRead: IsRead, isInsert: IsInsert, isUpdate: IsUpdate, isDelete: IsDelete });
+                    }
+                });
+                //console.log(ListGrantEnd);
+                Utils.Loading();
+                $.ajax({
+                    type: 'POST',
+                    url: UrlRoot + "Home/SaveGrantForListUser",
+                    data: JSON.stringify(ListGrantEnd),
+                    contentType: 'application/json; charset=utf-8',
+                    dataType: 'json',
+                    async: true,
+                    success: function (data) {
+                        Utils.UnLoading();
+                        if (data.ResponseCode >= 0) {
+                            $("html,body").animate({ scrollTop: $('#TemplateContent').offset().top }, 'fast');
+                            bootbox.alert(data.Description);
+                            setTimeout(function () { ListFunction(); }, 2000);
+                        }
+                        else {
+                            $("html,body").animate({ scrollTop: $('#TemplateContent').offset().top }, 'fast');
+                            bootbox.alert(data.Description);
+                            return;
+                        }
+                    }
+                });
+            });
+
+        });
+        function grantReadClick(e) {
+            var id = e.attr('id').split('_')[1];
+            var check = e.is(":checked") ? true : false;
+            if (check == true) {
+                return;
+            } else {
+                $("#cbIsDelete_" + id).prop('checked', false);
+                $("#cbIsInsert_" + id).prop('checked', false);
+                $("#cbIsUpdate_" + id).prop('checked', false);
+            }
+        }
+
+        function roleClick(e) {
+            //debugger;
+            var id = e.attr("id").split('_')[1];
+            var checked = e.is(":checked") ? true : false;
+            if (checked == false) {
+                var Insert = $("#cbIsInsert_" + id).is(":checked") ? true : false;
+                var Update = $("#cbIsUpdate_" + id).is(":checked") ? true : false;
+                var Delete = $("#cbIsDelete_" + id).is(":checked") ? true : false;
+
+                if (Insert == false && Update == false && Delete == false)
+                    $("#cbIsRead_" + id).prop("checked", false);
+            }
+            else {
+                $("#cbIsRead_" + id).prop("checked", true);
+            }
+        }
+    </script>
+}
+else
+{
+    <h2 style="color:red">ErrorPermission</h2>
+
+    <h4>Bạn không có quyền truy cập . Xin hãy liên hệ Admin để được cấp quyền vào hệ thống CMS</h4>
+
+}

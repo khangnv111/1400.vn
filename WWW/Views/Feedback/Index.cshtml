@@ -1,0 +1,91 @@
+﻿<div class="col-lg-8 col-md-8 col-sx-8 col-sm-12">
+    <div class="tieude_noidung_trai">gửi thư góp ý</div>
+    <div class="noidung_chitiet_tintuc">
+        <ul class="list_form_gopy">
+            <li><input type="text" id="Email_" placeholder="Nhập địa chỉ email"></li>
+            <li><input type="text" id="Mobile_" placeholder="Nhập số điện thoại" maxlength="15"></li>
+            <li><textarea name="" id="Content_" placeholder="Nhập nội dung"></textarea></li>
+            <li><a class="btn_gui_gopy" onclick="btn_gui_gopy_onclick()" href="javascript:;">gửi góp ý</a></li>
+        </ul>
+    </div>
+</div>
+<script type="text/javascript">
+    //$("#Mobile_").keydown(function (event) {
+    //    // Allow only backspace and delete
+    //    if (event.keyCode == 46 || event.keyCode == 8) {
+    //        // let it happen, don't do anything
+    //    }
+    //    else {
+    //        // Ensure that it is a number and stop the keypress
+    //        if (event.keyCode < 48 || event.keyCode > 57) {
+    //            event.preventDefault();
+    //        }
+    //    }
+    //});
+    function btn_gui_gopy_onclick() {
+        var Email = $("#Email_").val();
+        var Mobile = $("#Mobile_").val();
+        var Content = $("#Content_").val();
+        if (Email == '') {
+            bootbox.alert("Bạn vui lòng nhập email");
+            $("#Email_").focus();
+            return;
+        }
+
+        if (validateEmail(Email)) {
+        }
+        else {
+            bootbox.alert('Email không đúng định dạng');
+            return false;
+        }
+
+        if (Mobile == '') {
+            bootbox.alert("Bạn vui lòng nhập số điện thoại");
+            $("#Mobile_").focus();
+            return;
+        }
+
+        if (validatePhone(Mobile)) {
+        }
+        else {
+            bootbox.alert('Số điện thoại không chính xác');
+            return;
+        }
+
+
+        if (Content == '') {
+            bootbox.alert("Bạn vui lòng nhập nội dung góp ý");
+            $("#Content_").focus();
+            return;
+        }
+        $.ajax({
+            type: "POST",
+            url:appPath+ 'Partial/SendSuggest',
+            data: {
+                Email: Email,
+                Mobile: Mobile,
+                Content: Content
+            },
+            success: function (data) {
+                if (data.success == 1) {
+                    bootbox.alert("Cảm ơn bạn đã gửi góp ý cho chúng tôi");
+                    $("#Email_").val("");
+                    $("#Mobile_").val("");
+                    $("#Content_").val("");
+                }
+                else
+                    bootbox.alert("Hệ thống đang bận");
+            },
+        });
+    }
+    function validatePhone(txtPhoneNumber) {
+        var filter = /^[0-9-+]+$/;
+        if (filter.test(txtPhoneNumber)) {
+            return true;
+        }
+        else {
+            return false;
+        }
+    }
+
+</script>

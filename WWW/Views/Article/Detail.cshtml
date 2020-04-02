@@ -1,0 +1,145 @@
+﻿@model W1400.DataAccess.DTO.Article
+
+
+<div class="col-lg-8 col-md-8 col-sx-8 col-sm-12">
+    @if (Model != null)
+    {
+        if (Model.MenuID == 11) //video
+        {
+            <div class="tieude_noidung_trai">
+                Chi tiết video
+            </div>
+            <div class="noidung_chitiet_tintuc">
+                <b>@Model.Title</b>
+                <em style="display:block;">@Model.PublishDate.ToString("dd/MM/yyyy")</em>
+                <p style="margin-bottom: 10px">@Model.Description</p>
+                <div class="box_img_chitiet_tin">
+                    @*<img src="images/img_chitiet_tintuc.jpg" class="img-responsive" alt="">*@
+
+                    <div class="embed-responsive embed-responsive-16by9">
+                        <iframe class="embed-responsive-item" src="https://www.youtube.com/embed/@Model.MetaData"></iframe>
+                    </div>
+                    
+
+                    <div class="box_ten_tacgia" >
+                        <strong style="font-size:16px;"> @Model.Author</strong>
+                    </div>
+
+                </div>
+                <div class="box_binhluan_face">
+                    @*<img src="images/img_binhluan.jpg" class="img-responsive" alt="">*@
+                    <div class="fb-like" data-href="@Request.Url.ToString().Replace(":8001", "")" data-layout="standard" data-action="like" data-size="small" data-show-faces="false" data-share="true"></div>
+
+                    <div class="fb-comments" data-href="@Request.Url.ToString().Replace(":8001", "")" data-numposts="5" width="100%"></div>
+                </div>
+            </div>
+        }
+        else if (Model.MenuID == 10) //album anh
+        {
+            <div class="tieude_noidung_trai">
+                Chi tiết hình ảnh
+            </div>
+            <div class="noidung_chitiet_tintuc">
+                <b>@Model.Title</b>
+                <em style="display:block;">@Model.PublishDate.ToString("dd/MM/yyyy")</em>
+                <p style="margin-bottom: 10px">@Model.Description</p>
+                <div class="demo">
+                    <ul id="image-gallery" class="gallery list-unstyled cS-hidden">
+                        @if (ViewBag.listimg != null && ViewBag.listimg.Count > 0)
+                        {
+                            foreach (var item in ViewBag.listimg)
+                            {
+                                <li data-thumb="@item.FilePath">
+                                    <img class="img-responsive" src="@item.FilePath"/>
+                                    <div class="chu_thick_img">@item.Description</div>
+                                </li>
+                            }
+                        }
+                        
+                        
+                    </ul>
+                </div>
+                <div class="box_ten_tacgia">
+                    <strong style="font-size:16px;">
+                        @Model.Author
+                    </strong>
+                </div>
+                <div class="box_binhluan_face">
+                    <div class="fb-like" data-href="@Request.Url.ToString().Replace(":8001", "")" data-layout="standard" data-action="like" data-size="small" data-show-faces="false" data-share="true"></div>
+
+                    <div class="fb-comments" data-href="@Request.Url.ToString().Replace(":8001", "")" data-numposts="5" width="100%"></div>
+                </div>
+            </div>
+            
+        }
+        else
+        {
+            <div class="tieude_noidung_trai">
+                Tin tức <em></em> @Model.MenuName
+            </div>
+
+            <div class="noidung_chitiet_tintuc">
+                <b>@Model.Title</b>
+                <em style="display:block;">@Model.CreateDate.ToString("dd/MM/yyyy HH:mm")</em>
+                <p style="font-weight: bold;">
+                     @Html.Raw(Model.Description)
+                </p>
+                <div class="box_img_chitiet_tin">
+                    @if (!string.IsNullOrEmpty(Model.ImageDetail))
+                    {
+                        <center> <img src="@Model.ImageDetail" class="img-responsive" alt=""></center>
+                    }
+                </div>
+                <ul class="list_binhchon_luon">
+                    <li><img src="@System.Configuration.ConfigurationManager.AppSettings["URL_ROOT"]images/icon_view.png" alt="">@Model.CountView Xem</li>
+                </ul>
+                <p>
+                    @Html.Raw(Model.Detail)
+                </p>
+                @if (!string.IsNullOrEmpty(Model.BottomDesc))
+                {
+                    <div class="box_ghi_chu" style="text-align:justify;">
+                        @Html.Raw(Model.BottomDesc)
+                    </div>
+                }
+                
+                @{
+                int Total = 0;
+                var lst_ = W1400.DataAccess.Factory.AbstractDAOFactory.Instance().CreateArticleDAO().SP_Article_GetList_Web(1, Model.ArticleID, "", 0, "", "", -1, 1, 1, out Total);
+                }
+                @if (lst_ != null && lst_.Count > 0)
+                {
+                    if (lst_[0].MenuID == 13)
+                    {
+                        <center> 
+                            <a target="_blank" href="@Model.MetaData">
+                                <img src="@System.Configuration.ConfigurationManager.AppSettings["URL_ROOT"]images/img_ung_ho.png" />
+                            </a>
+                        </center>
+                        <br /><br />
+                    }
+                }
+                <strong style="float:right;font-size:16px;">
+                    @Html.Raw(Model.Author)
+                </strong>
+                <div class="box_binhluan_face">
+                    @*<img src="@System.Configuration.ConfigurationManager.AppSettings["URL_ROOT"]images/img_binhluan.jpg" class="img-responsive" alt="">*@
+                    <div class="fb-like" data-href="@Request.Url.ToString().Replace(":8001", "")" data-layout="standard" data-action="like" data-size="small" data-show-faces="false" data-share="true"></div>
+
+                    <div class="fb-comments" data-href="@Request.Url.ToString().Replace(":8001", "")" data-numposts="5" width="100%"></div>
+                </div>
+            </div>
+        }
+
+
+        <div id="show_relationArticle">
+            @Html.Action("RelationArticlePartial", "Article", new { ArticleId = Model.ArticleID, CurrentPage = 1 })
+        </div>
+    }
+
+
+</div>
+
+<script type="text/javascript">
+    //$(".noidung_chitiet_tintuc img").attr("style", "margin:auto !important");
+</script>

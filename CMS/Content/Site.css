@@ -1,0 +1,644 @@
+﻿body {
+    padding-top: 50px;
+    padding-bottom: 20px;
+}
+/* Set padding to keep content from hitting the edges */
+.body-content {
+    padding-left: 15px;
+    padding-right: 15px;
+}
+
+/* styles for validation helpers */
+.field-validation-error {
+    color: #b94a48;
+}
+
+.field-validation-valid {
+    display: none;
+}
+
+input.input-validation-error {
+    border: 1px solid #b94a48;
+}
+
+input[type="checkbox"].input-validation-error {
+    border: 0 none;
+}
+
+.validation-summary-errors {
+    color: #b94a48;
+}
+
+.validation-summary-valid {
+    display: none;
+}
+
+.pagination li a.active, .pagination li a:hover, .pagination li:hover {
+    background: #1c6af5;
+    color: #fff;
+}
+
+a.link-grant, a.link-grant > fa {
+    color: #ffffff;
+    padding: 2px 4px;
+    background-color: #0094ff;
+}
+
+a.link-edit, a.link-edit > fa {
+    color: #ffffff;
+    padding: 2px 5px;
+    background-color: #ffac29;
+}
+
+a.link-delete, a.link-delete > fa {
+    padding: 2px 5px;
+    color: #fff;
+    background-color: #ca3a28;
+}
+
+#txtIconSrc, #txtCoverImg, #SrcImgLeft, #SrcImgRight {
+    float: left;
+    margin: 0;
+}
+
+a.link-delete > fa:hover, a.link-hover > fa:hover, a.link-edit:hover, a.link-edit > fa:hover, a.link-grant > fa:hover, a.link-grant > fa:hover {
+    color: #ffffff !important;
+}
+
+#dataTables > thead > th, #dataTables > tbody > tr {
+    text-align: center;
+}
+
+    #dataTables > tbody > tr > td.functionName {
+        text-align: left;
+    }
+
+#dataTables tr th {
+    text-align: center;
+    vertical-align: middle;
+    white-space: nowrap;
+}
+#table-static tr th,#table-static tr td  {
+    text-align: center;
+    vertical-align: middle;
+    white-space: normal;
+        font-size: 13px;
+    padding: 3px 5px;
+    border: 1px solid #848484;
+}
+.display-hide {
+    display: none;
+}
+
+.nopadding {
+    padding: 0 !important;
+}
+
+a.panel_collapse {
+    clear: both;
+    display: inherit;
+    padding: 0;
+}
+
+.panel-title a.panel_collapse:after {
+    font-family: 'Glyphicons Halflings';
+    content: "\e114";
+    float: right;
+    color: #fff;
+}
+
+#FunctionPartial .panel-heading {
+    position: relative;
+}
+
+#FunctionPartial .panel-title .link-edit {
+    position: absolute;
+    top: 3px;
+    right: 80px;
+}
+
+#FunctionPartial .panel-title .link-delete {
+    position: absolute;
+    top: 3px;
+    right: 45px;
+}
+
+.panel-heading a.collapsed:after {
+    content: "\e080";
+}
+
+.panel-footer .submit, .modal-footer {
+    text-align: center;
+}
+
+#datetimeFromDate .form-control, #datetimeToDate .form-control, #datetimeSelectDate .form-control, 
+#BalanceFromDate .form-control, #BalanceToDate  .form-control
+{
+    display: table-cell;
+    float: left;
+    width: 100%;
+    margin-bottom: 0;
+    border-bottom-right-radius: 0;
+    border-top-right-radius: 0;
+}
+
+#datetimeFromDate, #datetimeToDate, #datetimeSelectDate ,#BalanceFromDate,  #BalanceToDate{
+    position: relative;
+    display: table;
+    border-collapse: separate;
+}
+
+    #datetimeFromDate .form-control-feedback, #datetimeToDate .form-control-feedback,
+    #BalanceFromDate .form-control-feedback, #BalanceToDate .form-control-feedback{
+        right: 20% !important;
+    }
+
+#ErrorlogPartial table#dataTables {
+    table-layout: auto;
+}
+
+a.link-success {
+    color: #ffffff;
+    padding: 2px 5px;
+    background-color: #00C24C;
+}
+
+#form label.control-label, #formConfig label.control-label {
+    white-space: nowrap;
+    float: left;
+    margin: 5px 10px 5px 0px;
+    color: #31708f;
+}
+
+#wrapper .top {
+    height: 4px;
+    margin: 0;
+    background-color: #0188d7;
+}
+
+.navbar-header {
+    padding: 7px 18px;
+}
+
+#cbxIsActive, #cbxIsDisplay, #cbxIsAdministrator {
+    margin: 0 !important;
+}
+
+.submit {
+    text-align: center;
+}
+
+#FunctionPartial .panel-heading {
+    background-color: #1C6373;
+    color: #fff;
+}
+
+.text-info {
+    float: left;
+    margin: 5px 0 0 10px;
+    width: 90px;
+}
+
+#formConfig .text-info {
+    width: 100px;
+}
+
+span.multiselect-selected-text {
+    padding-right: 5px;
+    white-space: normal;
+}
+
+.dropdown-menu i.fa, .dropdown-menu .glyphicon, span.glyphicon, span.fa, i.fa, i.glyphicon {
+    width: 18px;
+    margin-right: 5px;
+    text-align: center;
+}
+
+#loginForm i.fa, #loginForm i.glyphicon {
+    width: 14px;
+}
+
+a.ReportNRU {
+    cursor: pointer;
+}
+
+#page-wrapper {
+    width: 100%;
+}
+
+.well {
+    padding: 5px 0 5px 10px;
+    text-align: left;
+}
+
+#dataTables td {
+    white-space: normal;
+    padding: 3px 5px;
+    vertical-align: middle;
+}
+
+.visible-ie9 {
+    display: none;
+}
+
+.visible-ie8 {
+    display: none;
+}
+
+.login .content .input-icon {
+    border-left: 2px solid #35aa47 !important;
+    width:75%;
+}
+
+.input-icon {
+    position: relative;
+    /*width: 75%;*/
+    margin-left: 25px;
+}
+
+    .input-icon > i {
+        color: #ccc;
+        display: block;
+        position: absolute;
+        margin: 11px 2px 4px 10px;
+        z-index: 3;
+        width: 16px;
+        height: 16px;
+        font-size: 16px;
+        text-align: center;
+    }
+
+.login .content .input-icon .form-control {
+    border-left: 0;
+}
+
+.input-icon > .form-control {
+    padding-left: 33px;
+}
+
+.login .content {
+    background-color: #fff;
+    width: 420px;
+    margin: 0 auto;
+    margin-bottom: 0px;
+    padding: 0;
+    text-align: center;
+    padding-top: 20px;
+    padding-bottom: 15px;
+}
+
+button.btn-sm {
+    border-radius: 0;
+    border-width: 0;
+    padding: 7px 14px;
+    font-size: 14px;
+}
+
+.btn-sm.btn-success {
+    background: #35aa47;
+    color: #fff;
+}
+
+.input-icon .form-control-feedback {
+    top: -10px !important;
+}
+
+.login .logo {
+    margin: 0 auto;
+    text-align: center;
+}
+
+li.dropdown-user .dropdown-toggle > img {
+    float: left;
+    margin-top: -5px;
+    margin-right: 5px;
+    height: 29px;
+    display: inline-block;
+}
+
+.navbar-right li.dropdown-user .dropdown-toggle .username {
+    color: #446CCC;
+}
+
+.navbar-right li.dropdown-user .dropdown-toggle > .username {
+    display: inline-block;
+    font-size: 13px;
+    font-weight: 600;
+}
+
+.navbar-right li.dropdown {
+    margin: 0px;
+    padding: 0px 4px;
+    height: 46px;
+    display: inline-block;
+}
+
+.navbar-right li.dropdown-user .dropdown-toggle {
+    padding: 14px 6px 12px 8px;
+}
+
+.img-circle {
+    border-radius: 50% !important;
+}
+
+.navbar-right .dropdown-menu {
+    top: 40px;
+}
+
+.modal.in .modal-dialog {
+    z-index: 9999;
+}
+
+.navbar-nav > li > .dropdown-menu, .open > .dropdown-menu {
+    padding: 0;
+}
+
+.dropdown-menu > li > a {
+    padding: 5px 20px 5px 5px;
+}
+
+.btn-circle i.fa {
+    font-size: inherit !important;
+    margin-right: 0 !important;
+}
+
+.btn-circle {
+    margin: 0 3px;
+}
+
+p.btn-action {
+    margin-bottom: 0;
+}
+
+.btn-circle.circle-25 {
+    width: 25px;
+    height: 25px;
+    padding: 3px 0;
+}
+
+#tree .list-group-item {
+    width: 100%;
+    float: left;
+}
+
+#ServicePartial .list-group-item, #FunctionPartial .list-group-item {
+    width: 85%;
+}
+
+li.action {
+    list-style: none outside;
+    float: left;
+    width: 15%;
+    background-color: #fff;
+    border: 1px solid #428bca;
+    padding: 5px 0;
+    display: block;
+    border-left: 0;
+    border-bottom: 0;
+    text-align: center;
+}
+
+    li.action:last-child {
+        border-bottom: 1px solid #428bca;
+    }
+
+#tree .list-group-item:first-child {
+    border-top-right-radius: 0px;
+}
+
+#tree li.action:nth-child(2) {
+    border-top-right-radius: 4px;
+}
+
+#backtop {
+    display: none;
+    background-image: url('../Images/backtop.png');
+    /*background-image: url('../Images/ScrollToTop-ARSDK.png');*/
+    overflow: visible;
+    width: 38px;
+    height: 38px;
+    z-index: 20;
+    cursor: pointer;
+    position: fixed;
+    left: 10px;
+    bottom: 0px;
+}
+
+#treeService li.node-treeService:hover, .treeview li.node-tree:hover {
+    background: #428bca;
+    color: #fff;
+}
+
+#FunctionPartial .list-group-item, #ServicePartial .list-group-item, #treeService .list-group-item {
+    padding: 5px 10px;
+}
+
+#FunctionPartial li.action, #ServicePartial li.action {
+    padding: 2px 0 3px;
+}
+
+#FunctionPartial .btn-circle, #ServicePartial .btn-circle {
+    width: 25px;
+    height: 25px;
+    padding: 4px 0;
+}
+
+#contextProduct, #contextFunction {
+    display: inline-block;
+    padding: 6px 12px;
+    margin-bottom: 0;
+    font-size: 14px;
+}
+
+#treeServiceModal .modal-body, #treeProductModal .modal-body, #treeFunctionModal .modal-body , #myModal .modal-body{
+    max-height: 480px;
+    overflow-y: scroll;
+    height: auto;
+}
+
+.multiselect-container {
+    height: 350px;
+    overflow-y: scroll;
+}
+
+.nav-tabs > li.active > a, .nav-tabs > li.active > a:focus, .nav-tabs > li.active > a:hover {
+    background: #337ab7;
+    color: #fff;
+}
+
+#formConfig {
+    padding-top: 30px;
+}
+
+ul.nav-tabs > li > a {
+    padding: 10px 15px;
+    border: 1px solid #ccc;
+}
+
+#formConfig .panel-title {
+    border-bottom: 1px solid #ccc;
+}
+
+#filterInput {
+    position: relative;
+}
+
+#filterData {
+    display: none;
+    position: absolute;
+    left: 15px;
+    list-style: none;
+    min-width: 200px;
+    top: 35px;
+    z-index: 999;
+    background: #fff;
+    border: 1px solid #428bca;
+    padding: 0;
+    border-radius: 4px;
+    -webkit-transition: width 2s; /* For Safari 3.1 to 6.0 */
+    transition: width 2s;
+}
+
+    #filterData li a {
+        clear: both;
+        color: #333;
+        padding: 5px 10px;
+        white-space: nowrap;
+        font-weight: 400;
+        line-height: 1.42857143;
+        display: block;
+    }
+
+        #filterData li:hover, #filterData li a:hover {
+            background: #428bca;
+            color: #fff;
+        }
+
+    #filterData li {
+        border-bottom: 1px solid #428bca;
+        background: #fff;
+    }
+
+        #filterData li:last-child {
+            border-bottom: 0 none;
+        }
+
+        #filterData li.disable:hover, #filterData li.disable a:hover {
+            cursor: not-allowed;
+        }
+
+.removeFilter.btn-circle, .removeVcoin.btn-circle {
+    position:absolute;
+    top:0;
+    right:5px;
+    width: 20px;
+    height: 20px;
+    padding: 0;
+    text-align: center;
+    vertical-align: middle;
+    margin-top: 5px;
+    border: 1px solid #dedede;
+}
+
+.closefilter {
+    float: left;
+    font-size: 21px;
+    font-weight: 700;
+    line-height: 1;
+    color: #000;
+    text-shadow: 0 1px 0 #fff;
+    filter: alpha(opacity=20);
+    opacity: .5;
+}
+
+#filterData li.disable {
+    background: #E0E0E0;
+    color: #EFEFEF;
+}
+
+    #filterData li.disable a {
+        color: #BDBDBD;
+    }
+
+.hidden {
+    visibility: hidden;
+    opacity: 0;
+    -webkit-transition: .125s linear;
+    -moz-transition: .125s linear;
+    -ms-transition: .125s linear;
+    -o-transition: .125s linear;
+    transition: .125s linear;
+}
+
+.visible {
+    visibility: visible;
+    opacity: 1;
+    -webkit-transition: .125s linear;
+    -moz-transition: .125s linear;
+    -ms-transition: .125s linear;
+    -o-transition: .125s linear;
+    transition: .125s linear;
+}
+
+.AddConditionVcoin {
+    float: left;
+    width: 100%;
+}
+
+button.addRangeVcoin {
+    float: left;
+}
+
+#formConfig label {
+    width: auto;
+}
+
+h3.titleReport {
+    text-align: center;
+    margin: 0;
+    font-family: arial sans-serif;
+    text-transform: uppercase;
+    font-weight: bold;
+    font-size: 18px;
+}
+
+#ReportPartial .alert.alert-info {
+    padding: 10px 0;
+}
+
+#reportGeneralReport .text-info{ width : auto;color:#333333; text-transform:uppercase;font-size:12px;}
+#reportGeneralReport h4{color:#1c6af5; font-weight:bold; text-transform:uppercase;font-size:15px}
+
+#dataTables_wrapper a.dt-button i{
+    color:#1992cf
+}
+#dataTables_wrapper a.dt-button{
+    color:#00245A
+}
+
+
+#table-static_wrapper a.dt-button i{
+    color:#1992cf
+}
+ #table-static_wrapper a.dt-button{
+    color:#00245A
+}
+ .dt-button-collection i{
+    color: #1992cf;
+}
+
+
+#dataTables_wrapper button.dt-button:hover:not(.disabled), div.dt-button:hover:not(.disabled), a.dt-button:hover:not(.disabled){
+    background-image: -webkit-linear-gradient(top, #f9f9f9 0%, #e0e0e0 100%) !important;
+}
+div.dt-button-collection button.dt-button:hover:not(.disabled), div.dt-button-collection  div.dt-button:hover:not(.disabled), div.dt-button-collection  a.dt-button:hover:not(.disabled) {
+    background-image: -webkit-linear-gradient(top, #99E3FF 0%, #0171A7 100%) !important;
+    color:#fff
+}
+div.dt-button-collection button.dt-button:hover:not(.disabled) i, div.dt-button-collection  div.dt-button:hover:not(.disabled) i, div.dt-button-collection  a.dt-button:hover:not(.disabled) i {
+    color:#fff
+}
+#table-static_wrapper button.dt-button:hover:not(.disabled), div.dt-button:hover:not(.disabled), a.dt-button:hover:not(.disabled){
+    background-image: -webkit-linear-gradient(top, #f9f9f9 0%, #e0e0e0 100%) !important;
+}
+

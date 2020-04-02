@@ -1,0 +1,42 @@
+﻿@{W1400.DataAccess.DTO.Article m_Article = ViewBag.Article; }
+<div class="col-lg-8 col-md-8 col-sx-8 col-sm-12">
+    <div class="tieude_noidung_trai">
+        @ViewBag.CateName
+        @Html.Action("MenuArticle", "Partial")
+    </div>
+    @{W1400.Utility.NoMark rw = new W1400.Utility.NoMark();}
+    @if (m_Article != null)
+    {
+        string rewrite = rw.ReWrite(m_Article.Title, m_Article.ArticleID);
+        <div class="noidung_chitiet_tintuc">
+            <div class="box_img_chitiet_tin">
+                @if (!string.IsNullOrEmpty(m_Article.ImageDetail))
+                {
+                    <a style="cursor:pointer;" href="@rewrite">
+                        <center> <img src="@m_Article.ImageDetail" class="img-responsive" alt="@m_Article.Title"></center>
+                    </a>
+                }
+            </div>
+
+            <span style="font-size: 24px;"><a style="cursor:pointer;" href="@rewrite">@m_Article.Title</a></span>
+            <table style="width: 100%;margin-bottom: 11px;">
+                <tr>
+                    <td style="font-style:italic;">@m_Article.CreateDate.ToString("dd/MM/yyyy")</td>
+                    <td style="font-style:italic;float:right"><img src="@System.Configuration.ConfigurationManager.AppSettings["URL_ROOT"]images/icon_view.png" alt="">@m_Article.CountView Xem</td>
+                </tr>
+                </table>
+            @*<span style="text-align:left;">@m_Article.CreateDate.ToString("dd/MM/yyyy")</span> <span style="text-align:right;"><img src="@System.Configuration.ConfigurationManager.AppSettings["URL_ROOT"]images/icon_view.png" alt="">@m_Article.CountView Xem</span></em>*@
+            
+                @*<ul class="list_binhchon_luon">
+                    <li><img src="@System.Configuration.ConfigurationManager.AppSettings["URL_ROOT"]images/icon_view.png" alt="">@m_Article.CountView Xem</li>
+                </ul>*@
+                <p>
+                    @Html.Raw(m_Article.Description)
+                </p>
+</div>
+    }
+    <div class="box_line"></div>
+    <div id="show_dulieu">
+        @Html.Action("ArticleOneCatePartial", "Article", new { UrlRedirect = ViewBag.UrlRedirect })
+    </div>
+</div>

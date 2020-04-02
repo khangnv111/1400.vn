@@ -1,0 +1,103 @@
+﻿@using W1400.DataAccess.DTO
+@{
+    var permission = ((UserFunction)Session[W1400.Utility.SessionsManager.SESSION_PERMISSION]);
+}
+
+
+@if (permission != null || permission.IsGrant || ViewBag.IsAdmin)
+{
+    <!-- /.row -->
+    <div class="row">
+        <div class="col-lg-12">
+            <div class="panel panel-primary">
+                <div class="panel-heading"><span class="glyphicon glyphicon-user"></span>Danh sách Chương trình</div>
+                <div class="panel-body">
+                    <div class="row" id="form">
+                        <div class="col-md-12">
+                            <div class="form-group col-md-3 col-xs-12 col-sm-6">
+                                @*<label class="control-label"><i class="fa fa-flag"></i>Từ khóa</label>*@
+                                <div class="col-lg-11 col-md-8 col-sm-8 col-xs-12">
+                                    <input type="text" id="txtEventName" class="form-control" placeholder="Nhập từ khóa tên chương trình">
+                                </div>
+                            </div>
+
+                            @*<div class="form-group col-md-3 col-xs-12 col-sm-6">
+                                <label class="control-label">Trạng thái</label>
+                                <div class="col-lg-8 col-md-8 col-sm-8 col-xs-12">
+                                    <select class="form-control" id="txtStatus">
+                                        <option value="-1">Tất cả</option>
+                                        <option value="1">Đang đăng</option>
+                                        <option value="0">Đang hạ</option>
+                                    </select>
+                                </div>
+                            </div>*@
+
+
+                            <div class="form-group col-md-3 col-xs-12 col-sm-6">
+                                <label style="width:80px;" class="control-label">Từ Ngày</label>
+                                <div class="col-lg-8 col-md-8 col-sm-8 col-xs-12">
+                                    <input type="text" id="txtFromDate" value="" data-date-format="DD/MM/YYYY" name="opentime" class="form-control" />
+                                </div>
+                            </div>
+
+                            <div class="form-group col-md-3 col-xs-12 col-sm-6">
+                                <label style=" width: 94px;" class="control-label">Đến Ngày</label>
+                                <div class="col-lg-8 col-md-8 col-sm-8 col-xs-12">
+                                    <input type="text" id="txtToDate" value="" data-date-format="DD/MM/YYYY" name="opentime" class="form-control" />
+                                </div>
+                            </div>
+
+                            <div class="form-group col-md-12 submit" style="text-align:center">
+
+                                <button id="btnSearch" onclick="EventCtrl.GetListEvent(1)" class="btn btn-primary"><i class="fa fa-search-plus"></i>Tìm kiếm</button>
+
+                                @if (permission.IsInsert)
+                                {<a href="@Url.Action("EventInertUpdate", new { ID = 0 })" id="btnCreate" class="btn btn-success"><i class="fa fa-user-plus"></i>Thêm mới</a>}
+
+                            </div>
+                        </div>
+
+                    </div>
+                    <div class="table-responsive">
+                        <div id="dgrid" class="dataTables_wrapper form-inline" role="grid">
+                            <div id="list_data">
+                                @Html.Action("EventGetList", "Manager")
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <script type="text/javascript">
+        $(document).ready(function () {
+            $('#txtFromDate').datetimepicker({
+                format: 'DD/MM/YYYY',
+                defaultDate:'@ViewBag.FromDate'
+            });
+
+            $('#txtToDate').datetimepicker({
+                format: 'DD/MM/YYYY',
+                defaultDate:'@ViewBag.ToDate'
+            });
+        });
+
+        $('#txtEventName, txtFromDate, txtToDate').keypress(function (e) {
+            if (e.which == 13) {
+                //Do something
+                EventCtrl.GetListEvent(1)
+            }
+        });
+
+    </script>
+
+
+}
+else
+{
+    <h2 style="color:red">ErrorPermission</h2>
+
+    <h4>Bạn không có quyền truy cập . Xin hãy liên hệ Admin để được cấp quyền vào hệ thống CMS</h4>
+
+    <a href="@Html.Raw(ViewBag.UrlLogin)?act=out" style="color:#005bff; font-size:13px;text-decoration:underline">Logout</a>
+}

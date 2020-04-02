@@ -1,0 +1,58 @@
+﻿@{
+    ViewBag.Title = "Home Page";
+}
+
+<div class="col-lg-8 col-md-8 col-sx-8 col-sm-12">
+    
+    @Html.Action("ArticlePartial", "Home")
+
+
+    <div class="tieude_noidung_trai">
+        video/ảnh
+        <ul class="hidden-xs">
+            <li><a href="javascript:;" onclick="videoImgIndex(9)">tất cả</a></li>
+            <li><a href="javascript:;" onclick="videoImgIndex(11)">video</a></li>
+            <li><a href="javascript:;" onclick="videoImgIndex(10)">album ảnh</a></li>
+        </ul>
+    </div>
+    <div class="box_noidung_trai">
+        <div class="row list-img-index">
+            @Html.Action("VideoPartial", "Home")
+
+        </div>
+    </div>
+    <ul class="list_xemthem">
+        <li><a id="link_videoImg" href="@System.Configuration.ConfigurationManager.AppSettings["URL_ROOT"]video-anh">Xem thêm</a></li>
+    </ul>
+    
+    
+</div>
+<script>
+    function videoImgIndex(a) {
+        var urlR = appPath + "video-anh";
+        if (a == 11)
+        {
+            urlR = appPath + "video";
+        }
+        else if (a == 10) {
+            urlR = appPath + "album-anh";
+        }
+        $.ajax({
+            type: "GET",
+            url: appPath + "Home/VideoPartial",
+            cache: false,
+            data: {
+                menuId: a,
+            },
+            dataType: "html",
+            success: function (data) {
+                $(".list-img-index").html(data);
+
+                $("#link_videoImg").prop("href", urlR);
+            },
+            error: function () {
+                console.log("Hệ thống bận vui lòng quay lại sau");
+            }
+        });
+    }
+</script>

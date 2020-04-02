@@ -1,0 +1,46 @@
+﻿@model List<W1400.DataAccess.DTO.ProgramReport>
+@if (Model != null && Model.Count>0)
+{ 
+<table class="table">
+    <tbody>
+        <tr>
+            <th>Mạng viễn thông</th>
+            <th>Đầu số</th>
+            <th>Cú pháp</th>
+            <th>Giá trị SMS (vnđ)</th>
+            <th>Số lượng tin nhắn SMS</th>
+            <th>Số tiền vận động (vnđ)</th>
+        </tr>
+        @{
+        long TotalSMS_ = 0;
+        ulong TotalMoney_ = 0;
+        ulong TotalMoney = 0;
+        }
+            @for (int i = 0; i < Model.Count; i++)
+            {
+                TotalMoney = (ulong)Model[i].Total_SMS * (ulong)Model[i].Price;
+                TotalSMS_ = TotalSMS_ + Model[i].Total_SMS;
+                TotalMoney_ = TotalMoney_ + TotalMoney;
+                <tr>
+                    <td>@Model[i].SMSHost</td>
+                    <td>@Model[i].ServiceID</td>
+                    <td>@Model[i].CommandCode</td>
+                    <td>@Model[i].Price</td>
+                    <td>@string.Format("{0: ##,###}", Model[i].Total_SMS).Replace(",", ".")</td>
+                    <td>@string.Format("{0: ##,###}", TotalMoney).Replace(",", ".")</td>
+                </tr>
+            }
+        <tr>
+            <th colspan="4">Tổng số</th>
+            <th>@string.Format("{0: ##,###}", TotalSMS_).Replace(",", ".")</th>
+            <th>@string.Format("{0: ##,###}", TotalMoney_).Replace(",", ".")</th>
+        </tr>
+    </tbody>
+</table>
+}
+else
+{
+    <script type="text/javascript">
+        bootbox.alert("Không có dữ liệu nào được tìm thấy");
+    </script>    
+}

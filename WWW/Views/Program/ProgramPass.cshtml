@@ -1,0 +1,56 @@
+﻿@{
+    Layout = "~/Views/Shared/_LayoutProgram.cshtml";
+}
+<div class="col-lg-8 col-md-8 col-sx-8 col-sm-12">
+    <div class="tieude_noidung_trai">
+        chương trình nhắn tin đã thực hiện
+    </div>
+    <div class="box_thongtin_timkiem_chitiet border_none">
+        <ul>
+            <li>Chọn năm cần tìm</li>
+            <li>
+                <select id="drlYear" >
+                    <option value="2023">2023</option>
+                    <option value="2022">2022</option>
+                    <option value="2021">2021</option>
+                    <option value="2020">2020</option>
+                    <option value="2019">2019</option>
+                    <option value="2018">2018</option>
+                    <option value="2017" selected="selected">2017</option>
+                    <option value="2016">2016</option>
+                    <option value="2015">2015</option>
+                    <option value="2014">2014</option>
+                    <option value="2013">2013</option>
+                    <option value="2012">2012</option>
+                    <option value="2011">2011</option>
+                    <option value="2010">2010</option>
+                    <option value="2009">2009</option>
+                    <option value="2008">2008</option>
+                    <option value="2007">2007</option>
+                </select>
+            </li>
+            <li><a class="btn_timkiem" onclick="Year_onchange()" href="javascript:;">tìm kiếm</a></li>
+        </ul>
+        @{
+            int Year_ = Convert.ToInt32(DateTime.Now.ToString("yyyy"));
+        }
+        <div class="table-responsive" id="ProgramPassPartial">
+            @Html.Action("ProgramPassPartial", "Program", new { Year = Year_ })
+        </div>
+    </div>
+</div>
+<script type="text/javascript">
+    function Year_onchange() {
+        var Year = $("#drlYear").val();
+        $.ajax({
+            type: "POST",
+            url: '@Url.Action("ProgramPassPartial", "Program")',
+            data: {
+                Year: Year
+            },
+            success: function (data) {
+                $("#ProgramPassPartial").html(data);
+            },
+        });
+    }
+</script>

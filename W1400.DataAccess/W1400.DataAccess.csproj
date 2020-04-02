@@ -1,0 +1,111 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="12.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProjectGuid>{EF0A9994-E76F-42DB-AB4A-18DDB2DD04C3}</ProjectGuid>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>W1400.DataAccess</RootNamespace>
+    <AssemblyName>W1400.DataAccess</AssemblyName>
+    <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
+    <FileAlignment>512</FileAlignment>
+    <SccProjectName>SAK</SccProjectName>
+    <SccLocalPath>SAK</SccLocalPath>
+    <SccAuxPath>SAK</SccAuxPath>
+    <SccProvider>SAK</SccProvider>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="EBank.DBHelpers, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\..\DLL\DLL\EBank.DBHelpers.dll</HintPath>
+    </Reference>
+    <Reference Include="NLog, Version=2.0.0.0, Culture=neutral, PublicKeyToken=5120e14c03d0593c, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\..\DLL\DLL\NLog.dll</HintPath>
+    </Reference>
+    <Reference Include="PaygateRSALib, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\cf_GiauDau.Utility\bin\Debug\PaygateRSALib.dll</HintPath>
+    </Reference>
+    <Reference Include="System" />
+    <Reference Include="System.Core" />
+    <Reference Include="System.Web" />
+    <Reference Include="System.Xml.Linq" />
+    <Reference Include="System.Data.DataSetExtensions" />
+    <Reference Include="Microsoft.CSharp" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="DAOImpl\ArticleDAOImpl.cs" />
+    <Compile Include="DAOImpl\CmsDAOImpI.cs" />
+    <Compile Include="DAOImpl\ErrorLogDAOImpl.cs" />
+    <Compile Include="DAOImpl\FunctionsDAOImpl.cs" />
+    <Compile Include="DAOImpl\MessageDAOImpl.cs" />
+    <Compile Include="DAOImpl\ProgramDAOImpl.cs" />
+    <Compile Include="DAOImpl\SuggestDAOImpl.cs" />
+    <Compile Include="DAOImpl\UserRoleDAOImpl.cs" />
+    <Compile Include="DAOImpl\UsersDAOImpl.cs" />
+    <Compile Include="DAOImpl\UsersLogDAOImpl.cs" />
+    <Compile Include="DAO\ArticleDAO.cs" />
+    <Compile Include="DAO\CmsDAO.cs" />
+    <Compile Include="DAO\IErrorLogDAO.cs" />
+    <Compile Include="DAO\IFucntionsDAO.cs" />
+    <Compile Include="DAO\IUserRoleDAO.cs" />
+    <Compile Include="DAO\IUsersDAO.cs" />
+    <Compile Include="DAO\IUsersLogDAO.cs" />
+    <Compile Include="DAO\MessageDAO.cs" />
+    <Compile Include="DAO\ProgramDAO.cs" />
+    <Compile Include="DAO\SuggestDAO.cs" />
+    <Compile Include="DTO\AccessTokenInfo.cs" />
+    <Compile Include="DTO\AllClass.cs" />
+    <Compile Include="DTO\Article.cs" />
+    <Compile Include="DTO\ErrorLog.cs" />
+    <Compile Include="DTO\Functions.cs" />
+    <Compile Include="DTO\DBMessage.cs" />
+    <Compile Include="DTO\Program.cs" />
+    <Compile Include="DTO\Users.cs" />
+    <Compile Include="DTO\UsersLog.cs" />
+    <Compile Include="Factory\AbstractDAOFactory.cs" />
+    <Compile Include="Factory\ADODAOFactory.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="DLL\EBank.DBHelpers.dll" />
+    <Content Include="DLL\NLog.dll" />
+    <Content Include="DLL\PaygateRSALib.dll" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\W1400.Utility\W1400.Utility.csproj">
+      <Project>{060504aa-790c-4e2c-a75c-927fa4b4a37d}</Project>
+      <Name>W1400.Utility</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target>
+  -->
+</Project>

@@ -1,0 +1,171 @@
+﻿@using W1400.DataAccess.DTO
+@model List<Functions>
+
+@if (ViewBag.IsAdmin)
+{
+    <div class="row">
+        <div class="col-md-12">
+            <div class="panel-group col-md-12 col-sm-12 col-xs-12" id="steps" style="float:left">
+                <div class="panel panel-info ">
+                    <div class="panel-heading">
+                        <h4 class="panel-title"><i class="fa fa-wrench" style="margin-right:7px"></i>Sắp xếp chức năng</h4>
+                    </div>
+                    @*<menu id="nestable-menu" class="submit">
+                            <button type="button" class="btn-primary" data-action="expand-all">Mở Rộng</button>
+                            <button type="button" class="btn-warning" data-action="collapse-all">Thu Hẹp</button>
+                        </menu>*@
+                    <div class="panel-body">
+                        <div class="messager-body">
+                            <div class="alert alert-success display-hide alert-dismissable">
+                                <button type="button" class="close" data-close="alert" aria-hidden="true">×</button>
+                                <span class="glyphicon glyphicon-ok"></span>
+                                <label>Đã lưu dữ liệu thành công !!!</label>
+                            </div>
+                            <div class="alert alert-danger display-hide alert-dismissable">
+                                <button type="button" class="close" data-close="alert" aria-hidden="true">×</button>
+                                <span class="glyphicon glyphicon-warning-sign"></span>
+                                <label>Có một vài lỗi trong khung nhập liệu dưới đây ! kiểm tra lại</label>
+                            </div>
+                        </div>
+
+                        <div class="cf nestable-lists">
+                            <div class="dd" id="nestable">
+                                <ol class="dd-list">
+                                    @if (Model != null && Model.Count > 0)
+                                    {
+                                        var fathers = Model.FindAll(fa => fa.ParentID == 0);
+                                        fathers.Sort((f1, f2) => f1.Order.CompareTo(f2.Order));
+
+                                        if (fathers != null && fathers.Count > 0)
+                                        {
+                                            foreach (var far in fathers)
+                                            {
+                                                @Html.Raw(CMS.Controllers.HomeController.GetChildFunction(far.FunctionID, Model))
+                                            }
+                                        }
+                                    }
+                                </ol>
+                            </div>
+
+                            <textarea id="nestable-output" hidden></textarea>
+                            <div class="form-group submit">
+                                <button id="OrderFunction" class="btn btn-success">Lưu lại</button>
+                                <button id="btnBack" class="btn btn-default" onclick="ListFunction()">Quay lại</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+    $(document).ready(function () {
+        var functionOrder = [];
+        $("#OrderFunction").click(function () {
+            functionOrder = [];
+            var order = 0;
+            var dataParse = $.parseJSON($("#nestable-output").val());
+            $.each(dataParse, function (key, val) {
+                //Push dữ liệu vào params[]
+                functionOrder.push({
+                    'id': val.id,
+                    'fatherID': 0,
+                    'order': order
+                });
+                order++;
+                var children_number = 0;
+                if (val.children != null && val.children != undefined)
+                    children_number = val.children.length;
+                //// nếu danh sách children của function > 0, gọi đệ qui
+                if (children_number > 0) {
+                    heriachy(val.id, val.children);
+                }
+            });
+            var param = {
+                'listOrder': functionOrder
+            }
+            //console.log(functionOrder);
+            Utils.Loading();
+            $.ajax({
+                type: 'POST',
+                url: UrlRoot + "Home/SaveOrderFunction",
+                data: JSON.stringify(param),
+                dataType: 'json',
+                contentType: 'application/json',
+                async: true,
+                success: function (data) {
+                    Utils.UnLoading();
+                    if (data.ResponseCode >= 0) {
+                        $("html,body").animate({ scrollTop: $('#TemplateContent').offset().top }, 'fast');
+                        $(".alert-success").show("slow");
+                        $(".alert-danger").hide("slow");
+                        setTimeout(function () { $(".alert-success").hide("slow"); ListFunction(); }, 2000);
+                    }
+                    else {
+                        $("html,body").animate({ scrollTop: $('#TemplateContent').offset().top }, 'fast');
+                        $("#ErrorMessage").text(data.Description);
+                        $(".alert-danger").show("slow");
+                        $(".alert-success").hide("slow");
+                        setTimeout(function () { $(".alert-danger").hide("slow"); }, 2000);
+                    }
+                }
+            });
+        });
+        var updateOutput = function (e) {
+            var list = e.length ? e : $(e.target),
+                output = list.data('output');
+            if (window.JSON) {
+                output.val(window.JSON.stringify(list.nestable('serialize')));//, null, 2));
+            } else {
+                output.val('JSON browser support required for this demo.');
+            }
+        };
+
+        // activate Nestable for list 1
+        $('#nestable').nestable({
+            group: 1,
+            expandBtnHTML: '<button data-action="expand"><span class="glyphicon glyphicon-plus"></span></button>',
+            collapseBtnHTML: '<button data-action="collapse"><span class="glyphicon glyphicon-minus"></span></button>'
+        })
+        .on('change', updateOutput);
+
+        //$('.dd').nestable('collapseAll');
+        // output initial serialised data
+        updateOutput($('#nestable').data('output', $('#nestable-output')));
+
+        $('#nestable-menu').on('click', function (e) {
+            var target = $(e.target),
+                action = target.data('action');
+            if (action === 'expand-all') {
+                $('.dd').nestable('expandAll');
+            }
+            if (action === 'collapse-all') {
+                $('.dd').nestable('collapseAll');
+            }
+        });
+
+        function heriachy(fatherID, root) {
+            var order = 0;
+            $.each(root, function (key, val) {
+                functionOrder.push({
+                    'id': val.id,
+                    'fatherID': fatherID,
+                    'order': order
+                });
+                order++;
+                // nếu danh sách children của function > 0, gọi đệ qui
+                var children_number = 0;
+                if (val.children != null && val.children != undefined)
+                    children_number = val.children.length;
+                if (children_number > 0)
+                    heriachy(val.id, val.children);
+            });
+        };
+    });
+    </script>
+}
+else
+{
+
+}

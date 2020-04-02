@@ -1,0 +1,281 @@
+﻿@using W1400.DataAccess.DTO
+@model CMS.Models.ModelFunctionDetail
+
+@{var permission = ((UserFunction)Session[W1400.Utility.SessionsManager.SESSION_PERMISSION]);}
+
+@if (ViewBag.IsAdmin && permission != null && permission.FunctionID == (int)W1400.Utility.Enums.FunctionId.Function && ((Model.FunctionDetail.FunctionID == 0 && permission.IsInsert) || (permission.IsUpdate && Model.FunctionDetail.FunctionID > 0)))
+{
+    <div class="well">
+        <span class="label label-danger">
+            Chú ý!
+        </span>
+        <span>
+            Hãy chắc chắn nhập vào đầy đủ thông tin tại các mục bắt buộc đánh dấu (*)
+        </span>
+    </div>
+    <div class="row">
+        <div class="col-md-12">
+            <div class="panel panel-primary">
+                <div class="panel-heading">
+                    <i class="fa fa-cogs"></i>Cập Nhật Chức Năng
+                </div>
+                <form id="defaultForm" method="post" class="form-horizontal">
+                    <div class="panel-group" id="steps">
+                        <div class="messager-body">
+                            <div class="alert alert-success display-hide alert-dismissable">
+                                <button type="button" class="close" data-close="alert" aria-hidden="true">×</button>
+                                <span class="glyphicon glyphicon-ok"></span>
+                                <label id="SuccessMessage">Đã lưu dữ liệu thành công !!!</label>
+                            </div>
+                            <div class="alert alert-danger display-hide alert-dismissable">
+                                <button type="button" class="close" data-close="alert" aria-hidden="true">×</button>
+                                <span class="glyphicon glyphicon-warning-sign"></span>
+                                <label id="ErrorMessage">Có một vài lỗi trong khung nhập liệu dưới đây ! kiểm tra lại</label>
+                            </div>
+                        </div>
+                        <div class="panel panel-info">
+                            <div class="panel-heading">
+                                <h4 class="panel-title"><i class="fa fa-wrench" style="margin-right:7px"></i>Thông Tin Chức Năng</h4>
+                            </div>
+                            <div class="panel-body">
+                                <!-- dành cho UpdateFunction -->
+                                <div class="form-group">
+                                    <label class="control-label col-md-5">
+                                        Tên chức năng :<span class="required">*</span>
+                                    </label>
+                                    <div class="col-md-4">
+                                        <input id="txtFunctionName" maxlength="50" name="FunctionName" class="form-control" value="@Model.FunctionDetail.FunctionName" placeholder="Nhập tên chức năng" />
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label class="control-label col-md-5">
+                                        ActionName Url :
+                                    </label>
+                                    <div class="col-md-4">
+                                        <input id="txtActionName" maxlength="50" name="ActionName" class="form-control" value="@Model.FunctionDetail.ActionName" placeholder="Nhập ActionName" />
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label class="control-label col-md-5">
+                                        Chọn chức năng cha :
+                                    </label>
+                                    <div class="col-md-4">
+                                        <select class="form-control" id="ddlFather" name="FatherFunction">
+                                            <option value="0">Chọn chức năng</option>
+                                            @if (Model.ListFunction != null && Model.ListFunction.Count > 0)
+                                            {
+                                                foreach (var obj in Model.ListFunction)
+                                                {
+                                                    if (obj.FunctionID == Model.FunctionDetail.ParentID)
+                                                    {
+                                                        <option value="@obj.FunctionID" selected="selected">@obj.FunctionName</option>
+                                                    }
+                                                    else
+                                                    {
+                                                        <option value="@obj.FunctionID">@obj.FunctionName</option>
+                                                    }
+                                                }
+                                            }
+                                        </select>
+                                    </div>
+                                </div>
+
+                                <div class="form-group">
+                                    <label class="control-label col-md-5" for="txtFunctionUrl">
+                                        Đường Dẫn :<span class="required">*</span>
+                                    </label>
+                                    <div class="col-md-4">
+                                        <input type="text" id="txtFunctionUrl" maxlength="250" name="ControlUrl" class="form-control" placeholder="Enter Function Url" value="@Model.FunctionDetail.Url" />
+                                    </div>
+                                </div>
+
+                                <div class="form-group">
+                                    <label class="control-label col-md-5" for="txtIconId">
+                                        Mã Icon :<span class="required">*</span>
+                                    </label>
+                                    <div class="col-md-4">
+                                        <input type="text" id="txtIconId" maxlength="250" name="txtIconId" class="form-control" placeholder="nhập mã icon" value="@Model.FunctionDetail.CssIcon" />
+                                    </div>
+                                </div>
+
+                                <div class="form-group">
+                                    <label class="control-label col-md-5" for="cbxIsActive">
+                                        Trạng thái hoạt động :
+                                    </label>
+                                    <div class="col-md-4">
+                                        <div class="checkbox">
+                                            @if (Model.FunctionDetail.IsActive == true)
+                                            {<input type="checkbox" id="cbxIsActive" checked="checked" />}
+                                            else
+                                            {<input type="checkbox" id="cbxIsActive" />}
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label class="control-label col-md-5" for="cbxIsDisplay">
+                                        Trạng thái hiển thị :
+                                    </label>
+                                    <div class="col-md-4">
+                                        <div class="checkbox">
+                                            @if (Model.FunctionDetail.IsDisplay == true)
+                                            {<input type="checkbox" id="cbxIsDisplay" checked="checked" />}
+                                            else
+                                            {<input type="checkbox" id="cbxIsDisplay" />}
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="panel-footer">
+                                <div class="form-group submit">
+                                    @if ((Model.FunctionDetail.FunctionID == 0 && permission.IsInsert) || (Model.FunctionDetail.FunctionID > 0 && permission.IsUpdate))
+                                    {
+                                        <button type="submit" class="btn btn-primary" id="btnSave"><i class="fa fa-save"></i>Lưu lại</button>
+                                    }
+                                    <button type="button" class="btn btn-success" id="btnReset"><i class="fa fa-refresh"></i>Làm mới</button>
+                                    @*@if (Model.FunctionDetail.FunctionID > 0 && permission.IsUpdate)
+                                        {
+                                            <button type="button" class="btn btn-warning" id="btnArrange"><i class="fa fa-sort-amount-asc"></i>Sắp xếp</button>
+                                        }*@
+
+                                    <button type="button" class="btn btn-default" id="btnBack" onclick="ListFunction();"><i class="fa fa-backward"></i>Back</button>
+                                </div>
+                            </div>
+                        </div>
+
+                    </div>
+
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <script type="text/javascript">
+        $(document).ready(function () {
+            //debugger;
+            $("button.close").click(function () {
+                $(this).parent().css("display", "none");
+            });
+            $('#defaultForm').bootstrapValidator({
+                message: 'This value is not valid',
+                excluded: ':disabled',
+                //live: 'submitted',
+                feedbackIcons: {
+                    valid: 'glyphicon glyphicon-ok',
+                    invalid: 'glyphicon glyphicon-remove',
+                    validating: 'glyphicon glyphicon-refresh'
+                },
+                fields: {
+                    FunctionName: {
+
+                        message: 'Bạn chưa nhập tên chức năng.',
+                        validators: {
+                            notEmpty: {
+                                message: 'Bạn chưa nhập tên chức năng'
+                            },
+                            stringLength: {
+                                min: 6,
+                                max: 30,
+                                message: 'Tên chức năng dài từ 6 đến 30 ký tự'
+                            },
+                            regexp: {
+                                regexp: /^[a-zA-Z0-9áàảãạăắằẳẵặâấầẩẫậđéèẻẽẹêếềểễệíìỉĩịóòỏõọôốồổỗộơớờởỡợúùủũụưứừửữựýỳỷỹỵÁÀẢÃẠĂẮẰẲẴẶÂẤẦẨẪẬĐÉÈẺẼẸÊẾỀỂỄỆÍÌỈĨỊÓÒỎÕỌÔỐỒỔỖỘƠỚỜỞỠỢÚÙỦŨỤƯỨỪỬỮỰÝỲỶỸỴ\.\-\_{}()\[\]\s]+$/,
+                                message: 'Tên chức năng không được nhập các ký tự đặc biệt'
+                            },
+                        }
+                    },
+                    ActionName:{
+                        stringLength: {
+                            min: 3,
+                            max: 50,
+                            message: 'Tên Action dài từ 3 đến 50 ký tự'
+                        },
+                        regexp: {
+                            regexp: /^[a-zA-Z0-9]+$/,
+                            message: 'Tên Action không được nhập các ký tự đặc biệt'
+                        },
+                    },
+                    FatherFunction: {
+                        validators: {
+                            notEmpty: {
+                                message: 'Bạn chưa chọn Chức năng cha'
+                            }
+                        }
+                    }
+                }
+            })
+            .on('error.form.bv', function (e) {
+                // Active the panel element containing the first invalid element
+                e.preventDefault();
+                var $form = $(e.target),
+                validator = $form.data('bootstrapValidator');
+                $invalidField = validator.getInvalidFields().eq(0),
+                $(".alert-danger").css("display", "block");
+                $(".close").click(function () {
+                    $(".alert-danger").css("display", "none");
+                    $(".alert-success").css("display", "none");
+                });
+            })
+            .on('success.form.bv', function (e) {
+                // Prevent submit form
+                e.preventDefault();
+                var $form = $(e.target),
+                    validator = $form.data('bootstrapValidator');
+                SaveData();
+                $(".close").click(function () {
+                    $(".alert-success").css("display", "none");
+                });
+            });
+
+
+            $("#btnReset").click(function () {
+                $('#defaultForm').data('bootstrapValidator').resetForm(true);
+                $(".alert-danger").css("display", "none");
+                $(".alert-success").css("display", "none");
+            });
+            //Save Data
+            function SaveData() {
+                var param = {
+                    FunctionID: '@Model.FunctionDetail.FunctionID',
+                    FunctionName: $("#txtFunctionName").val(),
+                    ActionName: $("#txtActionName").val(),
+                    ParentID: $("#ddlFather").val(),
+                    Url: $("#txtFunctionUrl").val(),
+                    IsActive: $("#cbxIsActive").is(":checked") ? true : false,
+                    IsDisplay: $("#cbxIsDisplay").is(":checked") ? true : false,
+                    CssIcon: $("#txtIconId").val(),
+                    IsReport: $("#cbxIsReport").is(":checked") ? true : false
+                };
+                Utils.Loading();
+                $.ajax({
+                    type: 'POST',
+                    url: UrlRoot + "Home/SaveDataFunction",
+                    data: param,
+                    async: true,
+                    success: function (ReturnData) {
+                        Utils.UnLoading();
+                        if (ReturnData.ResponseCode >= 0) {
+                            $("html,body").animate({ scrollTop: $('#TemplateContent').offset().top }, 'fast');
+                            $(".alert-success").show("slow");
+                            $(".alert-danger").hide("slow");
+                            setTimeout(function () { $(".alert-success").hide("slow"); ListFunction(); }, 2000);
+                        }
+                        else {
+                            $("html,body").animate({ scrollTop: $('#TemplateContent').offset().top }, 'fast');
+                            $("#ErrorMessage").text(ReturnData.Description);
+                            $(".alert-danger").show("slow");
+                            $(".alert-success").hide("slow");
+                            setTimeout(function () { $(".alert-danger").hide("slow"); }, 2000);
+                        }
+                    }
+                });
+            };
+        });
+    </script>
+}
+else
+{
+    <h2 style="color:red">ErrorPermission</h2>
+
+    <h4>Bạn không có quyền truy cập . Xin hãy liên hệ Admin để được cấp quyền vào hệ thống CMS</h4>
+
+}

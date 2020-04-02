@@ -1,0 +1,166 @@
+﻿@model W1400.DataAccess.DTO.ProgramDetail
+@if(Model !=null)
+{
+<div class="col-lg-8 col-md-8 col-sx-8 col-sm-12">
+    <div class="tieude_noidung_trai">
+        @Model.EventName
+    </div>
+    @{
+        int year = Convert.ToInt32(Model.StartTime.ToString("yyyy")) ;
+    int Total = 0;
+    var List = W1400.DataAccess.Factory.AbstractDAOFactory.Instance().CreateProgramDAO().SP_Event_OldGetList_Web(Model.EventID, "", -1, year, 1, 1, out Total);
+    string MucDich = "";
+    string ChuTri = "";
+    string PhoiHop = "";
+    string VanBan = "";
+    string File = "";
+    string DoanhThu = "";
+    if (List != null && List.Count > 0)
+    {
+        MucDich = List[0].Porpose;
+        ChuTri = List[0].HostUnit;
+        PhoiHop = List[0].CoordUnit;
+        VanBan = List[0].LegalDoc;
+        File = List[0].LegalFile;
+        DoanhThu = List[0].Revenue;
+    }
+    }
+    <div class="noidung_chitiet_tintuc">
+        <table class="bang_noidung1">
+            <tbody>
+                <tr>
+                    <td>Ngày bắt đầu</td>
+                    <td>@Model.StartTime.ToString("dd/MM/yyyy")</td>
+                </tr>
+                <tr>
+                    <td>Ngày kết thúc</td>
+                    <td>@Model.EndTime.ToString("dd/MM/yyyy")</td>
+                </tr>
+                <tr>
+                    <td>Mục đích triển khai:</td>
+                    <td>
+                        @Html.Raw(MucDich)
+                        <table class="bang_noidung2">
+                            <tbody>
+                                <tr>
+                                    <td>Đầu số</td>
+                                    <td>Cú pháp</td>
+                                    <td>Giá trị tin nhắn (VNĐ)</td>
+                                </tr>
+                                @if (ViewBag.List != null && ViewBag.List.Count > 0)
+                                {
+                                    for (int m = 0; m < ViewBag.List.Count; m++)
+                                    {
+                                        <tr>
+                                            <td><b>@ViewBag.List[m].ServiceID</b></td>
+                                            <td><b>@ViewBag.List[m].Commandcode</b></td>
+                                            <td><b>@string.Format("{0: ##,###}", ViewBag.List[m].Price).Replace(",", ".")</b></td>
+                                        </tr>
+                                    }
+                                }
+                            </tbody>
+                        </table>
+                    </td>
+                </tr>
+                <tr>
+                    <td>Đơn vị chủ trì</td>
+                    <td>@ChuTri</td>
+                </tr>
+                <tr>
+                    <td>Đơn vị phối hợp:</td>
+                    <td>@PhoiHop</td>
+                </tr>
+                <tr>
+                    <td>Văn bản pháp lý:</td>
+                    @if (!string.IsNullOrEmpty(VanBan))
+                    {
+                        <td>@Html.Raw(VanBan)</td>
+                    }
+                    else
+                    {
+                        <td><a href="@File">Tải file</a></td>
+                    }
+                </tr>
+                <tr>
+                    <td>Doanh thu dự kiến:</td>
+                    <td>@string.Format("{0: ##,###}", DoanhThu).Replace(",", ".")</td>
+                </tr>
+                <tr>
+                    <td>Chương trình:</td>
+                    <td>Đã thực hiện</td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+    <div class="box_thongtin_timkiem_chitiet">
+        <b style="font-size: 16px;color: #383838;font-family: 'MYRIADPRO-BOLD';">Thông tin tìm kiếm</b>
+        <ul>
+            <li>Thời gian:&nbsp;&nbsp;Từ</li>
+            <li>
+                <input type="text" id="datepickerFrom" value="@Model.StartTime.ToString("dd/MM/yyyy")" name="FromDate" placeholder="Từ ngày" />
+            </li>
+            <li style="margin-left: 30px;" class="aaa">đến</li>
+            <li>
+                <input type="text" id="datepickerTo" value="@Model.EndTime.ToString("dd/MM/yyyy")" name="ToDate" placeholder="Tới ngày" />
+            </li>
+            <li>
+                <a class="btn_timkiem" href="javascript:;" onclick="ReportProgram('@Model.EventID')">tìm kiếm</a>
+            </li>
+        </ul>
+        <div class="table-responsive" id="DetailPass">
+
+        </div>
+        <h5><a target="_blank" href="@System.Configuration.ConfigurationManager.AppSettings["URL_ROOT"]chuong-trinh-da-thuc-hien">kết quả những chương trình khác</a></h5>
+    </div>
+</div>
+}
+<script type="text/javascript">
+    $(document).ready(function () {
+        ReportProgram(@ViewBag.Id);
+    });
+    function ReportProgram(id) {
+        var FromDate = $("#datepickerFrom").val();
+        if (FromDate == '')
+        {
+            bootbox.alert("Vui lòng nhập ngày bắt đầu");
+            return;
+        }
+        var ToDate = $("#datepickerTo").val();
+        if (ToDate == '') {
+            bootbox.alert("Vui lòng nhập ngày kết thúc");
+            return;
+        }
+        $.ajax({
+            type: "POST",
+            url: '@Url.Action("DetailPartial", "Program")',
+            data: {
+                EventID: id,
+                FromDate: FromDate,
+                ToDate: ToDate
+            },
+            dataType: "html",
+            success: function (data) {
+                $("#DetailPass").html(data);
+            },
+        });
+    }
+    $(function () {
+        $("#datepickerFrom").datepicker({
+            dateFormat: 'dd/mm/yy',
+            changeMonth: true,
+            changeYear: true,
+            //yearRange: '1998:2001',
+            //defaultDate: '01/01/1998'
+        });
+    });
+    $(function () {
+        $("#datepickerTo").datepicker({
+            dateFormat: 'dd/mm/yy',
+            changeMonth: true,
+            changeYear: true,
+            //yearRange: '1998:2001',
+            //defaultDate: '01/01/1998'
+        });
+    });
+
+</script>

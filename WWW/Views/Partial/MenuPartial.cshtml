@@ -1,0 +1,46 @@
+﻿@model List<W1400.DataAccess.DTO.Menu>
+<ul class="nav navbar-nav">
+    <li><a style="line-height: 24px;" href="@System.Configuration.ConfigurationManager.AppSettings["URL_ROOT"]"><img style=" margin-top: -10px;" class="hidden-md hidden-sm hidden-xs" src="@System.Configuration.ConfigurationManager.AppSettings["URL_ROOT"]images/icon_home.png" alt="">
+        <span>Trang chủ</span></a></li>
+    @{
+        if (Model != null && Model.Count > 0)
+        {
+            for (int i = 0; i < Model.Count; i++)
+            {
+                if (Model[i].FatherID == 0)
+                {
+                    if (Model[i].MenuID == 1 || Model[i].MenuID == 5 || Model[i].MenuID == 9 || Model[i].MenuID == 12)
+                    {
+                        <li class="dropdown">
+                            <a href="@System.Configuration.ConfigurationManager.AppSettings["URL_ROOT"]@Model[i].UrlRedirect" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">@Model[i].MenuName <span class="caret"></span></a>
+                            <ul class="dropdown-menu">
+                                @{
+                                int Total = 0;
+                                var lst = W1400.DataAccess.Factory.AbstractDAOFactory.Instance().CreateArticleDAO().SP_Menu_GetList(Model[i].MenuID.ToString(), 1, -1, out Total);
+                                }
+                                @if (lst != null && lst.Count > 0)
+                                {
+                                    for (int k = 0; k < lst.Count; k++)
+                                    {
+                                        if (lst[k].FatherID  != 0)
+                                        {
+                                            <li><a href="@System.Configuration.ConfigurationManager.AppSettings["URL_ROOT"]@lst[k].UrlRedirect">@lst[k].MenuName</a></li>
+                                        }
+                                    }
+                                }
+                            </ul>
+                        </li>
+                    }
+                    else
+                    {
+                    <li>
+                        <a href="@System.Configuration.ConfigurationManager.AppSettings["URL_ROOT"]@Model[i].UrlRedirect">
+                            @Model[i].MenuName
+                        </a>
+                    </li>
+                    }
+                }
+            }
+        }
+    }    
+</ul>

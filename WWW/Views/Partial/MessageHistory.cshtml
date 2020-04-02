@@ -1,0 +1,53 @@
+﻿
+<div class="tieude_noidung" id="tinnhan">tra cứu lịch sử nhắn tin</div>
+<div class="box_noidung_tracuu">
+    <ul>
+        <li>Số điện thoại: </li>
+        <li><div class="box_all_input_btn"><input type="text" id="txtKeyword" maxlength="15" ><a href="javascript:;" onclick="    LoadMessage(1)"></a></div></li>
+    </ul>
+    <p style="text-align:justify;"><em>Chú ý:</em>Thuê bao nhắn tin ủng hộ chỉ có thể tra cứu các tin nhắn đến đầu số 140x trong vòng 30 ngày tính từ ngày hiện tại trở về trước. Nếu cần thêm thông tin chủ thuê bao vui lòng liên hệ 19001530</p>
+</div>
+<div class="box_ketqua_tracuu">
+   
+</div>
+<script type="text/javascript">    
+    $("input#txtKeyword").on('keyup', function (e) {
+        if (e.keyCode == 13) {
+            LoadMessage(1);
+        }
+    });
+    //$("#txtKeyword").keydown(function (event) {
+    //    // Allow only backspace and delete
+    //    if (event.keyCode == 46 || event.keyCode == 8) {
+    //        // let it happen, don't do anything
+    //    }
+    //    else {
+    //        // Ensure that it is a number and stop the keypress
+    //        if (event.keyCode < 48 || event.keyCode > 57) {
+    //            event.preventDefault();
+    //        }
+    //    }
+    //});
+    function LoadMessage(CurrentPage) {
+        var Keyword = $("#txtKeyword").val();
+        if (Keyword.length < 10) {
+            bootbox.alert("Vui lòng nhập chính xác số điện thoại");
+            return false;
+        }        
+        $.ajax({
+            type: "POST",
+            url: appPath + 'Partial/MessageHistoryPartial',
+            cache: false,
+            data: {
+                Keyword: Keyword,
+                CurrentPage: CurrentPage,
+
+            },
+            dataType: "html",
+            success: function (data) {
+                $(".box_ketqua_tracuu").html(data);
+                $("#numMobile").html("Số điện thoại: <em>" + Keyword + " </em>");
+            },
+        });
+    }
+</script>

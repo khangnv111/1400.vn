@@ -1,0 +1,58 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio 2013
+VisualStudioVersion = 12.0.40629.0
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CMS", "CMS\CMS.csproj", "{62BA5885-1804-48D1-A7EA-26E64A1C7AA6}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WWW", "WWW\WWW.csproj", "{37B2347F-F640-4CAF-9CDB-149E1FA903CC}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "W1400.Utility", "W1400.Utility\W1400.Utility.csproj", "{060504AA-790C-4E2C-A75C-927FA4B4A37D}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "W1400.DataAccess", "W1400.DataAccess\W1400.DataAccess.csproj", "{EF0A9994-E76F-42DB-AB4A-18DDB2DD04C3}"
+EndProject
+Global
+	GlobalSection(TeamFoundationVersionControl) = preSolution
+		SccNumberOfProjects = 5
+		SccEnterpriseProvider = {4CA58AB2-18FA-4F8D-95D4-32DDF27D184C}
+		SccTeamFoundationServer = http://192.168.1.248:8080/tfs/webbase
+		SccLocalPath0 = .
+		SccProjectUniqueName1 = CMS\\CMS.csproj
+		SccProjectName1 = CMS
+		SccLocalPath1 = CMS
+		SccProjectUniqueName2 = W1400.DataAccess\\W1400.DataAccess.csproj
+		SccProjectName2 = W1400.DataAccess
+		SccLocalPath2 = W1400.DataAccess
+		SccProjectUniqueName3 = W1400.Utility\\W1400.Utility.csproj
+		SccProjectName3 = W1400.Utility
+		SccLocalPath3 = W1400.Utility
+		SccProjectUniqueName4 = WWW\\WWW.csproj
+		SccProjectName4 = WWW
+		SccLocalPath4 = WWW
+	EndGlobalSection
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{62BA5885-1804-48D1-A7EA-26E64A1C7AA6}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{62BA5885-1804-48D1-A7EA-26E64A1C7AA6}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{62BA5885-1804-48D1-A7EA-26E64A1C7AA6}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{62BA5885-1804-48D1-A7EA-26E64A1C7AA6}.Release|Any CPU.Build.0 = Release|Any CPU
+		{37B2347F-F640-4CAF-9CDB-149E1FA903CC}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{37B2347F-F640-4CAF-9CDB-149E1FA903CC}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{37B2347F-F640-4CAF-9CDB-149E1FA903CC}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{37B2347F-F640-4CAF-9CDB-149E1FA903CC}.Release|Any CPU.Build.0 = Release|Any CPU
+		{060504AA-790C-4E2C-A75C-927FA4B4A37D}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{060504AA-790C-4E2C-A75C-927FA4B4A37D}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{060504AA-790C-4E2C-A75C-927FA4B4A37D}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{060504AA-790C-4E2C-A75C-927FA4B4A37D}.Release|Any CPU.Build.0 = Release|Any CPU
+		{EF0A9994-E76F-42DB-AB4A-18DDB2DD04C3}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{EF0A9994-E76F-42DB-AB4A-18DDB2DD04C3}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{EF0A9994-E76F-42DB-AB4A-18DDB2DD04C3}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{EF0A9994-E76F-42DB-AB4A-18DDB2DD04C3}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+EndGlobal

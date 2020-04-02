@@ -1,0 +1,92 @@
+﻿@using W1400.DataAccess.DTO
+@model List<Menu>
+
+@{var permission = ((UserFunction)Session[W1400.Utility.SessionsManager.SESSION_PERMISSION]);}
+
+@if (permission != null && permission.IsGrant)
+{
+    <table class="table table-striped table-bordered dataTable" border="1" role="grid" aria-describedby="example_info" width="100%" style="width: 100%;" id="dataTables">
+        <thead>
+            <tr class="info">
+                <th style="text-align:center;">STT</th>
+                <th style="text-align:center;">Tên Menu</th>
+                <th style="text-align:center;">Menu Cha</th>
+                <th style="text-align:center;">Trạng thái</th>
+                <th style="text-align:center;">Chức năng</th>
+            </tr>
+        </thead>
+        <tbody>
+            @if (Model != null && Model.Count > 0)
+            {
+                for (var i = 0; i < Model.Count; i++)
+                {
+                    var item = Model[i];
+                    <tr role="row">
+                        <td>@(i + 1)</td>
+                        <td>
+                            @item.MenuName
+                        </td>
+                        <td>
+                            @item.FatherName
+                        </td>
+                        <td>
+                            @if (item.Status == 1)
+                            {
+                                <span><i style="color:green" class="fa fa-check"></i></span>
+                            }
+                            else
+                            {
+                                <span><i style="color:red" class="fa fa-ban"></i></span>
+                            }
+                        </td>
+                        <td style="text-align:center">
+                            @if (permission.IsUpdate)
+                            {
+                                <a href="@Url.Action("MenuDetail", new { ID = item.MenuID })" class="btn link-edit" data-trigger="hover" data-container="body" data-toggle="popover" data-placement="top" data-content="Sửa"><i class="fa fa-edit"></i></a>
+                            }
+                        </td>
+                    </tr>
+                }
+            }
+        </tbody>
+    </table>
+
+    <script type="text/javascript">
+        $(document).ready(function () {
+            $('[data-toggle="popover"]').popover();
+
+            var table = $('#dataTables').DataTable({
+                dom: 'Bfrtip',
+                lengthMenu: [
+               [10, 25, 50],
+               ['10 rows', '25 rows', '50 rows']
+                ],
+                buttons: [
+                     'pageLength',
+                    {
+                        extend: "colvis",
+                        text: "<i class='fa fa-eye-slash'></i>Ẩn/hiện cột"
+                    }
+                ],
+                "bAutoWidth": true,
+                "aaSorting": [[0, 'desc']],
+                "bSort": true,
+                searching: true,
+                pageLength: 25,
+                reponsive: true
+            });
+            table.buttons().container().appendTo('#example_wrapper .col-sm-6:eq(0)');
+            $('#dataTables').on('page.dt', function () {
+                $("html,body").animate({ scrollTop: $('#dataTables').offset().top - 100 }, 'fast');
+            });
+        });
+    </script>
+}
+else
+{
+    <h2 style="color:red">ErrorPermission</h2>
+
+    <h4>Bạn không có quyền truy cập . Xin hãy liên hệ Admin để được cấp quyền vào hệ thống CMS</h4>
+
+    <a href="@Html.Raw(ViewBag.UrlLogin)?act=out" style="color:#005bff; font-size:13px;text-decoration:underline">Logout</a>
+}

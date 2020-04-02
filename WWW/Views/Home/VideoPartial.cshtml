@@ -1,0 +1,29 @@
+﻿@if (ViewBag.list != null && ViewBag.list.Count > 0)
+{
+    W1400.Utility.NoMark rw = new W1400.Utility.NoMark();
+    for (int i = 0; i < ViewBag.list.Count; i++)
+    {
+        var item = ViewBag.list[i];
+        string rwtitle = rw.ReWrite(item.Title, item.ArticleID);
+        if (i % 2 == 0)
+        {
+            @: <div class="col-lg-6 col-md-6 col-sx-8 col-sm-12">
+        }
+
+        <div class="box_img_link_tintuc">
+            <div class="box_img_tin_tuc">
+                <a href="@rwtitle">
+                    <img src="@item.Image.360.220.cache" alt="" title="@item.Title" style="width: 360px; height:220px ">
+                </a>
+            </div>
+            <a class="text_tieude_ud" href="@rwtitle" title="@item.Title" style="display: -webkit-box; -webkit-line-clamp: 2;-webkit-box-orient: vertical;overflow: hidden;">@W1400.Utility.DBCommon.SubString(item.Title, 85)</a>
+            <span>@item.PublishDate.ToString("dd/MM/yyyy HH:mm")</span>
+            <p title="@item.Description" style="display: -webkit-box; -webkit-line-clamp: 3;-webkit-box-orient: vertical;overflow: hidden;">@W1400.Utility.DBCommon.SubString(item.Description, 145)</p>
+        </div>
+
+        if (i % 2 != 0 || i == ViewBag.Count - 1)
+        {
+            @: </div>
+        }
+    }
+}

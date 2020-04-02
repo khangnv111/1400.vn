@@ -1,0 +1,81 @@
+﻿@model List<W1400.DataAccess.DTO.Program>
+
+@if(Model!=null && Model.Count>0)
+{
+    W1400.Utility.NoMark rw = new W1400.Utility.NoMark();
+    <table class="table">
+        <tbody>
+            <tr>
+                <th style="width:244px;">Tên chương trình</th>
+                <th>Đầu số</th>
+                <th>Cú pháp</th>
+                <th>Thời gian thực hiện</th>
+                <th>Số tin nhắn</th>
+                <th>Số tiền (vnđ)</th>
+            </tr>
+            @for (int i = 0; i < Model.Count; i++)
+            {
+                <tr>
+                    @{
+                DateTime StartTime = DateTime.Now;
+                DateTime EndTime = DateTime.Now;
+                int Total = 0;
+                int Total2 = 0;
+                ulong TotalMoney = 0;
+                long TotalMessage = 0;
+                int ValueMessage = 0;
+                var list = W1400.DataAccess.Factory.AbstractDAOFactory.Instance().CreateProgramDAO().SP_Event_GetReport_Web(Model[i].EventID, Model[i].StartDate, Model[i].EndDate, out Total);
+                var list2 = W1400.DataAccess.Factory.AbstractDAOFactory.Instance().CreateProgramDAO().SP_Event_GetDetail_Web(Model[i].EventID, out Total2);
+                StartTime = Model[i].StartDate;
+                EndTime = Model[i].EndDate;
+                string Rewrite = rw.ReWriteProgramPass(Model[i].EventName, Model[i].EventID);
+                    }
+                    <td class="text_trai" style="width:200px;"><a href="@Rewrite">@Model[i].EventName</a></td>
+                    <td>
+                        @if (list != null && list.Count > 0)
+                        {
+                            ValueMessage = list[0].Price;
+                            StartTime = Model[i].StartDate;
+                            EndTime = Model[i].EndDate;
+                            for (int k = 0; k < list.Count; k++)
+                            {
+                                TotalMoney = TotalMoney + ((ulong)list[k].Total_SMS * (ulong)ValueMessage);
+                                TotalMessage = TotalMessage + list[k].Total_SMS;
+
+                            }
+                            
+                        }
+                        @if (list2 != null && list2.Count > 0)
+                        {
+                       @Html.Raw(list2[0].ServiceID)
+                        }
+                    </td>
+                    <td>
+                        @if (list2 != null && list2.Count > 0)
+                        {
+                            @list2[0].Commandcode
+                        }
+                    </td>
+                    <td>@StartTime.ToString("dd/MM")-@EndTime.ToString("dd/MM/yyyy")</td>
+                    @if (TotalMessage!=0)
+                    { 
+                    <td>@string.Format("{0: ##,###}", TotalMessage).Replace(",",".")</td>
+                    }
+                    else
+                    {
+                    <td>0</td>
+                    }
+                    @if (TotalMoney!=0)
+                    { 
+                        <td>@string.Format("{0: ##,###}", TotalMoney).Replace(",", ".")</td>
+                    }
+                    else
+                    {
+                        <td>0</td>
+                    }
+                </tr>
+            }
+        </tbody>
+    </table>
+
+}

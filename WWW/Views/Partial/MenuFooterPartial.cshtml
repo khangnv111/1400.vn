@@ -1,0 +1,25 @@
+﻿@model List<W1400.DataAccess.DTO.Menu>
+@if (Model != null && Model.Count > 0)
+{
+<div class="box_menu_footer">
+    <div class="container">
+        <ul>
+            <li><a href="@System.Configuration.ConfigurationManager.AppSettings["URL_ROOT"]">trang chủ</a></li>
+            @for (int i = 0; i < Model.Count; i++)
+            {
+                if (Model[i].FatherID == 0)
+                {
+                    if (Model[i].MenuID == 12)
+                    {
+                        <li><a href="@System.Configuration.ConfigurationManager.AppSettings["URL_ROOT"]chuong-trinh-dang-thuc-hien">@Model[i].MenuName</a></li>
+                    }
+                    else
+                    {
+                        <li><a href="@System.Configuration.ConfigurationManager.AppSettings["URL_ROOT"]@Model[i].UrlRedirect">@Model[i].MenuName</a></li>
+                    }
+                }
+            }
+        </ul>
+    </div>
+</div>
+}

@@ -1,0 +1,35 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>@ViewBag.Title</title>
+    @Styles.Render("~/Content/css")
+    <script>
+        appPath = '@W1400.Utility.Config.ApplicationUrl';
+    </script>
+    @Scripts.Render("~/bundles/jquery")
+    @Scripts.Render("~/bundles/modernizr")
+    <link href="~/Content/font-awesome/css/font-awesome.css" rel="stylesheet" />
+</head>
+<body class="login">
+
+    <div id="wrapper">
+        <div id="LoginForm">
+            @RenderBody()
+        </div>
+        <!-- /#page-wrapper -->
+
+    </div>
+
+    <script type="text/javascript">
+        $(document).ready(function () {
+            var fullHeight = $(window).height();
+            $("#wrapper").css("min-height", fullHeight);
+        });
+    </script>
+    @Scripts.Render("~/bundles/bootstrap")
+    @Scripts.Render("~/bundles/metisMenu")
+    @RenderSection("scripts", required: false)
+</body>
+</html>

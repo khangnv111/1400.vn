@@ -1,0 +1,301 @@
+﻿@using W1400.DataAccess.DTO
+@model Article
+
+@{
+    var permission = ((UserFunction)Session[W1400.Utility.SessionsManager.SESSION_PERMISSION]);
+}
+
+<script src="~/ckfinder/ckfinder.js"></script>
+@if (permission.IsGrant)
+{
+
+    <div class="well">
+        <span class="label label-danger">
+            Chú ý!
+        </span>
+        <span>
+            Hãy chắc chắn nhập vào đầy đủ thông tin tại các mục bắt buộc đánh dấu (*)
+        </span>
+    </div>
+    <div class="row">
+        <div class="col-md-12">
+            <div class="panel panel-primary">
+                <div class="panel-heading">
+                    @if (ViewBag.ArtID == 0)
+                    {
+                        <i class="fa fa-fw fa-user-md"></i><span>Cập Nhật Bài viết</span>
+                    }
+                    else
+                    {
+                        <i class="fa fa-fw fa-user-plus"></i><span>Thêm mới bài viết</span>
+                    }
+                </div>
+                <form id="defaultForm" method="post" class="form-horizontal">
+                    <div class="panel-group" id="steps">
+                        <div class="messager-body">
+                            <div class="alert alert-success display-hide alert-dismissable">
+                                <button type="button" class="close" data-close="alert" aria-hidden="true">×</button>
+                                <span class="glyphicon glyphicon-ok"></span>
+                                <label>Đã lưu dữ liệu thành công !!!</label>
+                            </div>
+                            <div class="alert alert-danger display-hide alert-dismissable">
+                                <button type="button" class="close" data-close="alert" aria-hidden="true">×</button>
+                                <span class="glyphicon glyphicon-warning-sign"></span>
+                                <label id="ErrorMessage">Có một vài lỗi trong khung nhập liệu dưới đây ! kiểm tra lại</label>
+                            </div>
+                        </div>
+                        <div class="panel panel-info">
+                            <div class="panel-heading">
+                                <h4 class="panel-title"><i class="fa fa-wrench" style="margin-right:7px"></i>Thông Tin Cơ Bản</h4>
+                            </div>
+                            <div class="panel-body">
+                                <!-- dành cho UpdateFunction -->
+                                <div class="form-group">
+                                    <label for="txtTitle" class="control-label col-md-1">Tiêu đề (*):  </label>
+                                    <div class="col-md-8">
+                                        <div class="input-icon right">
+                                            <input type="text" id="txtTitle" name="txtTitle" value="@Model.Title" class="form-control" placeholder="Nhập tiêu đề" />
+                                        </div>
+                                    </div>
+                                </div> 
+
+                                <div class="form-group">
+                                    <label for="txtTitle" class="control-label col-md-1">Chuyên mục  </label>
+                                    @if (Model.MenuID == 2)
+                                    {
+                                        <div class="col-md-8">
+                                            <div class="input-icon right">
+                                                <select class="form-control" id="txtMenuId" name="txtMenuId">
+                                                    <option value="2">Về cổng 1400</option>
+                                                </select>
+                                            </div>
+                                        </div>
+                                    }
+                                    else
+                                    {
+                                        <div class="col-md-8">
+                                            <div class="input-icon right">
+                                                <select class="form-control" id="txtMenuId" name="txtMenuId">
+                                                    @for (int i = 0; i < ViewBag.listMenu.Count; i++)
+                                                    {
+                                                        var item = ViewBag.listMenu[i];
+                                                        if ((item.FatherID != 0 || item.MenuID == 13) && item.MenuID != 16 && item.MenuID != 17 && item.MenuID != 2)
+                                                        {
+                                                            <option value="@item.MenuID" @if (Model.MenuID == item.MenuID) { @Html.Raw("selected")  }>@item.MenuName</option>
+                                                        }
+
+                                                    }
+
+                                                </select>
+                                            </div>
+                                        </div>
+                                    }
+                                    
+                                </div>
+
+                                @if (Model.MenuID == 13 || Model.MenuID == 11)
+                                {
+                                    if (Model.MenuID == 13)
+                                    {
+                                        <div class="form-group meta_data_uhtt">
+                                            <label for="txtTitle" class="control-label col-md-1">Link Redirect (*):  </label>
+                                            <div class="col-md-8">
+                                                <div class="input-icon right">
+                                                    <input type="text" id="txtMetaData" name="txtMetaData" value="@Model.MetaData" class="form-control" placeholder="Link redirect của bài viết Ủng hộ trực tuyến" />
+                                                </div>
+                                            </div>
+                                        </div>
+                                    }
+                                    else
+                                    {
+                                        <div class="form-group meta_data_uhtt">
+                                            <label for="txtTitle" class="control-label col-md-1">Link Youtube (*):  </label>
+                                            <div class="col-md-8">
+                                                <div class="input-icon right">
+                                                    <input type="text" id="txtMetaData" name="txtMetaData" value="https://www.youtube.com/watch?v=@Model.MetaData" class="form-control" placeholder="https://www.youtube.com/watch?v=c25WRUwrTIQ" />
+                                                </div>
+                                            </div>
+                                        </div>
+                                    }
+                                }
+                                else
+                                {
+                                    <div class="form-group meta_data_uhtt" style="display: none">
+                                        @*<label for="txtTitle" class="control-label col-md-1">Link:  </label>
+                                        <div class="col-md-8">
+                                            <div class="input-icon right">
+                                                <input type="text" id="txtMetaData" name="txtMetaData" value="" class="form-control" placeholder="Link" />
+                                            </div>
+                                        </div>*@
+                                    </div>
+                                }
+
+                                <div class="form-group">
+                                    <label id="labanh" for="txtImageUrl" class="control-label col-md-1">Ảnh ava nhỏ (360x220) (*)</label>
+                                    <div class="col-md-8">
+                                        <div class="input-icon right">
+                                            <input type="text" id="txtImage1" name="txtImage" value="@Model.Image" class="form-control" placeholder="" />
+                                        </div>
+                                    </div>
+                                    <div class="col-md-1">
+                                        <a href="javascript:;" onclick="upload_image(1)"><i class="fa fa-file"></i></a>
+                                    </div>
+                                    <img src="@Model.Image" id="img_show1" style="max-width: 100px; max-height: 50px"/>
+                                </div>
+
+                                <div class="form-group">
+                                    <label id="labanh" for="txtImageUrl" class="control-label col-md-1">Ảnh ava lớn (750x320)(*)</label>
+                                    <div class="col-md-8">
+                                        <div class="input-icon right">
+                                            <input type="text" id="txtImage2" name="txtImage" value="@Model.ImageDetail" class="form-control" placeholder="" />
+                                        </div>
+                                    </div>
+                                    <div class="col-md-1">
+                                        <a href="javascript:;" onclick="upload_image(2)"><i class="fa fa-file"></i></a>
+                                    </div>
+                                    <img src="@Model.ImageDetail" id="img_show2" style="max-width: 100px; max-height: 50px" />
+                                </div>
+
+                                <div class="form-group">
+                                    <label class="control-label col-md-1" for="cbxIsActive">Bài Hot:</label>
+                                    <div class="col-md-3 input-icon">
+                                        <div class="input-icon checkbox">
+                                            @if (Model.isHot == true)
+                                            {<input type="checkbox" id="cbxIsHot" checked="checked" />}
+                                            else
+                                            {<input type="checkbox" id="cbxIsHot" /> }
+
+                                        </div>
+                                    </div>
+                                </div>
+                                @if (Model.isHot == true)
+                                {
+                                    <div class="form-group" id="img_hot" style="display: block">
+                                        <label id="labanh" for="txtImageUrl" class="control-label col-md-1">Ảnh Hot (1140x444)(*)</label>
+                                        <div class="col-md-8">
+                                            <div class="input-icon right">
+                                                <input type="text" id="txtImage3" name="txtImage" value="@Model.ImageHot" class="form-control" placeholder="" />
+                                            </div>
+                                        </div>
+                                        <div class="col-md-1">
+                                            <a href="javascript:;" onclick="upload_image(3)"><i class="fa fa-file"></i></a>
+                                        </div>
+                                        <img src="@Model.ImageHot" id="img_show3" style="max-width: 100px; max-height: 50px" />
+                                    </div>
+                                }
+                                else
+                                {
+                                    <div class="form-group" id="img_hot" style="display: none">
+                                        <label id="labanh" for="txtImageUrl" class="control-label col-md-1">Ảnh Hot (1140x444) (*)</label>
+                                        <div class="col-md-8">
+                                            <div class="input-icon right">
+                                                <input type="text" id="txtImage3" name="txtImage" value="@Model.ImageHot" class="form-control" placeholder="" />
+                                            </div>
+                                        </div>
+                                        <div class="col-md-1">
+                                            <a href="javascript:;" onclick="upload_image(3)"><i class="fa fa-file"></i></a>
+                                        </div>
+                                        <img src="@Model.ImageHot" id="img_show3" style="max-width: 100px; max-height: 50px" />
+                                    </div>
+                                }
+
+                                <div class="form-group">
+                                    <label for="txtTitle" class="control-label col-md-1">Mô tả (*):  </label>
+                                    <div class="col-md-8">
+                                        <div class="input-icon right">
+                                            <textarea id="txtDescription" name="txtDescription" class="form-control" rows="5">@Html.Raw(Model.Description)</textarea>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div id="IsArticle" style="@if(Model.MenuID >=9 && Model.MenuID <= 11){@Html.Raw("display:none")}">
+                                    
+
+                                    <div class="form-group">
+                                        <label for="txtContent" class="control-label col-md-1">Nội Dung:  </label>
+                                        <div class="col-md-10">
+                                            <div class="input-icon right">
+                                                <textarea id="txtContent" name="txtContent">@Html.Raw(Model.Detail)</textarea>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <div class="form-group">
+                                        <label for="txtContent" class="control-label col-md-1">Ghi chú:  </label>
+                                        <div class="col-md-8">
+                                            <div class="input-icon right">
+                                                <textarea id="txtBottomDes" name="txtBottomDes" rows="4" class="form-control">@Html.Raw(Model.BottomDesc)</textarea>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                
+
+                                <div class="form-group">
+                                    <label for="txtPublicTime" class="control-label col-md-1">Ngày Đăng *  </label>
+                                    <div class="col-md-4">
+                                        <div class="input-icon right">
+                                            @if (Model.ArticleID > 0)
+                                            {
+                                                <input type="text" id="txtPublicTime" data-format="dd/MM/yyyy HH:mm:ss" name="publictime" value="@Model.PublishDate.ToString("dd/MM/yyyy HH:mm:ss")" class="form-control" placeholder="Thời gian đăng bài" />
+                                            }
+                                            else
+                                            {
+                                                <input type="text" id="txtPublicTime" data-format="dd/MM/yyyy HH:mm:ss" name="publictime" value="" class="form-control" placeholder="Thời gian đăng bài" />
+                                            }
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="form-group" id="img_hot">
+                                    <label id="labanh" for="txtImageUrl" class="control-label col-md-1">Tên tác giả *</label>
+                                    <div class="col-md-4">
+                                        <div class="input-icon right">
+                                            <input type="text" id="txtAuthor" name="txtAuthor" value="@Model.Author" class="form-control" placeholder="VD: Ngọc Vũ" />
+                                        </div>
+                                    </div>
+                                    
+                                </div>
+                            </div>
+                            <div class="panel-footer form-horizontal">
+                                <div class="form-group submit">
+                                    @if ((Model.ArticleID == 0 && permission.IsInsert) || (Model.ArticleID > 0 && permission.IsUpdate))
+                                    {
+                                        <button type="button" class="btn btn-primary" id="btnSave" onclick="ArtCtrl.BtnSave(@Model.ArticleID);"><i class="fa fa-save"></i>Lưu lại</button>
+                                    }
+                                    @*<button type="button" class="btn btn-success" id="btnReset"><i class="fa fa-refresh"></i>Làm mới</button>*@
+                                    <button type="button" class="btn btn-default" id="btnBack" onclick="ArtCtrl.BtnBack();"><i class="fa fa-backward"></i>Back</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <script type="text/javascript">
+        $(document).ready(function () {
+            ArtCtrl.EditView();
+
+        });
+
+        var finder = new CKFinder();
+
+        function upload_image(id) {
+            finder.selectActionFunction = function (fileUrl) {
+                $('#txtImage' + id).val(fileUrl);
+                $('#img_show' + id).prop("src",fileUrl);
+            };
+            finder.popup();
+        }
+    </script>
+}
+else
+{
+    <h2 style="color:red">ErrorPermission</h2>
+
+    <h4>Bạn không có quyền truy cập . Xin hãy liên hệ Admin để được cấp quyền vào hệ thống CMS</h4>
+
+    <a href="@Html.Raw(ViewBag.UrlLogin)?act=out" style="color:#005bff; font-size:13px;text-decoration:underline">Logout</a>
+}

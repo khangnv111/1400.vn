@@ -1,0 +1,50 @@
+﻿
+@using W1400.DataAccess.DTO
+@model ArticleImage
+
+<script src="~/ckfinder/ckfinder.js"></script>
+
+<div id="PopupUpdate" style="position: fixed; transform: translate(-50%, -50%); top: 40%; left: 50%; width: 600px; background-color: white;z-index: 1112; border-radius: 3px">
+    <div style="width: 100%; font-size: 18px; text-align: center; color: #164d9a; font-weight: bold; margin-top: 15px">Cập nhật Ảnh</div>
+    <div style="color: red; width: 100%; text-align: center; font-size: 14px" id="textError"></div>
+    <div style="width: 100%; margin: 15px 0 0 0; padding-left: 20px">
+        <input type="text" class="form-control" id="img_update" value="@Model.FilePath" style="width: 80%; display: inline-block"/>
+        <a href="javascript:;" onclick="upload_image()"><i class="fa fa-file fa-lg"></i></a>
+    </div>
+    <div style="width: 90%; text-align: center; margin: 15px">
+        <img src="@Model.FilePath" id="img_show" style="max-width: 200px; max-height: 200px" />
+    </div>
+    <div style="width: 90%; margin: 15px">
+        <textarea rows="3" class="form-control" id="txtDes" maxlength="150" placeholder="Chú thích ảnh (Tối đa 150 ký tự)">@Model.Description</textarea>
+    </div>
+    @*<div style="width: 100%; margin: 15px 5px 15px 5px">
+        <label class="control-label col-md-2">Trạng thái</label>
+        @if (Model.Status == 1)
+        {
+            <input type="checkbox" id="cbxStatus" checked/>
+        }
+        else
+        {
+            <input type="checkbox" id="cbxStatus" />
+        }
+
+    </div>*@
+    <div style="width: 100%; margin: 0 5px 15px 30px;">
+        <button type="button" onclick="AlbumCtrl.RemoveFormUpdate()" class="btn btn-default">Hủy</button>
+        <button type="button" onclick="AlbumCtrl.SaveUpdateImg(@Model.ImageID, 1)" class="btn btn-success">Lưu</button>
+    </div>
+</div>
+<div id="blackGround" onclick="AlbumCtrl.RemoveFormUpdate()" style="position: fixed; top:0; left:0; background-color: black; opacity: 0.6; width: 100%; height: 100%; z-index: 1111"></div>
+
+<script type="text/javascript">
+
+    var finder = new CKFinder();
+
+    function upload_image() {
+        finder.selectActionFunction = function (fileUrl) {
+            $('#img_update').val(fileUrl);
+            $('#img_show').prop("src", fileUrl);
+        };
+        finder.popup();
+    }
+</script>

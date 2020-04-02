@@ -1,0 +1,30 @@
+﻿<!DOCTYPE html>
+<html class="error-page">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Error Not Found</title>
+    <script>
+        appPath = '@W1400.Utility.Config.ApplicationUrl';
+    </script>
+
+    @Styles.Render("~/Content/css")
+    @Scripts.Render("~/bundles/jquery")
+    <link href="~/Content/font-awesome/css/font-awesome.css" rel="stylesheet" />
+    <link href="~/Content/respons.css" rel="stylesheet" />
+    <link href="~/Content/style.css" rel="stylesheet" />
+    <link href="~/Content/bootstrap-error-page.css" rel="stylesheet" />
+</head>
+<body>
+    <div class="animationload" style="display: none;">
+        <div class="loader" style="display: none;">
+        </div>
+    </div>
+
+    @RenderBody()
+
+    @Scripts.Render("~/bundles/bootstrap")
+    @Scripts.Render("~/bundles/metisMenu")
+    @RenderSection("scripts", required: false)
+</body>
+</html>

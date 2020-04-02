@@ -1,0 +1,126 @@
+﻿@model W1400.DataAccess.DTO.UserFunction
+@if (Model != null && Model.IsGrant)
+{
+    <!-- /.row -->
+    <div class="row">
+        <div class="col-lg-12">
+            <div class="panel panel-primary">
+                <div class="panel-heading"><span class="glyphicon glyphicon-user"></span>Tìm Kiếm Danh Sách Người Dùng</div>
+                <div class="panel-body">
+                    <div class="row" id="form">
+                        <div class="col-md-12">
+                            <div class="form-group col-md-4 col-xs-12 col-sm-6">
+                                <label class="control-label"><i class="fa fa-flag"></i>Trạng thái</label>
+                                <div class="col-lg-8 col-md-8 col-sm-8 col-xs-12">
+                                    <select class="form-control" id="ddlActive">
+                                        <option value="-1">Lấy tất cả</option>
+                                        <option value="1">Hoạt Động</option>
+                                        <option value="0">Không Hoạt Động</option>
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="form-group col-md-4 submit" style="text-align:center">
+
+                                @if (ViewBag.IsAdmin)
+                                {<button type="button" id="btnCreate" class="btn btn-success"><i class="fa fa-user-plus"></i>Thêm User</button>}
+                            </div>
+                        </div>
+                    </div>
+                    <div class="table-responsive">
+                        @ViewBag.A2
+
+                        <br/>
+                        @ViewBag.Count
+                        <div id="dgrid" class="dataTables_wrapper form-inline" role="grid">
+                            <div id="UsersPartial">
+                                @Html.Action("ListUsers", "Home")
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <script type="text/javascript">
+        $(document).ready(function () {
+            var parameters = {
+            };
+            $("#form").keypress(function (event) {
+                if (event.which == 13) {
+                    $("#btnSearch").click();
+                }
+            });
+            //$("#btnSearch").click(function () {
+            //    GetList();
+            //});
+            $("#ddlActive").change(function () {
+                GetList();
+            });
+            $("#btnCreate").click(function () {
+                ViewUserData(0);
+            });
+
+
+        });
+        function GetList() {
+            parameters = {
+                isActive: $('#ddlActive :selected').val(),
+            };
+            Utils.Loading();
+            var urlRequestAns = UrlRoot + "Home/ListUsers";
+            $.ajax({
+                type: 'GET',
+                url: urlRequestAns,
+                data: parameters,
+                success: function (data) {
+                    $("#UsersPartial").html(data);
+                    Utils.UnLoading();
+                },
+                error: function () {
+                    Utils.UnLoading();
+                }
+            });
+        };
+        function DeleteData(id) {
+            var IsDelete = ('@ViewBag.IsAdmin').toLowerCase();
+            if (IsDelete != "true") {
+                bootbox.alert("Bạn không có quyền xóa chức năng");
+                return;
+            }
+            bootbox.confirm("Bạn chắc chắn muốn xóa tài khoản này ??? ", function (result) {
+                if (result == true) {
+                    Utils.Loading();
+                    $.ajax({
+                        type: 'POST',
+                        url: UrlRoot + "Home/DeleteUser",
+                        data: {
+                            'id': id
+                        },
+                        success: function (data) {
+                            Utils.UnLoading();
+                            if (data.ResponseCode >= 0) {
+                                bootbox.alert(data.Description);
+
+                                GetList();
+
+                            }
+                            else {
+                                bootbox.alert(data.Description);
+                                return;
+                            }
+                        }
+                    });
+                }
+            });
+
+        }
+    </script>
+}
+else
+{
+    <h2 style="color:red">ErrorPermission</h2>
+
+    <h4>Bạn không có quyền truy cập . Xin hãy liên hệ Admin để được cấp quyền vào hệ thống CMS</h4>
+
+    <a href="@Html.Raw(ViewBag.UrlLogin)?act=out" style="color:#005bff; font-size:13px;text-decoration:underline">Logout</a>
+}

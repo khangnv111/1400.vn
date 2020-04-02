@@ -1,0 +1,212 @@
+﻿@using W1400.DataAccess.DTO
+<!-- /.row -->
+@if (ViewBag.Status == -1)
+{
+    <h2 style="color:red">ErrorPermission</h2>
+
+    <h4>Bạn không có quyền truy cập . Xin hãy liên hệ Admin để được cấp quyền vào hệ thống CMS</h4>
+
+    <a href="@Html.Raw(ViewBag.UrlLogin)?act=out" style="color:#005bff; font-size:13px;text-decoration:underline">Logout</a>
+}
+else if (ViewBag.Status == -2)
+{
+    <div class="container-fluid">
+        <div class="row-fluid">
+            <div class="col-lg-12">
+                <div class="centering text-center error-container">
+                    <div class="text-center">
+                        <h2 class="without-margin">Don't worry. It's <span class="text-warning"><big>403</big></span> error only.</h2>
+                        <h4 class="text-warning">Access denied</h4>
+                    </div>
+                    <div class="text-center">
+                        <h3><small>Choose an option below</small></h3>
+                    </div>
+                    <hr>
+                    <ul class="pager">
+                        <li><a href="@Html.Raw(W1400.Utility.Config.UrlRoot)">&larr; Home</a></li>
+                        <li><a href="@Html.Raw(ViewBag.UrlLogin)?act=out" style="color:#005bff; font-size:13px;text-decoration:underline">Logout</a></li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+}
+else
+{
+    <div class="row">
+        <div class="col-lg-12">
+            <div class="panel panel-primary">
+                <div class="panel-heading">Quản lý User Log</div>
+                <div class="panel-body">
+                    <div class="row" id="form">
+                        <form id="defaultForm" method="post">
+                            <div class="col-md-12">
+                                <div class="form-group col-lg-4 col-md-4 col-sm-5">
+                                    <label class="textDate" style="float: left; margin: 5px 0 0 10px; width:80px">Từ Ngày</label>
+                                    <div class="col-lg-8">
+                                        <div class="input-icon date" id="datetimeFromDate">
+                                            <input type="text" data-date-format="DD/MM/YYYY" id="fromDate" class="form-control" name="datetimeFromDate" />
+                                            <span class="input-group-addon"><span class="fa fa-fw fa-calendar"></span></span>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="form-group col-lg-4 col-md-4 col-sm-5">
+                                    <label class="textDate" style="float: left; margin: 5px 0 0 10px; width: 80px">Đến Ngày</label>
+                                    <div class="col-lg-8">
+                                        <div class="input-icon date" id="datetimeToDate">
+                                            <input type="text" data-date-format="DD/MM/YYYY" id="toDate" class="form-control" name="datetimeToDate" />
+                                            <span class="input-group-addon"><span class="fa fa-fw fa-calendar"></span></span>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="form-group col-lg-4 col-md-4 col-sm-4">
+                                    <label style="float: left; margin: 5px 0 0 10px; width: 80px">chức năng</label>
+                                    <div class="col-lg-8">
+                                        <select class="form-control" id="ddlfunctionId">
+                                            @if (ViewBag.ListFunction != null)
+                                            {
+                                                <option value="-1" selected="selected">Tất cả</option>
+                                                <option value="9999">Đăng nhập hệ thống</option>
+                                                foreach (var obj in ViewBag.ListFunction)
+                                                {
+                                                    <option value="@obj.FunctionID">@obj.FunctionName</option>
+                                                }
+                                            }
+                                        </select>
+                                    </div>
+                                </div>
+                                <div class="form-group col-lg-4 col-md-4 col-sm-4">
+                                    <label style="float: left; margin: 5px 0 0 10px; width: 80px">Tài khoản</label>
+                                    <div class="col-lg-8">
+                                        <select class="input-icon form-control" id="ddluserId">
+                                            @if (ViewBag.ListUser != null)
+                                            {
+                                                <option value="-1" selected="selected">Tất cả</option>
+                                                foreach (var obj in ViewBag.ListUser)
+                                                {
+                                                    <option value="@obj.UserID">@obj.Username</option>
+                                                }
+                                            }
+                                        </select>
+                                    </div>
+                                </div>
+                                <div class="form-group col-lg-4 col-md-4 col-sm-12" style="text-align:center">
+                                    <input type="button" id="btnSearch" class="btn btn-info" value="Tìm Kiếm">
+                                    @if (ViewBag.IsAdmin)
+                                    {
+                                        <input type="button" id="btnClear" class="btn btn-danger" value="Xóa" />
+                                    }
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                    <div class="table-responsive">
+                        <div id="dgrid" class="dataTables_wrapper form-inline" role="grid">
+                            <div id="UserlogPartial">
+                            </div>
+                            <div class="dataTables_paginate" id="pager">
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <script type="text/javascript">
+    $(document).ready(function () {
+        $('#datetimeFromDate').datetimepicker();
+        $('#datetimeToDate').datetimepicker();
+        var fromdate = '@string.Format("{0:dd/MM/yyyy}", ViewBag.fromDate)';
+        var todate = '@string.Format("{0:dd/MM/yyyy}", ViewBag.toDate)';
+        $('#datetimeFromDate').data("DateTimePicker").setDate(fromdate);
+        $('#datetimeToDate').data("DateTimePicker").setDate(todate);
+
+        $("#datetimeFromDate").on("dp.change dp.show", function (e) {
+            $('#datetimeToDate').data("DateTimePicker").setMinDate(e.date);
+        });
+        $("#datetimeToDate").on("dp.change dp.show", function (e) {
+            $('#datetimeFromDate').data("DateTimePicker").setMaxDate(e.date);
+        });
+        var parameters = {
+        };
+        $("#form").keypress(function (event) {
+            if (event.which == 13) {
+                $("#btnSearch").click();
+            }
+        });
+        $("#btnSearch").click(function () {
+            btnSearch();
+        });
+
+        $("#btnClear").click(function () {
+            deleteData();
+        });
+        btnSearch();
+    });
+        function btnSearch() {
+            parameters = {
+                'FromDate': $("#fromDate").val(),
+                'ToDate': $("#toDate").val(),
+                'FunctionId': $("#ddlfunctionId").val(),
+                'UserId':$("#ddluserId").val()
+            };
+            Utils.Loading();
+            var urlRequestAns = UrlRoot + "Home/ListUserLog";
+            $.ajax({
+                type: 'GET',
+                url: urlRequestAns,
+                data: parameters,
+                success: function (data) {
+                    $("#UserlogPartial").html(data);
+                    Utils.UnLoading();
+                },
+                error: function () {
+                    Utils.UnLoading();
+                }
+            });
+        }
+        function deleteData() {
+            //debugger
+            var IsDelete = '@ViewBag.IsAdmin';
+            if (IsDelete.toLowerCase() != "true") {
+                bootbox.alert("Bạn không có quyền xóa chức năng");
+                return;
+            }
+            bootbox.confirm("Bạn chắc chắn muốn Log trong khoảng thời gian này ??? ", function (result) {
+                if (result == true) {
+                    var from = $("#fromDate").val();
+                    var to = $("#toDate").val();
+                    if (from == '' || from == null || to == '' || to == null) {
+                        alert("Bạn chưa chọn khoảng thời gian log cần xóa");
+                        return;
+                    }
+                    Utils.Loading();
+                    $.ajax({
+                        type: 'POST',
+                        url: UrlRoot + "Home/DelDataUserLog",
+                        data: {
+                            fromdate: from,
+                            todate: to,
+                            functionId: $("#ddlfunctionId").val(),
+                            userID: $("#ddluserId").val()
+                        },
+                        success: function (data) {
+                            Utils.UnLoading();
+                            if (data.ResponseCode >= 0) {
+                                bootbox.alert(data.Description);
+                                btnSearch();
+                                return;
+                            }
+                            else {
+                                bootbox.alert(data.Description);
+                                return;
+                            }
+                        }
+                    });
+                }
+            });
+        }
+    </script>
+}

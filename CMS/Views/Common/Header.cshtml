@@ -1,0 +1,60 @@
+﻿@if (ViewBag.LogIn)
+{
+    <nav class="navbar navbar-default navbar-fixed-top" role="navigation" style="border-top: 5px solid #285B9E">
+        <div class="top"></div>
+        <div class="container-fluid">
+            <div class="navbar-header" style="padding: 7px 18px;">
+                <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar">
+                    <span class="sr-only">Toggle navigation</span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                </button>
+                <a href="@Html.Raw(W1400.Utility.Config.UrlRoot)"><img alt="Hệ thống quản trị CMS Analystic" style="margin-top: 5px;" width="150" src="~/images/logvn.png"></a>
+            </div>
+
+            <div id="navbar" class="navbar-collapse collapse">
+                @Html.Action("Menu", "Common")
+                <ul class="nav navbar-top-links navbar-right">
+                    <li class="dropdown dropdown-user">
+                        <a href="#" class="dropdown-toggle" data-toggle="dropdown" data-hover="dropdown" data-animations="flipInX flipInY flipInX flipInY" data-close-others=" true" role="button" aria-expanded="false">
+                            <img alt="" class="img-circle hide1" src="@Html.Raw(W1400.Utility.Config.UrlRoot)Images/favicon_care.ico" />
+                            <span class="username username-hide-on-mobile">
+                                @ViewBag.UserName
+                            </span>
+                            <i class="fa fa-angle-down"></i>
+                        </a>
+                        <ul class="dropdown-menu" role="menu">
+                            <li>
+                                <a id="changePass" onclick=" ViewChangePass(); " style="cursor: pointer">
+                                    <i class="fa-magic fa"></i> Đổi mật khẩu
+                                </a>
+                            </li>
+                            <li class="divider">
+                            </li>
+                            <li>
+                                <a href="@Html.Raw(ViewBag.UrlLogin)?act=out">
+                                    <i class="fa fa-key"></i> Đăng xuất
+                                </a>
+                            </li>
+                        </ul>
+                    </li>
+                    <li>
+                        <a href="@Html.Raw(ViewBag.UrlLogin)?act=out"><i class="fa fa-sign-out fa-fw"></i></a>
+                    </li>
+                    <!-- /.dropdown -->
+                </ul>
+            </div><!--/.nav-collapse -->
+        </div>
+    </nav>
+    <div id="changepass">
+    </div>
+}
+else
+{
+    <script type="text/javascript">
+        $(document).ready(function() {
+            location.href = '@ViewBag.UrlLogin';
+        });
+    </script>
+}

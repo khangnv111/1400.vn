@@ -1,0 +1,97 @@
+﻿@model List<W1400.DataAccess.DTO.Article>
+@using W1400.Utility;
+@if (Model != null && Model.Count > 0)
+{
+    <div class="box_noidung_trai">
+        <div class="row" >
+
+            @{NoMark rw = new NoMark();}
+
+            @for (int i = 0; i < Model.Count; i++)
+            {
+                string rewrite = rw.ReWrite(Model[i].Title, Model[i].ArticleID);
+
+                if (i % 2 == 0)
+                {
+                    <div class="col-lg-6 col-md-6 col-sx-8 col-sm-12">
+                        <div class="box_img_link_tintuc">
+                            <div class="box_img_tin_tuc"><a href="@rewrite"><img src="@Model[i].Image.360.220.cache" alt="@Model[i].Title"></a></div>
+                            <a class="text_tieude_ud" href="@rewrite">@DBCommon.SubString(Model[i].Title, 85)</a>
+                            <span>@Model[i].CreateDate.ToString("dd/MM/yyyy HH:mm")</span>
+                            <p>@DBCommon.SubString(Model[i].Description, 145)</p>
+                        </div>
+                    </div>
+                
+                }
+                else
+                {
+                    <div class="col-lg-6 col-md-6 col-sx-8 col-sm-12">
+                        <div class="box_img_link_tintuc">
+                            <div class="box_img_tin_tuc"><a href="@rewrite"><img src="@Model[i].Image.360.220.cache" alt="@Model[i].Title"></a></div>
+                            <a class="text_tieude_ud" href="@rewrite">@DBCommon.SubString(Model[i].Title, 85)</a>
+                            <span>@Model[i].CreateDate.ToString("dd/MM/yyyy HH:mm")</span>
+                            <p>@DBCommon.SubString(Model[i].Description, 145)</p>
+                        </div>
+                    </div>
+
+                }
+                if (i % 2 != 0)
+                {
+                    <div class="clear"></div>
+                }
+            }
+
+
+
+
+        </div>
+    </div>
+    if (ViewBag.TotalPage > 1)
+    {
+        int page = ViewBag.currentPage; //page hien tai
+        int total_page = ViewBag.TotalPage; //tong so page
+        int prePage = page - 1;
+        int nextPage = page + 1;
+    <ul class="list_phantrang_chitiet">
+        <li @if (page == 1) { prePage = page; @: class="disabled"
+            }><a href="javascript:;" onclick="Paging('@ViewBag.UrlRedirect', @prePage)"></a></li>
+            @for (int i = page - 2; i <= page + 2; i++)
+            {
+                if (i > 0 && i <= total_page)
+                { 
+                if (i == page)
+                {
+                    <li style="background-color: #02a7e1;"><a style="color: #fff;" href="javascript:;" onclick="Paging('@ViewBag.UrlRedirect', @i)">@i</a></li>
+                }
+                else
+                {
+                    <li><a href="javascript:;" onclick="Paging('@ViewBag.UrlRedirect', @i)">@i</a></li>
+                }
+                }
+            }
+        
+        <li @if (page == total_page)
+            {
+                nextPage = page; @: class="disabled"
+                        }><a href="javascript:;" onclick="Paging('@ViewBag.UrlRedirect', @nextPage)"></a></li>
+    </ul>
+    }
+}
+<script type="text/javascript">
+    function Paging(a, b) {
+        $.ajax({
+            type: "POST",
+            url: '@Url.Action("ArticleOneCatePartial", "Article")',
+            cache: false,
+            data: {
+                UrlRedirect: a,
+                Page: b,
+
+            },
+            dataType: "html",
+            success: function (data) {
+                $("#show_dulieu").html(data);
+            },
+        });
+    }
+</script>

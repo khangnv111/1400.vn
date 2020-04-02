@@ -1,0 +1,151 @@
+﻿@using W1400.DataAccess.DTO
+@model Suggest
+
+@{
+    var permission = ((UserFunction)Session[W1400.Utility.SessionsManager.SESSION_PERMISSION]);
+}
+
+<script src="~/ckfinder/ckfinder.js"></script>
+@if (permission.IsGrant)
+{
+
+    <div class="well">
+        <span class="label label-danger">
+            Chú ý!
+        </span>
+        <span>
+            Hãy chắc chắn nhập vào đầy đủ thông tin tại các mục bắt buộc đánh dấu (*)
+        </span>
+    </div>
+    <div class="row">
+        <div class="col-md-12">
+            <div class="panel panel-primary">
+                <div class="panel-heading">
+                    <i class="fa fa-fw fa-user-md"></i><span>Trả lời thư góp ý</span>
+                </div>
+                <form id="defaultForm" method="post" class="form-horizontal">
+                    <div class="panel-group" id="steps">
+                        <div class="messager-body">
+                            <div class="alert alert-success display-hide alert-dismissable">
+                                <button type="button" class="close" data-close="alert" aria-hidden="true">×</button>
+                                <span class="glyphicon glyphicon-ok"></span>
+                                <label>Gửi mail thành công !!!</label>
+                            </div>
+                            <div class="alert alert-danger display-hide alert-dismissable">
+                                <button type="button" class="close" data-close="alert" aria-hidden="true">×</button>
+                                <span class="glyphicon glyphicon-warning-sign"></span>
+                                <label id="ErrorMessage">Có một vài lỗi trong khung nhập liệu dưới đây ! kiểm tra lại</label>
+                            </div>
+                        </div>
+                        <div class="panel panel-info">
+                            @*<div class="panel-heading">
+                                    <h4 class="panel-title"><i class="fa fa-wrench" style="margin-right:7px"></i>Thông Tin Cơ Bản</h4>
+                                </div>*@
+                            <div class="panel-body">
+                                <!-- dành cho UpdateFunction -->
+                                <div class="form-group">
+                                    <label for="txtTitle" class="control-label col-md-2">Người gửi:  </label>
+                                    <div class="col-md-8">
+                                        <div class="input-icon right">
+                                            <input type="text" id="txtEmailSend" name="txtEmailConfirm" value="@ViewBag.EmailSend" class="form-control" placeholder="Email người trả lời" style="background-color: #f0f0f0" />
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="form-group">
+                                    <label for="txtTitle" class="control-label col-md-2">Password:  </label>
+                                    <div class="col-md-8">
+                                        <div class="input-icon right">
+                                            <input type="password" id="txtPassword" name="txtEmailConfirm" value="" class="form-control" placeholder="Mật khẩu email người trả lời" />
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="form-group">
+                                    <label for="txtTitle" class="control-label col-md-2">Người nhận:  </label>
+                                    <div class="col-md-8">
+                                        <div class="input-icon right">
+                                            <input type="text" id="txtEmailReceive" name="txtEmailConfirm" value="@Model.Email" class="form-control" placeholder="Email người nhận" style="background-color: #f0f0f0" />
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="form-group">
+                                    <label for="txtTitle" class="control-label col-md-2">CC:  </label>
+                                    <div class="col-md-8">
+                                        <div class="input-icon right">
+                                            <input type="text" id="txtEmailCc" name="txtEmailCc" value="" class="form-control" placeholder="Email đồng gửi cách nhau bằng dấu chấm phẩy (;)" />
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="form-group">
+                                    <label for="txtTitle" class="control-label col-md-2">Tiêu đề:  </label>
+                                    <div class="col-md-8">
+                                        <div class="input-icon right">
+                                            <input type="text" id="txtSubject" name="txtEmailConfirm" value="" class="form-control" placeholder="" />
+                                        </div>
+                                    </div>
+                                </div>
+
+
+                                <div class="form-group">
+                                    <label for="txtTitle" class="control-label col-md-2">Nội dung trả lời:  </label>
+                                    <div class="col-md-8">
+                                        <div class="input-icon right">
+                                            <textarea id="txtContent" name="txtContent" class="form-control" rows="5">
+
+                                                @Model.Suggestion
+                                            </textarea>
+                                        </div>
+                                    </div>
+                                </div>
+
+
+                            </div>
+                            <div class="panel-footer form-horizontal">
+                                <div class="form-group submit">
+                                    <button type="button" class="btn btn-success" onclick="SuggetCtrl.SendMail(@ViewBag.SugId);" id="btnReset"><i class="fa fa-paper-plane"></i>Gửi thư trả lời</button>
+
+                                    <button type="button" class="btn btn-default" id="btnBack" onclick="SuggetCtrl.BtnBack();"><i class="fa fa-backward"></i>Back</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <script type="text/javascript">
+
+        $(document).ready(function () {
+            var editor = CKEDITOR.instances['txtContent'];
+            if (editor) {
+                CKEDITOR.remove(editor);
+            }
+            CKEDITOR.replace('txtContent', {
+                filebrowserBrowseUrl: appPath + 'ckfinder/ckfinder.html',
+                filebrowserImageBrowseUrl: appPath + 'ckfinder/ckfinder.html',
+                filebrowserUploadUrl: appPath + 'ckfinder/ckfinder.html',
+                filebrowserImageUploadUrl: appPath + 'ckfinder/ckfinder.html',
+                disallowedContent: 'img{width,height}',
+                uiColor: '#77C0F1',
+                extraPlugins: 'colordialog,dialogadvtab,tableresize,youtube,video',
+                //enterMode: CKEDITOR.ENTER_BR,
+                //allowedContent: true,
+                height: 330,
+                //width: 980
+            });
+        })
+
+    </script>
+}
+else
+{
+    <h2 style="color:red">ErrorPermission</h2>
+
+    <h4>Bạn không có quyền truy cập . Xin hãy liên hệ Admin để được cấp quyền vào hệ thống CMS</h4>
+
+    <a href="@Html.Raw(ViewBag.UrlLogin)?act=out" style="color:#005bff; font-size:13px;text-decoration:underline">Logout</a>
+}

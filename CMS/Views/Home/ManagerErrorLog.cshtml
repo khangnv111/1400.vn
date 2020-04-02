@@ -1,0 +1,151 @@
+﻿@using W1400.DataAccess.DTO
+@model UserFunction
+<!-- /.row -->
+@if (Model != null && Model.FunctionID == (int)W1400.Utility.Enums.FunctionId.ErrorSystem)
+{
+    <div class="row">
+        <div class="col-lg-12">
+            <div class="panel panel-primary">
+                <div class="panel-heading">Quản lý lỗi hệ thống</div>
+                <div class="panel-body">
+                    <div class="row" id="form">
+                        <form id="defaultForm" method="post">
+                            <div class="col-md-12">
+                                <div class="form-group col-lg-4 col-md-4 col-sm-4 col-xs-12">
+                                    <label class="textDate" style="float: left; margin: 5px 0 0 10px; width:30px">Từ</label>
+                                    <div class="col-lg-8">
+                                        <div class="input-icon date" id="datetimeFromDate">
+                                            <input type="text" data-date-format="DD/MM/YYYY" id="fromDate" class="form-control" name="datetimeFromDate" />
+                                            <span class="input-group-addon"><span class="fa fa-fw fa-calendar"></span></span>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="form-group col-lg-4 col-md-4 col-sm-4 col-xs-12">
+                                    <label class="textDate" style="float: left; margin: 5px 0 0 10px; width: 30px">Đến</label>
+                                    <div class="col-lg-8">
+                                        <div class="input-icon date" id="datetimeToDate">
+                                            <input type="text" data-date-format="DD/MM/YYYY" id="toDate" class="form-control" name="datetimeToDate" />
+                                            <span class="input-group-addon"><span class="fa fa-fw fa-calendar"></span></span>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="form-group submit col-lg-4 col-md-4 col-sm-4 col-xs-12">
+                                    <input type="button" id="btnSearch" class="btn btn-info" value="Tìm Kiếm" style="margin:0">
+                                    @if (Model.IsDelete)
+                                    {
+                                        <input type="button" id="btnClear" class="btn btn-danger" value="Xóa" style="margin:0" />
+                                    }
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                    <div class="table-responsive">
+                        <div id="dgrid" class="dataTables_wrapper form-inline" role="grid">
+                            <div id="ErrorlogPartial">
+                                @Html.Action("ListErrorLog", "Home")
+                            </div>
+
+                            <div class="dataTables_paginate" id="pager">
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <script type="text/javascript">
+    $(document).ready(function () {
+        $('#datetimeFromDate').datetimepicker();
+        $('#datetimeToDate').datetimepicker();
+        var fromdate = '@string.Format("{0:dd/MM/yyyy}", ViewBag.fromDate)';
+        var todate = '@string.Format("{0:dd/MM/yyyy}", ViewBag.toDate)';
+        $('#datetimeFromDate').data("DateTimePicker").setDate(fromdate);
+        $('#datetimeToDate').data("DateTimePicker").setDate(todate);
+
+        $("#datetimeFromDate").on("dp.change dp.show", function (e) {
+            $('#datetimeToDate').data("DateTimePicker").setMinDate(e.date);
+        });
+        $("#datetimeToDate").on("dp.change dp.show", function (e) {
+            $('#datetimeFromDate').data("DateTimePicker").setMaxDate(e.date);
+        });
+        var parameters = {
+        };
+        $("#form").keypress(function (event) {
+            if (event.which == 13) {
+                $("#btnSearch").click();
+            }
+        });
+        $("#btnSearch").click(function () {
+            btnSearch();
+        });
+
+        $("#btnClear").click(function () {
+            deleteData();
+        });
+    });
+    function btnSearch() {
+        parameters = {
+            'FromDate': $("#fromDate").val(),
+            'ToDate': $("#toDate").val()
+        };
+        Utils.Loading();
+        var urlRequestAns = UrlRoot + "Home/ListErrorLog";
+        $.ajax({
+            type: 'GET',
+            url: urlRequestAns,
+            data: parameters,
+            success: function (data) {
+                $("#ErrorlogPartial").html(data);
+                Utils.UnLoading();
+            },
+            error: function () {
+                Utils.UnLoading();
+            }
+        });
+    }
+    function deleteData() {
+        var IsDelete = '@Model.IsDelete';
+        if (IsDelete.toLowerCase() != "true") {
+            bootbox.alert("Bạn không có quyền xóa chức năng");
+            return;
+        }
+        bootbox.confirm("Bạn Chắc Chắn Muốn Xóa Chức Năng Này ??? ", function (result) {
+            if (result == true) {
+                var from = $("#fromDate").val();
+                var to = $("#toDate").val();
+                if (from == '' || from == null || to == '' || to == null) {
+                    alert("Bạn chưa chọn khoảng thời gian log cần xóa");
+                    return;
+                }
+                Utils.Loading();
+                $.ajax({
+                    type: 'POST',
+                    url: UrlRoot + "Home/DelDataErroLog",
+                    data: {
+                        fromdate: from,
+                        todate: to
+                    },
+                    success: function (data) {
+                        Utils.UnLoading();
+                        if (data.ResponseCode >= 0) {
+                            bootbox.alert(data.Description);
+                            btnSearch();
+                            return;
+                        }
+                        else {
+                            bootbox.alert(data.Description);
+                            return;
+                        }
+                    }
+                });
+            }
+        });
+    }
+    </script>
+}
+else
+{
+    <h2 style="color:red">ErrorPermission</h2>
+
+    <h4>Bạn không có quyền truy cập . Xin hãy liên hệ Admin để được cấp quyền vào hệ thống CMS</h4>
+}

@@ -1,0 +1,197 @@
+﻿@{
+    ViewBag.Title = "FormLogin";
+    Layout = "~/Views/Shared/_LayoutLogin.cshtml";
+}
+
+
+<!-- Modal -->
+<div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+                <div class="logo">
+                    <a href="@Html.Raw(W1400.Utility.Config.UrlRoot)"><img alt="Hệ thống quản trị CMS Analystic" style="margin-top: 5px;" width="215" height="35" src="~/images/logvn.png"></a>
+                </div>
+            </div>
+            <div class="modal-body">
+                <div class="panel panel-primary">
+                    <div class="panel-heading">
+                        <h4 class="modal-title" id="myModalLabel"><i class="fa fa-fw fa-sign-out"></i>Đăng nhập vào hệ thống</h4>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-12">
+                            <div class="panel panel-default login" style="margin-top:0">
+                                <div class="messager-body">
+                                    <div class="alert alert-success display-hide alert-dismissable">
+                                        <button type="button" class="close" data-close="alert" aria-hidden="true">×</button>
+                                        <span class="glyphicon glyphicon-ok"></span>
+                                        <label>Đăng nhập thành công !!!</label>
+                                    </div>
+                                    <div class="alert alert-danger display-hide alert-dismissable">
+                                        <button type="button" class="close" data-close="alert" aria-hidden="true">×</button>
+                                        <span class="glyphicon glyphicon-warning-sign"></span>
+                                        <label id="ErrorLbl">Có lỗi trong khung đăng nhập</label>
+                                    </div>
+                                </div>
+                                <div class="panel-body content">
+                                    <form class="form-horizontal" role="form" id="loginForm" method="post">
+
+                                        <div class="form-group col-md-push-1">
+                                            <label class="control-label visible-ie8 visible-ie9">Username</label>
+                                            <div class="input-icon">
+                                                <i class="fa fa-user"></i>
+                                                <input class="form-control" id="Username" name="Username" placeholder="Username" required="" type="text">
+                                            </div>
+                                        </div>
+                                        <div class="form-group col-md-push-1">
+                                            <label class="control-label visible-ie8 visible-ie9">Password</label>
+                                            <div class="input-icon">
+                                                <i class="fa fa-lock"></i>
+                                                <input class="form-control" id="Password" name="Password" placeholder="Password" required="" type="password">
+                                            </div>
+                                        </div>
+
+                                        <div class="form-group last">
+                                            <div class="col-lg-12">
+                                                <button type="submit" class="btn btn-success btn-sm" name="datasave" id="btnSave">Đăng nhập <i class="fa fa-arrow-circle-right"></i></button>
+                                                <button type="reset" class="btn btn-info btn-sm" id="btnReset"><i class="fa fa-refresh"></i>Làm mới</button>
+                                                @*<button type="button" class="btn btn-primary btn-sm" id="btnGotoMailVTC"><i class="fa fa-external-link"></i>Đăng Nhập Mail VTC</button>*@
+                                            </div>
+                                        </div>
+                                    </form>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </div>
+</div>
+<script type="text/javascript">
+    $(document).ready(function () {
+        setTimeout(function () {
+            $("#myModal").modal({
+                show: true,
+                backdrop: 'static',
+                keyboard:false
+            });
+        }, 1000);
+        $("#myModal").on('shown.bs.modal', function () {
+            $("#Username").focus();
+        });
+        @*$("#btnGotoMailVTC").click(function () {
+            var urlLogin = '@Html.Raw(ViewBag.urlSSo)';
+            location.href = urlLogin;
+        });*@
+        $("button.close").click(function () {
+            $(this).parent().css("display", "none");
+        });
+        $('#loginForm').bootstrapValidator({
+            message: 'This value is not valid',
+            //live: 'submitted',
+            feedbackIcons: {
+                valid: 'glyphicon glyphicon-ok',
+                invalid: 'glyphicon glyphicon-remove',
+                validating: 'glyphicon glyphicon-refresh'
+            },
+            fields: {
+                Username: {
+                    message: 'The username is not valid',
+                    validators: {
+                        notEmpty: {
+                            message: 'Username không được bỏ trống'
+                        },
+                        regexp: {
+                            regexp: /^[a-zA-Z0-9\.]+$/,
+                            message: 'Username nhập vào sai định dạng'
+                        },
+                        stringLength: {
+                            min: 3,
+                            max: 30,
+                            message: 'Username trong khoảng 3 - 30 ký tự'
+                        }
+                    }
+                },
+                Password: {
+                    validators: {
+                        notEmpty: {
+                            message: 'password không thể bỏ trống'
+                        },
+                        stringLength: {
+                            min: 6,
+                            max: 30,
+                            message: 'Password phải từ 6 đến 30 ký tự'
+                        }
+                    }
+                }
+            }
+        })
+        .on('success.form.bv', function (e) {
+            // Prevent submit form
+            e.preventDefault();
+
+            var $form = $(e.target),
+                validator = $form.data('bootstrapValidator');
+            SaveData();
+            $(".close").click(function () {
+                $(".alert-success").css("display", "none");
+            });
+        })
+        .on('error.form.bv', function (e) {
+            // Active the panel element containing the first invalid element
+            e.preventDefault();
+            var $form = $(e.target),
+            validator = $form.data('bootstrapValidator');
+            $(".alert-danger label").text("Có một vài lỗi trong khung đăng nhập");
+            $(".alert-danger").css("display", "block");
+            $(".close").click(function () {
+                $(".alert-danger").css("display", "none");
+                $(".alert-success").css("display", "none");
+            });
+            var Username = $("#Username").val();
+            if (Username == null || Username == '')
+                $("#Username").focus();
+            else
+                $("#Password").focus();
+        });
+        $("#btnReset").click(function () {
+            $('#loginForm').data('bootstrapValidator').resetForm(true);
+            $(".alert-danger").css("display", "none");
+            $(".alert-success").css("display", "none");
+        });
+        function SaveData() {
+            var param = {
+                Username: $("#Username").val(),
+                Password: $("#Password").val()
+            }
+            Utils.Loading();
+            $.ajax({
+                type: 'POST',
+                url: UrlRoot + "Account/Login",
+                data: param,
+                async: true,
+                success: function (data) {
+                    Utils.UnLoading();
+                    if (data.success == true) {
+                        $(".alert-success").show("slow");
+                        $(".alert-danger").hide("slow");
+                        setTimeout(function () {
+                            $(".alert-success").hide("slow");
+                            location.href = data.url;
+                        }, 2500);
+                    }
+                    else {
+                        $(".alert-danger label").text(data.msg);
+                        $(".alert-danger").show("slow");
+                        $(".alert-success").hide("slow");
+                        $("#Password").focus();
+                        setTimeout(function () { $(".alert-danger").hide("slow"); }, 3000);
+                    }
+                }
+            });
+        };
+    });
+</script>

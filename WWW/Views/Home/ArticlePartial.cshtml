@@ -1,0 +1,10 @@
+﻿<div class="tieude_noidung_trai">
+    tin tức
+    @Html.Action("MenuArticleHome", "Partial")
+</div>
+<div id="divLoadArticleByCate">
+    @Html.Action("ArticleHomePartial", "Article", new { CateId = -1 })
+</div>
+<ul class="list_xemthem">
+    <li><a href="@System.Configuration.ConfigurationManager.AppSettings["URL_ROOT"]tin-tuc">Xem thêm</a></li>
+</ul>

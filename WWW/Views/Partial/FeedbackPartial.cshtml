@@ -1,0 +1,91 @@
+﻿<div class="box_gopy" id="gopy">
+    <span>gửi thư góp ý</span>
+    <ul>
+        <li><input type="text" id="Email" placeholder="Nhập email"></li>
+        <li><input type="text" id="Mobile" placeholder="Nhập số điện thoại" maxlength="15"></li>
+    </ul>
+    <textarea placeholder="Nhập nội dung" id="Content"></textarea>
+    <a href="javascript:;" onclick="SendSuggest()">Gửi góp ý</a>
+</div>
+<script type="text/javascript">
+    //$("#Mobile").keydown(function (event) {
+    //    // Allow only backspace and delete
+    //    if (event.keyCode == 46 || event.keyCode == 8) {
+    //        // let it happen, don't do anything
+    //    }
+    //    else {
+    //        // Ensure that it is a number and stop the keypress
+    //        if (event.keyCode < 48 || event.keyCode > 57) {
+    //            event.preventDefault();
+    //        }
+    //    }
+    //});
+    function SendSuggest() {
+        var Email = $("#Email").val();        
+        var Mobile = $("#Mobile").val();
+        var Content = $("#Content").val();
+        if (Email == '') {
+            bootbox.alert("Bạn vui lòng nhập email");
+            $("#Email").focus();
+            return;
+        }
+
+        if (validateEmail(Email)) {
+        }
+        else {
+            bootbox.alert('Email không đúng định dạng');
+            return false;
+        }
+
+        if (Mobile == '') {
+            bootbox.alert("Bạn vui lòng nhập số điện thoại");
+            $("#Mobile").focus();
+            return;
+        }
+
+        if (validatePhone(Mobile)) {
+        }
+        else {
+            bootbox.alert('Số điện thoại không chính xác');
+            return;
+        }
+
+
+        if (Content == '') {
+            bootbox.alert("Bạn vui lòng nhập nội dung góp ý");
+            $("#Content").focus();
+            return;
+        }
+        $.ajax({
+            type: "POST",
+            url: '@Url.Action("SendSuggest", "Partial")',            
+            data: {
+                Email: Email,
+                Mobile: Mobile,
+                Content: Content
+            },            
+            success: function (data) {                
+                if (data.success == 1)
+                    {
+                    bootbox.alert("Cảm ơn bạn đã gửi góp ý cho chúng tôi");
+                    $("#Email").val("");
+                    $("#Mobile").val("");
+                    $("#Content").val("");
+                }
+                else
+                    bootbox.alert("Hệ thống đang bận");
+            },
+        });
+    }
+    function validatePhone(txtPhoneNumber) {
+        var filter = /^[0-9-+]+$/;
+        if (filter.test(txtPhoneNumber)) {
+            return true;
+        }
+        else {
+            return false;
+        }
+    }
+
+    
+</script>

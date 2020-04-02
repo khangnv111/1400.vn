@@ -1,0 +1,66 @@
+﻿@using W1400.DataAccess.DTO
+@model List<ErrorLog>
+@{var permission = ((UserFunction)Session[W1400.Utility.SessionsManager.SESSION_PERMISSION]);}
+
+@if (permission != null || permission.FunctionID == (int)W1400.Utility.Enums.FunctionId.ErrorSystem)
+{
+    <table class="table table-striped table-bordered table-hover dataTable no-footer" id="dataTables">
+        <thead>
+            <tr class="info">
+                <th class="col-lg-1">ErrorTime</th>
+                <th class="col-lg-1">UserName</th>
+                <th class="col-lg-1">ErrorCode</th>
+                <th class="col-lg-1">ErrorState</th>
+                <th class="col-lg-3">ErrorProcedure</th>
+                <th class="col-lg-1">ErrorLine</th>
+                <th class="col-lg-4">ErrorMessage</th>
+            </tr>
+        </thead>
+        @if (Model.Count > 0)
+        {
+            foreach (var obj in Model)
+            {
+                <tr>
+                    <td>@string.Format("{0:dd/MM/yyyy HH:mm}", obj.ErrorTime)</td>
+                    <td>@obj.UserName</td>
+                    <td>@obj.ErrorCode</td>
+                    <td>@obj.ErrorState</td>
+                    <td>@obj.ErrorProcedure</td>
+                    <td>@obj.ErrorLine</td>
+                    <td>@obj.ErrorMessage</td>
+                </tr>
+            }
+        }
+    </table>
+    <script type="text/javascript">
+    $(document).ready(function () {
+        var table = $('#dataTables').DataTable({
+            ordering: false,
+            dom: 'Bfrtip',
+            lengthMenu: [
+           [10, 25, 50],
+           ['10 dòng', '25 dòng', '50 dòng']
+            ],
+            buttons: [
+                 'pageLength',
+                {
+                    extend: "colvis",
+                    text: "<i class='fa fa-eye-slash'></i>Ẩn/hiện cột"
+                }
+            ],
+            "bAutoWidth": true,
+            "aaSorting": [[0, 'desc']],
+            "bSort": true,
+            searching: true,
+            pageLength: 25,
+            reponsive: true
+        });
+        table.buttons().container().appendTo('#example_wrapper .col-sm-6:eq(0)');
+        $('#dataTables').on('page.dt', function () {
+            $("html,body").animate({ scrollTop: $('#dataTables').offset().top - 100 }, 'fast');
+        });
+
+    });
+    </script>
+}
+

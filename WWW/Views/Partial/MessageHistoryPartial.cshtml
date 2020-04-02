@@ -1,0 +1,70 @@
+﻿@model List<W1400.DataAccess.DTO.DBMessage>
+<span id="numMobile"></span>
+@if (Model != null && Model.Count > 0)
+{
+    <table>
+        <tr>
+            <th>STT</th>
+            <th>Cú pháp</th>
+            <th>Đầu số</th>
+            <th>Thời gian</th>
+            <th>Tình trạng</th>
+        </tr>
+        <tr>
+
+            @for (int i = 0; i < Model.Count; i++)
+            {
+        <tr>
+            <td>@Model[i].STT</td>
+            <td class="text_cu_phap">@Model[i].CommandCode</td>
+            <td>@Model[i].ServiceID</td>
+            <td>@Model[i].RequestTime.ToString("dd/MM/yyyy HH:mm")</td>
+            @if (Model[i].MsgType == 1)
+            {
+                <td>Thành công</td>
+            }
+            else
+            {
+                <td>Thất bại</td>
+            }
+        </tr>
+        }
+
+
+    </table>
+}
+else
+{
+    <span>Không có dữ liệu nào được tìm thấy</span>
+}
+
+@if (ViewBag.TotalPage > 1)
+{
+    int page = ViewBag.currentPage; //page hien tai
+    int total_page = ViewBag.TotalPage; //tong so page
+    int prePage = page - 1;
+    int nextPage = page + 1;
+    <ul class="list_phantrang">
+
+        <li @if (page == 1) { prePage = page; @: class="disabled"
+                                }><a href="javascript:;" onclick="LoadMessage(@prePage)">«</a></li>
+        @for (int i = page - 2; i <= page + 2; i++)
+        {
+            if (i > 0 && i <= total_page)
+            {
+                if (i == page)
+                {
+                    <li><a style="color: #e31e25;" href="javascript:;" onclick="LoadMessage(@i)">@i</a></li>
+                }
+                else
+                {
+                    <li><a href="javascript:;" onclick="LoadMessage( @i)">@i</a></li>
+                }
+
+            }
+        }
+        <li @if (page == total_page) { nextPage = page; @: class="disabled"
+                                            }><a href="javascript:;" onclick="LoadMessage( @nextPage)">»</a></li>
+
+    </ul>
+}

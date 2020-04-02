@@ -1,0 +1,330 @@
+﻿@using W1400.DataAccess.DTO
+@model Users
+
+@{
+    var permission = ((UserFunction)Session[W1400.Utility.SessionsManager.SESSION_PERMISSION]);
+
+}
+@if (ViewBag.IsAdmin)
+{
+
+    <div class="well">
+        <span class="label label-danger">
+            Chú ý!
+        </span>
+        <span>
+            Hãy chắc chắn nhập vào đầy đủ thông tin tại các mục bắt buộc đánh dấu (*)
+        </span>
+    </div>
+    <div class="row">
+        <div class="col-md-12">
+            <div class="panel panel-primary">
+                <div class="panel-heading">
+                    @if (Model.UserID > 0)
+                    {
+                        <i class="fa fa-fw fa-user-md"></i><span>Cập Nhật User</span>
+                    }
+                    else
+                    {
+                        <i class="fa fa-fw fa-user-plus"></i><span>Thêm mới User</span>
+                    }
+                </div>
+                <form id="defaultForm" method="post" class="form-horizontal">
+                    <div class="panel-group" id="steps">
+                        <div class="messager-body">
+                            <div class="alert alert-success display-hide alert-dismissable">
+                                <button type="button" class="close" data-close="alert" aria-hidden="true">×</button>
+                                <span class="glyphicon glyphicon-ok"></span>
+                                <label>Đã lưu dữ liệu thành công !!!</label>
+                            </div>
+                            <div class="alert alert-danger display-hide alert-dismissable">
+                                <button type="button" class="close" data-close="alert" aria-hidden="true">×</button>
+                                <span class="glyphicon glyphicon-warning-sign"></span>
+                                <label>Có một vài lỗi trong khung nhập liệu dưới đây ! kiểm tra lại</label>
+                            </div>
+                        </div>
+                        <div class="panel panel-info">
+                            <div class="panel-heading">
+                                <h4 class="panel-title"><i class="fa fa-wrench" style="margin-right:7px"></i>Thông Tin Cơ Bản</h4>
+                            </div>
+                            <div class="panel-body">
+                                <!-- dành cho UpdateFunction -->
+                                <div class="form-group">
+                                    <label for="txtUserName" class="control-label col-md-5">UserName :<span class="required">*</span></label>
+                                    <div class="col-md-3">
+                                        <div class="input-icon right">
+                                            <input type="text" id="txtUserName" maxlength="30" name="username" value="@Model.Username" class="form-control" placeholder="Nhập tên Tài Khoản" />
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="form-group">
+                                    <label for="txtFullName" class="control-label col-md-5">FullName :<span class="required">*</span></label>
+                                    <div class="col-md-3">
+                                        <div class="input-icon right">
+                                            <input type="text" id="txtFullName" name="fullname" maxlength="50" value="@Model.FullName" class="form-control" placeholder="Nhập họ tên" />
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label for="txtEmail" class="control-label col-md-5">Email :<span class="required">*</span></label>
+                                    <div class="col-md-3">
+                                        <div class="input-icon right">
+                                            <input type="text" id="txtEmail" name="Email" maxlength="150" value="@Model.Email" class="form-control" placeholder="Nhập địa chỉ Email" data-rule-required="true" />
+                                        </div>
+                                    </div>
+                                </div>
+                                @if (Model.UserID > 0)
+                                {
+                                    <div class="form-group" style="display: none">
+                                        <label for="txtpassword" class="control-label col-md-5">Password :<span class="required">*</span></label>
+                                        <div class="col-md-3">
+                                            <div class="input-icon right">
+                                                <input type="password" id="txtpassword" name="Password" maxlength="30" class="form-control" placeholder="Nhập mật khẩu" />
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="form-group" style="display: none">
+                                        <label for="txtConfirmPass" class="control-label col-md-5">RewritePassword :<span class="required">*</span></label>
+                                        <div class="col-md-3">
+                                            <div class="input-icon right">
+                                                <input type="password" id="txtConfirmPass" name="ConfirmPassword" maxlength="30" class="form-control" placeholder="nhập lại mật khẩu" />
+                                            </div>
+                                        </div>
+                                    </div>
+                                }
+                                else
+                                {
+                                    <div class="form-group">
+                                        <label for="txtpassword" class="control-label col-md-5">Password :<span class="required">*</span></label>
+                                        <div class="col-md-3">
+                                            <div class="input-icon right">
+                                                <input type="password" id="txtpassword" name="Password" maxlength="30" class="form-control" placeholder="Nhập mật khẩu" />
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="txtConfirmPass" class="control-label col-md-5">RewritePassword :<span class="required">*</span></label>
+                                        <div class="col-md-3">
+                                            <div class="input-icon right">
+                                                <input type="password" id="txtConfirmPass" name="ConfirmPassword" maxlength="30" class="form-control" placeholder="nhập lại mật khẩu" />
+                                            </div>
+                                        </div>
+                                    </div>
+                                }
+
+                                <div class="form-group">
+                                    <label class="control-label col-md-5" for="cbxIsActive">Status :</label>
+                                    <div class="col-md-3">
+                                        <div class="input-icon checkbox">
+                                            @if (Model.Status == true)
+                                            {<input type="checkbox" id="cbxIsActive" checked="checked" />}
+                                            else
+                                            {<input type="checkbox" id="cbxIsActive" /> }
+
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label class="control-label col-md-5" for="cbxIsAdministrator">Admin :</label>
+                                    <div class="col-md-3">
+                                        <div class="input-icon checkbox">
+                                            @if (Model.IsAdministrator == true)
+                                            {<input type="checkbox" id="cbxIsAdministrator" checked="checked" />}
+                                            else
+                                            {<input type="checkbox" id="cbxIsAdministrator" /> }
+
+                                        </div>
+                                    </div>
+                                </div>
+
+
+
+                            </div>
+                            <div class="panel-footer form-horizontal">
+                                <div class="form-group submit">
+                                    @if ((Model.UserID == 0 && permission.IsInsert) || (Model.UserID > 0 && permission.IsUpdate))
+                                    {
+                                        <button type="submit" class="btn btn-primary" id="btnSave"><i class="fa fa-save"></i>Lưu lại</button>
+                                    }
+                                    <button type="button" class="btn btn-success" id="btnReset"><i class="fa fa-refresh"></i>Làm mới</button>
+                                    <button type="button" class="btn btn-default" id="btnBack" onclick="ListUsers();"><i class="fa fa-backward"></i>Back</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <script type="text/javascript">
+        $(document).ready(function () {
+            $("button.close").click(function () {
+                $(this).parent().css("display", "none");
+            });
+            $('#defaultForm').bootstrapValidator({
+                message: 'This value is not valid',
+                //live: 'submitted',
+                feedbackIcons: {
+                    valid: 'glyphicon glyphicon-ok',
+                    invalid: 'glyphicon glyphicon-remove',
+                    validating: 'glyphicon glyphicon-refresh'
+                },
+                fields: {
+
+                    username: {
+                        message: 'The username is not valid',
+                        validators: {
+                            notEmpty: {
+                                message: 'Username không được bỏ trống'
+                            },
+                            regexp: {
+                                regexp: /^[a-zA-Z0-9\.]+$/,
+                                message: 'Username gồm ký tự alphabeta hoặc số'
+                            },
+                            stringLength: {
+                                min: 3,
+                                max: 30,
+                                message: 'Username nhỏ nhất 3 ký tự và nhiều nhất 30 ký tự'
+                            },
+                            different: {
+                                field: 'Password',
+                                message: 'Username và password phải khác nhau'
+                            }
+                        }
+                    },
+                    fullname: {
+                        message: 'Bạn chưa nhập họ tên.',
+                        validators: {
+                            notEmpty: {
+                                message: 'Bạn chưa nhập họ tên'
+                            },
+                            stringLength: {
+                                min: 3,
+                                max: 50,
+                                message: 'họ tên dài từ 3 đến 50 ký tự'
+                            },
+                            regexp: {
+                                regexp: /^[a-zA-Z0-9áàảãạăắằẳẵặâấầẩẫậđéèẻẽẹêếềểễệíìỉĩịóòỏõọôốồổỗộơớờởỡợúùủũụưứừữửựýỳỷỹỵÁÀẢÃẠĂẮẰẲẴẶÂẤẦẨẪẬĐÉÈẺẼẸÊẾỀỂỄỆÍÌỈĨỊÓÒỎÕỌÔỐỒỔỖỘƠỚỜỞỠỢÚÙỦŨỤƯỨỪỮỬỰÝỲỶỸỴ\.\-\_\s]+$/,
+                                message: 'Họ tên không được nhập các ký tự đặc biệt'
+                            },
+                        }
+                    },
+                    Email: {
+                        validators: {
+                            notEmpty: {
+                                message: 'Email không được bỏ trống'
+                            },
+                            emailAddress: {
+                                message: 'Bạn đã nhập sai định dạng địa chỉ email'
+                            }
+                        }
+                    },
+                    Password: {
+                        validators: {
+                            stringLength: {
+                                min: 6,
+                                max: 30,
+                                message: 'Password phải từ 6 đến 30 ký tự'
+                            },
+                            identical: {
+                                field: 'ConfirmPassword',
+                                message: 'Password và confirmPassword không trùng khớp'
+                            },
+                            different: {
+                                field: 'username',
+                                message: 'Password không thể trùng với Username'
+                            }
+                        }
+                    },
+                    ConfirmPassword: {
+                        validators: {
+                            identical: {
+                                field: 'Password',
+                                message: 'Password và confirmPassword không trùng khớp'
+                            },
+                            different: {
+                                field: 'username',
+                                message: 'Password không thể trùng với Username'
+                            }
+                        }
+                    }
+                }
+            })
+            .on('success.form.bv', function (e) {
+                // Prevent submit form
+                e.preventDefault();
+
+                var $form = $(e.target),
+                    validator = $form.data('bootstrapValidator');
+                SaveData();
+                $(".close").click(function () {
+                    $(".alert-success").css("display", "none");
+                });
+            })
+            .on('error.form.bv', function (e) {
+                // Active the panel element containing the first invalid element
+                e.preventDefault();
+                var $form = $(e.target),
+                validator = $form.data('bootstrapValidator');
+                $(".alert-danger label").text("Có một vài lỗi trong khung nhập liệu dưới đây ! kiểm tra lại");
+                $(".alert-danger").css("display", "block");
+                $(".close").click(function () {
+                    $(".alert-danger").css("display", "none");
+                    $(".alert-success").css("display", "none");
+                });
+            });
+
+            $("#btnReset").click(function () {
+                $('#defaultForm').data('bootstrapValidator').resetForm(true);
+                $(".alert-danger").css("display", "none");
+                $(".alert-success").css("display", "none");
+            });
+            //Save Data
+            function SaveData() {
+                var param = {
+                    'UserID': '@Model.UserID',
+                    'Username': $("#txtUserName").val(),
+                    'FullName': $("#txtFullName").val(),
+                    'Email': $("#txtEmail").val(),
+                    'Password': $("#txtpassword").val(),
+                    'Status': $("#cbxIsActive").is(":checked") ? true : false,
+                    'MerchantID': $("#ddlMerchant").val(),
+                    'IsAdministrator': $("#cbxIsAdministrator").is(":checked") ? true : false
+                };
+                Utils.Loading();
+                $.ajax({
+                    type: 'POST',
+                    url: UrlRoot + "Home/SaveDataUser",
+                    data: param,
+                    async: true,
+                    success: function (data) {
+                        Utils.UnLoading();
+                        if (data.ResponseCode >= 0) {
+                            $("html,body").animate({ scrollTop: $('#TemplateContent').offset().top }, 'fast');
+                            $(".alert-success").show("slow");
+                            $(".alert-danger").hide("slow");
+                            setTimeout(function () { $(".alert-success").hide("slow"); ListUsers(); }, 2000);
+                        }
+                        else {
+                            $("html,body").animate({ scrollTop: $('#TemplateContent').offset().top }, 'fast');
+                            $(".alert-danger label").text(data.Description);
+                            $(".alert-danger").show("slow");
+                            $(".alert-success").hide("slow");
+                            setTimeout(function () { $(".alert-danger").hide("slow"); }, 2000);
+                        }
+                    }
+                });
+            };
+        });
+    </script>
+}
+else
+{
+    <h2 style="color:red">ErrorPermission</h2>
+
+    <h4>Bạn không có quyền truy cập . Xin hãy liên hệ Admin để được cấp quyền vào hệ thống CMS</h4>
+
+    <a href="@Html.Raw(ViewBag.UrlLogin)?act=out" style="color:#005bff; font-size:13px;text-decoration:underline">Logout</a>
+}

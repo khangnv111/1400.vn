@@ -1,0 +1,84 @@
+﻿@model List<W1400.DataAccess.DTO.Program>
+
+@if (Model != null)
+{
+    W1400.Utility.NoMark rw = new W1400.Utility.NoMark();
+    <div class="tieude_noidung">chương trình đang thực hiện</div>
+    for (int i = 0; i < Model.Count; i++)
+    {
+        string Rewrite = rw.ReWriteProgramPending(Model[i].EventName, Model[i].EventID);
+        <a style="cursor:pointer" href="@Rewrite">
+            <div class="box_chuong_trinh">
+                <div class="box_img_chuongtrinh"><img class="img-responsive" src="@Model[i].Image"></div>
+                <div class="box_mota_chuongtrinh">@Model[i].EventName</div>
+                <div class="box_noidung_chuongtrinh">
+                    @{
+        int ValueMessage = 0;
+        int Total = 0;
+        int Total2 = 0;
+        DateTime StartTime = DateTime.Now;
+        DateTime EndTime = DateTime.Now;
+        ulong TotalMoney_ = 0;
+        ulong TotalMoney = 0;
+        long TotalMessage = 0;
+        var list = W1400.DataAccess.Factory.AbstractDAOFactory.Instance().CreateProgramDAO().SP_Event_GetReport_Web(Model[i].EventID, Model[i].StartDate, Model[i].EndDate, out Total);
+        var list2 = W1400.DataAccess.Factory.AbstractDAOFactory.Instance().CreateProgramDAO().SP_Event_GetDetail_Web(Model[i].EventID, out Total2);
+        StartTime = Model[i].StartDate;
+        EndTime = Model[i].EndDate;
+                    }
+                    @if (list != null && list.Count > 0)
+                    {
+                        ValueMessage = list[0].Price;
+
+
+                        for (int k = 0; k < list.Count; k++)
+                        {
+                            TotalMoney = (ulong)list[k].Total_SMS * (ulong)list[k].Price;
+                            TotalMoney_ = TotalMoney_ + TotalMoney;
+                            TotalMessage = TotalMessage + list[k].Total_SMS;
+
+                        }
+
+                    }
+                    @if (list2 != null && list2.Count > 0)
+                    {
+                        <span>Soạn: <em>@list2[0].Commandcode</em> gửi <em>@list2[0].ServiceID</em></span>
+                    }
+                    <ul>
+                        @if (TotalMessage != 0)
+                        {
+                            <li>@string.Format("{0: ##,###}", TotalMessage).Replace(",", ".")</li>
+                        }
+                        else
+                        {
+                            <li>0</li>
+                        }
+                        <li><img src="@System.Configuration.ConfigurationManager.AppSettings["URL_ROOT"]images/icon_traitim_small.png" alt=""></li>
+                        @if (TotalMessage != 0)
+                        {
+                            <li>@string.Format("{0: ##,###}", TotalMoney_).Replace(",",".")</li>
+                        }
+                        else
+                        {
+                            <li>0</li>
+                        }
+                    </ul>
+                </div>
+                <div class="box_time_chuongtrinh">
+                    Thời gian: @StartTime.ToString("dd/MM/yyyy") đến @EndTime.ToString("dd/MM/yyyy")
+                    <br>Giá trị:
+                    @if (list2 != null && list2.Count > 0)
+                    {
+                        @Html.Raw(string.Format("{0: ##,###}", list2[0].Price).Replace(",", "."))
+                    }
+                    else
+                    {
+                        @Html.Raw("0")
+                    }
+                    đồng/01 tin nhắn
+
+                </div>
+            </div>
+        </a>
+    }
+}

@@ -1,0 +1,100 @@
+﻿@using W1400.DataAccess.DTO
+@model List<EventReport>
+
+@{var permission = ((UserFunction)Session[W1400.Utility.SessionsManager.SESSION_PERMISSION]);}
+
+@if (permission != null && permission.IsGrant)
+{
+    <table class="table table-striped table-bordered dataTable" border="1" role="grid" aria-describedby="example_info" width="100%" style="width: 100%;" id="dataTables">
+        <thead>
+            <tr class="info">
+                <th style="text-align:center; width: 5%">STT</th>
+                <th style="text-align:center;">Chương trình</th>
+                <th style="text-align:center;">Loại mạng</th>
+                <th style="text-align:center;">Đầu số</th>
+                <th style="text-align:center;">Cú pháp</th>
+                <th style="text-align:center;">Giá tiền 1 tin nhắn</th>
+                <th style="text-align:center;">Tổng tin nhắn</th>
+                <th style="text-align:center;">Tổng tiền</th>
+            </tr>
+        </thead>
+        <tbody>
+            @if (Model != null && Model.Count > 0)
+            {
+                var i = 0;
+                foreach (var obj in Model)
+                {
+                    i++;
+                    <tr role="row">
+                        <td>@i</td>
+                        <td>
+                            @obj.EventName
+                        </td>
+                        <td>
+                            @obj.SMSHost
+                        </td>
+                        <td>
+                            @obj.ServiceID
+                        </td>
+                        <td>
+                            @obj.CommandCode
+                        </td>
+                        <td>
+                           @obj.Price
+                        </td>
+                        <td>
+                            @obj.Total_SMS
+                        </td>
+                        <td>
+                            @(obj.Price * obj.Total_SMS)
+                            
+                        </td>
+
+                        
+                    </tr>
+                }
+            }
+        </tbody>
+    </table>
+
+
+    <script type="text/javascript">
+        $(document).ready(function () {
+            $('[data-toggle="popover"]').popover();
+
+            var table = $('#dataTables').DataTable({
+                dom: 'Bfrtip',
+                lengthMenu: [
+               [10, 25, 50],
+               ['10 rows', '25 rows', '50 rows']
+                ],
+                buttons: [
+                     'pageLength',
+                    {
+                        extend: "colvis",
+                        text: "<i class='fa fa-eye-slash'></i>Ẩn/hiện cột"
+                    }
+                ],
+                "bAutoWidth": true,
+                //"aaSorting": [[0, 'desc']],
+                "bSort": true,
+                searching: true,
+                pageLength: 25,
+                reponsive: true
+            });
+            table.buttons().container().appendTo('#example_wrapper .col-sm-6:eq(0)');
+            $('#dataTables').on('page.dt', function () {
+                $("html,body").animate({ scrollTop: $('#dataTables').offset().top - 100 }, 'fast');
+            });
+        });
+    </script>
+}
+else
+{
+    <h2 style="color:red">ErrorPermission</h2>
+
+    <h4>Bạn không có quyền truy cập . Xin hãy liên hệ Admin để được cấp quyền vào hệ thống CMS</h4>
+
+    <a href="@Html.Raw(ViewBag.UrlLogin)?act=out" style="color:#005bff; font-size:13px;text-decoration:underline">Logout</a>
+}
+

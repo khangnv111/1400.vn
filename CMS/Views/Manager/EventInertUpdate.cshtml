@@ -1,0 +1,341 @@
+﻿@using W1400.DataAccess.DTO
+@model Event
+
+@{
+    var permission = ((UserFunction)Session[W1400.Utility.SessionsManager.SESSION_PERMISSION]);
+}
+
+<script src="~/ckfinder/ckfinder.js"></script>
+@if (permission.IsGrant)
+{
+
+    <div class="well">
+        <span class="label label-danger">
+            Chú ý!
+        </span>
+        <span>
+            Hãy chắc chắn nhập vào đầy đủ thông tin tại các mục bắt buộc đánh dấu (*)
+        </span>
+    </div>
+    <div class="row">
+        <div class="col-md-12">
+            <div class="panel panel-primary">
+                <div class="panel-heading">
+                    <i class="fa fa-fw fa-user-md"></i><span>Cập Nhật Chương trình</span>
+                </div>
+                <form id="defaultForm" method="post" class="form-horizontal">
+                    <div class="panel-group" id="steps">
+                        <div class="messager-body">
+                            <div class="alert alert-success display-hide alert-dismissable">
+                                <button type="button" class="close" data-close="alert" aria-hidden="true">×</button>
+                                <span class="glyphicon glyphicon-ok"></span>
+                                <label>Đã lưu dữ liệu thành công !!!</label>
+                            </div>
+                            <div class="alert alert-danger display-hide alert-dismissable">
+                                <button type="button" class="close" data-close="alert" aria-hidden="true">×</button>
+                                <span class="glyphicon glyphicon-warning-sign"></span>
+                                <label id="ErrorMessage">Có một vài lỗi trong khung nhập liệu dưới đây ! kiểm tra lại</label>
+                            </div>
+                        </div>
+                        <div class="panel panel-info">
+                            <div class="panel-heading">
+                                <h4 class="panel-title"><i class="fa fa-wrench" style="margin-right:7px"></i>Thông Tin Cơ Bản</h4>
+                            </div>
+                            <div class="panel-body">
+                                <!-- dành cho UpdateFunction -->
+                                <div class="form-group">
+                                    <label for="txtTitle" class="control-label col-md-2">Tên chương trình (*):  </label>
+                                    <div class="col-md-8">
+                                        <div class="input-icon right">
+                                            <input type="text" id="txtEventName" name="txtEventName" value="@Model.EventName" class="form-control" placeholder="Nhập tên chương trình" />
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="form-group">
+                                    <label for="txtTitle" class="control-label col-md-2">Mục đích (*):  </label>
+                                    <div class="col-md-8">
+                                        <div class="input-icon right">
+                                            <textarea id="txtPorpose" name="txtPorpose" class="form-control" rows="5" placeholder="Mục đích triển khai">@Model.Porpose</textarea>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="form-group">
+                                    <label id="labanh" for="txtImageUrl" class="control-label col-md-2">Ảnh (345x139) (*)</label>
+                                    <div class="col-md-8">
+                                        <div class="input-icon right">
+                                            <input type="text" id="txtImage" name="txtImage" value="@Model.Image" class="form-control" placeholder="" />
+                                        </div>
+                                    </div>
+                                    <div class="col-md-1" style="padding: 5px">
+                                        <a href="javascript:;" onclick="upload_image()"><i class="fa fa-file"></i></a>
+                                    </div>
+                                    <img src="@Model.Image" id="img_show" style="max-width: 100px; max-height: 50px" />
+                                </div>
+
+                                <div class="form-group">
+                                    <label for="txtTitle" class="control-label col-md-2">Đơn vị chủ trì (*):  </label>
+                                    <div class="col-md-8">
+                                        <div class="input-icon right">
+                                            <input type="text" id="txtHostUnit" name="txtHostUnit" value="@Model.HostUnit" class="form-control" placeholder="Đơn vị chủ trì" />
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="form-group">
+                                    <label for="txtTitle" class="control-label col-md-2">Đơn vị phối hợp (*):  </label>
+                                    <div class="col-md-8">
+                                        <div class="input-icon right">
+                                            <textarea id="txtCoordUnit" name="txtCoordUnit" class="form-control" rows="3">@Model.CoordUnit</textarea>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="form-group">
+                                    <label id="labanh" for="txtImageUrl" class="control-label col-md-2">File văn bản pháp lý (*)</label>
+                                    <div class="col-md-8">
+                                        <div class="input-icon right">
+                                            <input type="text" id="txtLegalFile" name="txtLegalFile" value="@Model.LegalFile" class="form-control" placeholder="" />
+                                        </div>
+                                    </div>
+                                    <div class="col-md-1" style="padding: 5px">
+                                        <a href="javascript:;" onclick="uploadfile()"><i class="fa fa-file-archive-o" style="font-size: 20px"></i></a>
+                                    </div>
+                                </div>
+
+                                <div class="form-group" style="display: none">
+                                    <label for="txtTitle" class="control-label col-md-2">Doanh thu dự kiến:  </label>
+                                    <div class="col-md-8">
+                                        <div class="input-icon right">
+                                            <input type="text" id="txtRevenue" name="txtRevenue" value="@Model.Revenue" class="form-control" placeholder="Doanh thu dự kiến" />
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="form-group" style="display: none">
+                                    <label for="txtTitle" class="control-label col-md-2">Kết quả:  </label>
+                                    <div class="col-md-8">
+                                        <div class="input-icon right">
+                                            <input type="text" id="txtResult" name="txtResult" value="@Model.Result" class="form-control" placeholder="Kết quả" />
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="form-group">
+                                    <label class="control-label col-md-2" for="cbxIsActive">Hoàn thành:</label>
+                                    <div class="col-md-3 input-icon">
+                                        <div class="input-icon checkbox">
+                                            @if (Model.IsDone == true)
+                                            {<input type="checkbox" id="cbxIsDone" checked="checked" />}
+                                            else
+                                            {<input type="checkbox" id="cbxIsDone" /> }
+
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="form-group" style="display: none">
+                                    <label class="control-label col-md-2" for="cbxIsActive">Hiển thị thông tin mạng:</label>
+                                    <div class="col-md-3 input-icon">
+                                        <div class="input-icon checkbox">
+                                            @if (Model.IsSetted == true)
+                                            {<input type="checkbox" id="cbxIsSetted" checked="checked" />}
+                                            else
+                                            {<input type="checkbox" id="cbxIsSetted" /> }
+
+                                        </div>
+                                    </div>
+                                </div>
+
+                                @*<div class="form-group">
+                                    <label class="control-label col-md-2" for="cbxIsActive">Trạng thái:</label>
+                                    <div class="col-md-3 input-icon">
+                                        <div class="input-icon checkbox">
+                                            @if (Model.Status == 1)
+                                            {<input type="checkbox" id="cbxStatus" checked="checked" />}
+                                            else
+                                            {<input type="checkbox" id="cbxStatus" /> }
+
+                                        </div>
+                                    </div>
+                                </div>*@
+
+                                <div class="form-group">
+                                    <label for="txtPublicTime" class="control-label col-md-2">Thời gian bắt đầu (*):  </label>
+                                    <div class="col-md-4">
+                                        <div class="input-icon right">
+                                            @if (ViewBag.EventId > 0)
+                                            {
+                                                <input type="text" id="txtStartTime" data-format="dd/MM/yyyy HH:mm:ss" name="publictime" value="@Model.StartDate.ToString("dd/MM/yyyy HH:mm:ss")" class="form-control" placeholder="Thời gian bắt đầu" />
+                                            }
+                                            else
+                                            {
+                                                <input type="text" id="txtStartTime" data-format="dd/MM/yyyy HH:mm:ss" name="publictime" value="" class="form-control" placeholder="Thời gian bắt đầu" />
+                                            }
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="form-group">
+                                    <label for="txtPublicTime" class="control-label col-md-2">Thời gian kết thúc (*):  </label>
+                                    <div class="col-md-4">
+                                        <div class="input-icon right">
+                                            @if (ViewBag.EventId > 0)
+                                            {
+                                                <input type="text" id="txtEndTime" data-format="dd/MM/yyyy HH:mm:ss" name="publictime" value="@Model.EndDate.ToString("dd/MM/yyyy HH:mm:ss")" class="form-control" placeholder="Thời gian kết thúc" />
+                                            }
+                                            else
+                                            {
+                                                <input type="text" id="txtEndTime" data-format="dd/MM/yyyy HH:mm:ss" name="publictime" value="" class="form-control" placeholder="Thời gian kết thúc" />
+                                            }
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div id="SMSEvent">
+                                    @if (ViewBag.totalSMS == 0)
+                                    {
+                                        <input type="hidden" value="1" id="TotalSMS" />
+                                        <div id="FormSMS_1">
+                                            <div class="form-group">
+                                                <label for="txtTitle" class="control-label col-md-2">Đầu số tin nhắn (*):  </label>
+                                                <div class="col-md-8">
+                                                    <div class="input-icon right">
+                                                        <select class="form-control" id="txtServiceID">
+                                                            @for (int i = 1400; i < 1410; i++)
+                                                            {
+                                                                <option value="@i">@i</option>
+                                                            }
+                                                        </select>
+                                                    </div>
+                                                </div>
+                                            </div>
+
+                                            <div class="form-group">
+                                                <label for="txtTitle" class="control-label col-md-2">Giá trị tin nhắn (VND) (*):  </label>
+                                                <div class="col-md-8">
+                                                    <div class="input-icon right">
+                                                        <input type="number" min="0" id="txtPrice" name="txtPrice" value="" class="form-control" placeholder="Giá tiền mỗi tin nhắn" />
+                                                    </div>
+                                                </div>
+                                            </div>
+
+                                            <div class="form-group">
+                                                <label for="txtTitle" class="control-label col-md-2">Cú pháp (*):  </label>
+                                                <div class="col-md-8">
+                                                    <div class="input-icon right">
+                                                        <input type="text" id="txtCommandcode_1" name="txtCommandcode" value="" class="form-control" placeholder="Cú pháp" />
+                                                    </div>
+                                                </div>
+                                            </div>
+
+                                        </div>
+                                    }
+                                    else
+                                    {
+                                        <input type="hidden" value="@ViewBag.totalSMS" id="TotalSMS" />
+                                        <div class="form-group">
+                                            <label for="txtTitle" class="control-label col-md-2">Đầu số tin nhắn (*):  </label>
+                                            <div class="col-md-8">
+                                                <div class="input-icon right">
+                                                    <select class="form-control" id="txtServiceID">
+                                                        @for (int i = 1400; i < 1410; i++)
+                                                        {
+                                                            <option value="@i" @if (i == ViewBag.listSMS[0].ServiceID)
+                                                                               { @Html.Raw("selected")   }>@i</option>
+                                                        }
+                                                    </select>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="form-group">
+                                            <label for="txtTitle" class="control-label col-md-2">Giá trị tin nhắn (VND) (*):  </label>
+                                            <div class="col-md-8">
+                                                <div class="input-icon right">
+                                                    <input type="number" min="0" id="txtPrice" name="txtPrice" value="@ViewBag.listSMS[0].Price" class="form-control" placeholder="Giá tiền mỗi tin nhắn" />
+                                                </div>
+                                            </div>
+                                        </div>
+                                        for (int j = 0; j < ViewBag.totalSMS; j++)
+                                        {
+                                            var item = ViewBag.listSMS[j];
+                                            <div id="FormSMS_@(j + 1)">
+
+                                                <div class="form-group">
+                                                    <label for="txtTitle" class="control-label col-md-2">Cú pháp (*):  </label>
+                                                    <div class="col-md-8">
+                                                        <div class="input-icon right">
+                                                            <input type="text" id="txtCommandcode_@(j + 1)" name="txtCommandcode" value="@item.Commandcode" class="form-control" placeholder="Cú pháp" />
+                                                        </div>
+                                                    </div>
+                                                </div>
+
+                                            </div>
+                                        }
+
+                                    }
+
+
+
+                                </div>
+
+                            </div>
+                            <div class="panel-footer form-horizontal">
+                                <div class="form-group submit">
+                                    <button type="button" class="btn btn-success" onclick="EventCtrl.MoreSMS();" id="btnReset"><i class="fa fa-plus"></i>Thêm cú pháp</button>
+                                    <button type="button" class="btn btn-warning" onclick="EventCtrl.RemoveSMS();"><i class="fa fa-undo"></i>Bớt cú pháp</button>
+                                    @if ((Model.EventID == 0 && permission.IsInsert) || (Model.EventID > 0 && permission.IsUpdate))
+                                    {
+                                        <button type="button" class="btn btn-primary" id="btnSave" onclick="EventCtrl.SaveEvent(@Model.EventID);"><i class="fa fa-save"></i>Lưu lại</button>
+                                    }
+                                    <button type="button" class="btn btn-default" id="btnBack" onclick="EventCtrl.BtnBack();"><i class="fa fa-backward"></i>Back</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <script type="text/javascript">
+        $(document).ready(function () {
+            $('#txtStartTime').datetimepicker({
+                //pickTime: false
+                format: 'DD/MM/YYYY HH:mm:ss'
+            });
+
+            $('#txtEndTime').datetimepicker({
+                //pickTime: false
+                format: 'DD/MM/YYYY HH:mm:ss'
+            });
+
+        });
+
+        var finder = new CKFinder();
+
+        function upload_image() {
+            finder.selectActionFunction = function (fileUrl) {
+                $('#txtImage').val(fileUrl);
+                $('#img_show').prop("src", fileUrl);
+            };
+            finder.popup();
+        }
+
+        function uploadfile() {
+            finder.selectActionFunction = function (fileUrl) {
+                $('#txtLegalFile').val(fileUrl);
+            };
+            finder.popup();
+        }
+    </script>
+}
+else
+{
+    <h2 style="color:red">ErrorPermission</h2>
+
+    <h4>Bạn không có quyền truy cập . Xin hãy liên hệ Admin để được cấp quyền vào hệ thống CMS</h4>
+
+    <a href="@Html.Raw(ViewBag.UrlLogin)?act=out" style="color:#005bff; font-size:13px;text-decoration:underline">Logout</a>
+}

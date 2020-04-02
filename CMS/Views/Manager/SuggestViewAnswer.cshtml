@@ -1,0 +1,14 @@
+﻿
+
+<div id="PopupForm" style="position: fixed; transform: translate(-50%, -50%); top: 40%; left: 50%; width: 600px; background-color: white;z-index: 1112; border-radius: 3px">
+    <div style="width: 100%; font-size: 18px; text-align: center; color: #164d9a; font-weight: bold; margin-top: 15px">Nội dung trả lời mail</div>
+    <div style="color: red; width: 100%; text-align: center; font-size: 14px" id="textError"></div>
+    <div style="width: 100%; padding: 15px; max-height: 400px; overflow: auto">
+        @Html.Raw(ViewBag.AnswerContent)
+    </div>
+
+    <div style="width: 100%; margin: 0 5px 15px 30px;">
+        <button type="button" onclick="SuggetCtrl.RemovePopup()" class="btn btn-default">Đóng</button>
+    </div>
+</div>
+<div id="blackGround" onclick="SuggetCtrl.RemovePopup()" style="position: fixed; top:0; left:0; background-color: black; opacity: 0.6; width: 100%; height: 100%; z-index: 1111"></div>

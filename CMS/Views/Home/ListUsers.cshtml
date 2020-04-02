@@ -1,0 +1,149 @@
+﻿@using W1400.DataAccess.DTO
+@model List<Users>
+
+@{var permission = ((UserFunction)Session[W1400.Utility.SessionsManager.SESSION_PERMISSION]);}
+
+@if (permission != null && permission.IsGrant)
+{
+    <table class="table table-striped table-bordered dataTable" border="1" role="grid" aria-describedby="example_info" width="100%" style="width: 100%;" id="dataTables">
+        <thead>
+            <tr class="info">
+                <th width="10%">Mã User</th>
+                <th width="5%">Admin</th>
+                <th>Username</th>
+                <th>Email</th>
+                <th>Họ Tên</th>
+                <th width="10%">Trạng Thái</th>
+                <th>Người Tạo</th>
+                <th>Chức Năng</th>
+            </tr>
+        </thead>
+        <tbody>
+            @if (Model != null && Model.Count > 0)
+            {
+                foreach (var obj in Model)
+                {
+                    if (ViewBag.IsAdmin)
+                    {
+                        <tr role="row">
+                            <td>@obj.UserID</td>
+
+                            <td>
+                                @if (obj.IsAdministrator == true)
+                                {
+                                    <label><i style="color:green" class="fa fa-check"></i></label>
+                                }
+                                else
+                                {
+                                    <label><i style="color:red" class="fa fa-ban"></i></label>
+                                }
+                            </td>
+                            <td>@obj.Username</td>
+                            <td>@obj.Email</td>
+                            <td>@obj.FullName</td>
+                            <td>
+                                @if (obj.Status == true)
+                                {
+                                    <label><i style="color:green" class="fa fa-check"></i></label>
+                                }
+                                else
+                                {
+                                    <label><i style="color:red" class="fa fa-ban"></i></label>
+                                }
+                            </td>
+                            <td>@obj.CreatedUser</td>
+                            <td style="text-align:center">
+                                @if (obj.Status == true)
+                                {
+                                    <a href="javascript:;" class="btn link-delete" data-trigger="hover" data-container="body" data-placement="left" data-toggle="popover" data-content="Bỏ Kích hoạt" onclick="UpdateStatusUser(@obj.UserID, 1);"><i class="fa fa-ban"></i></a>
+                                }
+                                else
+                                {
+                                    <a href="javascript:;" class="btn link-success" data-trigger="hover" data-container="body" data-placement="left" data-toggle="popover" data-content="Kích hoạt" onclick="UpdateStatusUser(@obj.UserID,0);"><i class="fa fa-check-circle"></i></a>
+                                }
+                                <a href="javascript:;" class="btn link-edit" data-trigger="hover" data-container="body" data-toggle="popover" data-placement="top" data-content="Sửa" onclick="ViewUserData(@obj.UserID);"><i class="fa fa-edit"></i></a>
+                                <a href="@Html.Raw(W1400.Utility.Config.UrlRoot)Home/GetGrantUser/@obj.UserID" class="btn link-grant" data-trigger="hover" data-container="body" data-placement="top" data-toggle="popover" data-content="Phân Quyền"><i class="fa fa-cogs"></i></a>
+                                <a href="javascript:;" data-trigger="hover" data-container="body" data-placement="top" data-toggle="popover" data-content="Xóa" class="btn link-delete" onclick="DeleteData(@obj.UserID)"><i class="fa fa-trash-o"></i></a>
+                            </td>
+                        </tr>
+                    }
+                    else if (!obj.IsAdministrator && obj.UserID != ViewBag.UserId)
+                    {
+                        <tr role="row">
+                            <td>@obj.UserID</td>
+                            <td>
+                                @if (obj.IsAdministrator == true)
+                                {
+                                    <label><i style="color: green" class="fa fa-check"></i></label>
+                                }
+                                else
+                                {
+                                    <label><i style="color: red" class="fa fa-ban"></i></label>
+                                }
+                            </td>
+                            <td>@obj.Username</td>
+                            <td>@obj.Email</td>
+                            <td>@obj.FullName</td>
+                            <td>
+                                @if (obj.Status == true)
+                                {
+                                    <label><i style="color: green" class="fa fa-check"></i></label>
+                                }
+                                else
+                                {
+                                    <label><i style="color: red" class="fa fa-ban"></i></label>
+                                }
+                            </td>
+                            <td>@obj.CreatedUser</td>
+                            <td style="text-align: center">
+                                @if (permission.IsGrant)
+                                {
+                                    <a href="@Html.Raw(W1400.Utility.Config.UrlRoot)Home/GetGrantUser/@obj.UserID" class="btn link-grant" data-trigger="hover" data-container="body" data-placement="top" data-toggle="popover" data-content="Phân Quyền"><i class="fa fa-cogs"></i></a>
+                                }
+                            </td>
+                        </tr>
+                    }
+
+                }
+            }
+        </tbody>
+    </table>
+    <script type="text/javascript">
+        $(document).ready(function () {
+            $('[data-toggle="popover"]').popover();
+
+            var table = $('#dataTables').DataTable({
+                dom: 'Bfrtip',
+                lengthMenu: [
+               [10, 25, 50],
+               ['10 rows', '25 rows', '50 rows']
+                ],
+                buttons: [
+                     'pageLength',
+                    {
+                        extend: "colvis",
+                        text: "<i class='fa fa-eye-slash'></i>Ẩn/hiện cột"
+                    }
+                ],
+                "bAutoWidth": true,
+                "aaSorting": [[0, 'desc']],
+                "bSort": true,
+                searching: true,
+                pageLength: 25,
+                reponsive: true
+            });
+            table.buttons().container().appendTo('#example_wrapper .col-sm-6:eq(0)');
+            $('#dataTables').on('page.dt', function () {
+                $("html,body").animate({ scrollTop: $('#dataTables').offset().top - 100 }, 'fast');
+            });
+        });
+    </script>
+}
+else
+{
+    <h2 style="color:red">ErrorPermission</h2>
+
+    <h4>Bạn không có quyền truy cập . Xin hãy liên hệ Admin để được cấp quyền vào hệ thống CMS</h4>
+
+    <a href="@Html.Raw(ViewBag.UrlLogin)?act=out" style="color:#005bff; font-size:13px;text-decoration:underline">Logout</a>
+}
