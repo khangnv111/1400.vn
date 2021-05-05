@@ -1,0 +1,459 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<!--
+https://go.microsoft.com/fwlink/?LinkID=208121. 
+-->
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup>
+    <_PublishTargetUrl>D:\Publish\1400\www</_PublishTargetUrl>
+    <History>True|2021-05-05T15:11:48.0693225Z;</History>
+  </PropertyGroup>
+  <ItemGroup>
+    <File Include="bin/Antlr3.Runtime.dll">
+      <publishTime>12/04/2020 20:40:31</publishTime>
+    </File>
+    <File Include="bin/Antlr3.Runtime.pdb">
+      <publishTime>12/04/2020 20:40:31</publishTime>
+    </File>
+    <File Include="bin/EBank.DBHelpers.dll">
+      <publishTime>12/04/2020 20:40:30</publishTime>
+    </File>
+    <File Include="bin/Microsoft.Web.Infrastructure.dll">
+      <publishTime>12/04/2020 20:40:31</publishTime>
+    </File>
+    <File Include="bin/Newtonsoft.Json.dll">
+      <publishTime>12/04/2020 20:40:31</publishTime>
+    </File>
+    <File Include="bin/PaygateRSALib.dll">
+      <publishTime>12/04/2020 20:40:30</publishTime>
+    </File>
+    <File Include="bin/System.Web.Helpers.dll">
+      <publishTime>12/04/2020 20:40:31</publishTime>
+    </File>
+    <File Include="bin/System.Web.Mvc.dll">
+      <publishTime>12/04/2020 20:40:31</publishTime>
+    </File>
+    <File Include="bin/System.Web.Optimization.dll">
+      <publishTime>12/04/2020 20:40:31</publishTime>
+    </File>
+    <File Include="bin/System.Web.Razor.dll">
+      <publishTime>12/04/2020 20:40:31</publishTime>
+    </File>
+    <File Include="bin/System.Web.WebPages.Deployment.dll">
+      <publishTime>12/04/2020 20:40:31</publishTime>
+    </File>
+    <File Include="bin/System.Web.WebPages.dll">
+      <publishTime>12/04/2020 20:40:31</publishTime>
+    </File>
+    <File Include="bin/System.Web.WebPages.Razor.dll">
+      <publishTime>12/04/2020 20:40:31</publishTime>
+    </File>
+    <File Include="bin/W1400.DataAccess.dll">
+      <publishTime>05/05/2021 22:10:57</publishTime>
+    </File>
+    <File Include="bin/W1400.DataAccess.pdb">
+      <publishTime>05/05/2021 22:10:57</publishTime>
+    </File>
+    <File Include="bin/W1400.Utility.dll">
+      <publishTime>05/05/2021 22:10:56</publishTime>
+    </File>
+    <File Include="bin/W1400.Utility.pdb">
+      <publishTime>05/05/2021 22:10:56</publishTime>
+    </File>
+    <File Include="bin/WebGrease.dll">
+      <publishTime>12/04/2020 20:40:31</publishTime>
+    </File>
+    <File Include="bin/WWW.dll">
+      <publishTime>05/05/2021 22:11:46</publishTime>
+    </File>
+    <File Include="bin/WWW.pdb">
+      <publishTime>05/05/2021 22:11:46</publishTime>
+    </File>
+    <File Include="Content/css/1400.css">
+      <publishTime>12/04/2020 20:40:31</publishTime>
+    </File>
+    <File Include="Content/css/bootstrap.min.css">
+      <publishTime>12/04/2020 20:40:31</publishTime>
+    </File>
+    <File Include="Content/css/jquery-ui.css">
+      <publishTime>12/04/2020 20:40:31</publishTime>
+    </File>
+    <File Include="Content/css/lightslider.css">
+      <publishTime>12/04/2020 20:40:31</publishTime>
+    </File>
+    <File Include="Content/css/owl.carousel.css">
+      <publishTime>12/04/2020 20:40:31</publishTime>
+    </File>
+    <File Include="Content/css/Pager.css">
+      <publishTime>12/04/2020 20:40:31</publishTime>
+    </File>
+    <File Include="Content/fonts/glyphicons-halflings-regular.eot">
+      <publishTime>12/04/2020 20:40:31</publishTime>
+    </File>
+    <File Include="Content/fonts/glyphicons-halflings-regular.svg">
+      <publishTime>12/04/2020 20:40:31</publishTime>
+    </File>
+    <File Include="Content/fonts/glyphicons-halflings-regular.ttf">
+      <publishTime>12/04/2020 20:40:31</publishTime>
+    </File>
+    <File Include="Content/fonts/glyphicons-halflings-regular.woff">
+      <publishTime>12/04/2020 20:40:31</publishTime>
+    </File>
+    <File Include="Content/fonts/glyphicons-halflings-regular.woff2">
+      <publishTime>12/04/2020 20:40:31</publishTime>
+    </File>
+    <File Include="Content/fonts/MYRIADPRO-BOLD.OTF">
+      <publishTime>12/04/2020 20:40:31</publishTime>
+    </File>
+    <File Include="Content/fonts/MYRIADPRO-REGULAR.OTF">
+      <publishTime>12/04/2020 20:40:31</publishTime>
+    </File>
+    <File Include="Content/fonts/MYRIADPRO-SEMIBOLD.OTF">
+      <publishTime>12/04/2020 20:40:31</publishTime>
+    </File>
+    <File Include="Content/images/controls.png">
+      <publishTime>12/04/2020 20:40:31</publishTime>
+    </File>
+    <File Include="Content/images/icon_comment.png">
+      <publishTime>12/04/2020 20:40:31</publishTime>
+    </File>
+    <File Include="Content/images/icon_date.png">
+      <publishTime>12/04/2020 20:40:31</publishTime>
+    </File>
+    <File Include="Content/images/icon_face.png">
+      <publishTime>12/04/2020 20:40:31</publishTime>
+    </File>
+    <File Include="Content/images/icon_gopy.png">
+      <publishTime>12/04/2020 20:40:31</publishTime>
+    </File>
+    <File Include="Content/images/icon_home.png">
+      <publishTime>12/04/2020 20:40:31</publishTime>
+    </File>
+    <File Include="Content/images/icon_phone.png">
+      <publishTime>12/04/2020 20:40:31</publishTime>
+    </File>
+    <File Include="Content/images/icon_search.png">
+      <publishTime>12/04/2020 20:40:31</publishTime>
+    </File>
+    <File Include="Content/images/icon_select.png">
+      <publishTime>12/04/2020 20:40:31</publishTime>
+    </File>
+    <File Include="Content/images/icon_tracuu.png">
+      <publishTime>12/04/2020 20:40:31</publishTime>
+    </File>
+    <File Include="Content/images/icon_traitim.png">
+      <publishTime>12/04/2020 20:40:31</publishTime>
+    </File>
+    <File Include="Content/images/icon_traitim_small.png">
+      <publishTime>12/04/2020 20:40:31</publishTime>
+    </File>
+    <File Include="Content/images/icon_view.png">
+      <publishTime>12/04/2020 20:40:31</publishTime>
+    </File>
+    <File Include="Content/images/icon_yeuthick.png">
+      <publishTime>12/04/2020 20:40:31</publishTime>
+    </File>
+    <File Include="Content/images/img_back_to_top.png">
+      <publishTime>12/04/2020 20:40:31</publishTime>
+    </File>
+    <File Include="Content/images/img_binhluan.jpg">
+      <publishTime>12/04/2020 20:40:31</publishTime>
+    </File>
+    <File Include="Content/images/img_chitiet_tintuc.jpg">
+      <publishTime>12/04/2020 20:40:31</publishTime>
+    </File>
+    <File Include="Content/images/img_chuongtrinh1.jpg">
+      <publishTime>12/04/2020 20:40:31</publishTime>
+    </File>
+    <File Include="Content/images/img_chuongtrinh2.jpg">
+      <publishTime>12/04/2020 20:40:31</publishTime>
+    </File>
+    <File Include="Content/images/img_chuongtrinh3.jpg">
+      <publishTime>12/04/2020 20:40:31</publishTime>
+    </File>
+    <File Include="Content/images/img_chuongtrinh4.jpg">
+      <publishTime>12/04/2020 20:40:31</publishTime>
+    </File>
+    <File Include="Content/images/img_homthu.png">
+      <publishTime>12/04/2020 20:40:31</publishTime>
+    </File>
+    <File Include="Content/images/img_hotline.png">
+      <publishTime>12/04/2020 20:40:31</publishTime>
+    </File>
+    <File Include="Content/images/img_logo_footer.png">
+      <publishTime>12/04/2020 20:40:31</publishTime>
+    </File>
+    <File Include="Content/images/img_slide.jpg">
+      <publishTime>12/04/2020 20:40:31</publishTime>
+    </File>
+    <File Include="Content/images/img_slide1.jpg">
+      <publishTime>12/04/2020 20:40:31</publishTime>
+    </File>
+    <File Include="Content/images/img_slide2.jpg">
+      <publishTime>12/04/2020 20:40:31</publishTime>
+    </File>
+    <File Include="Content/images/img_tintuc.jpg">
+      <publishTime>12/04/2020 20:40:31</publishTime>
+    </File>
+    <File Include="Content/images/img_tintuc2.jpg">
+      <publishTime>12/04/2020 20:40:31</publishTime>
+    </File>
+    <File Include="Content/images/img_ung_ho.png">
+      <publishTime>12/04/2020 20:40:31</publishTime>
+    </File>
+    <File Include="Content/images/img_video.jpg">
+      <publishTime>12/04/2020 20:40:31</publishTime>
+    </File>
+    <File Include="Content/images/logo_header.png">
+      <publishTime>12/04/2020 20:40:31</publishTime>
+    </File>
+    <File Include="Content/images/Thumbs.db">
+      <publishTime>12/04/2020 20:40:31</publishTime>
+    </File>
+    <File Include="Content/Site.css">
+      <publishTime>12/04/2020 20:40:31</publishTime>
+    </File>
+    <File Include="favicon.ico">
+      <publishTime>12/04/2020 20:40:31</publishTime>
+    </File>
+    <File Include="Global.asax">
+      <publishTime>12/04/2020 20:40:31</publishTime>
+    </File>
+    <File Include="images/controls.png">
+      <publishTime>12/04/2020 20:40:31</publishTime>
+    </File>
+    <File Include="images/icon_comment.png">
+      <publishTime>12/04/2020 20:40:31</publishTime>
+    </File>
+    <File Include="images/icon_date.png">
+      <publishTime>12/04/2020 20:40:31</publishTime>
+    </File>
+    <File Include="images/icon_face.png">
+      <publishTime>12/04/2020 20:40:31</publishTime>
+    </File>
+    <File Include="images/icon_gopy.png">
+      <publishTime>12/04/2020 20:40:31</publishTime>
+    </File>
+    <File Include="images/icon_home.png">
+      <publishTime>12/04/2020 20:40:31</publishTime>
+    </File>
+    <File Include="images/icon_phone.png">
+      <publishTime>12/04/2020 20:40:31</publishTime>
+    </File>
+    <File Include="images/icon_search.png">
+      <publishTime>12/04/2020 20:40:31</publishTime>
+    </File>
+    <File Include="images/icon_select.png">
+      <publishTime>12/04/2020 20:40:31</publishTime>
+    </File>
+    <File Include="images/icon_tracuu.png">
+      <publishTime>12/04/2020 20:40:31</publishTime>
+    </File>
+    <File Include="images/icon_traitim.png">
+      <publishTime>12/04/2020 20:40:31</publishTime>
+    </File>
+    <File Include="images/icon_traitim_small.png">
+      <publishTime>12/04/2020 20:40:31</publishTime>
+    </File>
+    <File Include="images/icon_view.png">
+      <publishTime>12/04/2020 20:40:31</publishTime>
+    </File>
+    <File Include="images/icon_yeuthick.png">
+      <publishTime>12/04/2020 20:40:31</publishTime>
+    </File>
+    <File Include="images/img_back_to_top.png">
+      <publishTime>12/04/2020 20:40:31</publishTime>
+    </File>
+    <File Include="images/img_binhluan.jpg">
+      <publishTime>12/04/2020 20:40:31</publishTime>
+    </File>
+    <File Include="images/img_chitiet_tintuc.jpg">
+      <publishTime>12/04/2020 20:40:31</publishTime>
+    </File>
+    <File Include="images/img_chuongtrinh1.jpg">
+      <publishTime>12/04/2020 20:40:31</publishTime>
+    </File>
+    <File Include="images/img_chuongtrinh2.jpg">
+      <publishTime>12/04/2020 20:40:31</publishTime>
+    </File>
+    <File Include="images/img_chuongtrinh3.jpg">
+      <publishTime>12/04/2020 20:40:31</publishTime>
+    </File>
+    <File Include="images/img_chuongtrinh4.jpg">
+      <publishTime>12/04/2020 20:40:31</publishTime>
+    </File>
+    <File Include="images/img_homthu.png">
+      <publishTime>12/04/2020 20:40:31</publishTime>
+    </File>
+    <File Include="images/img_hotline.png">
+      <publishTime>12/04/2020 20:40:31</publishTime>
+    </File>
+    <File Include="images/img_logo_footer.png">
+      <publishTime>12/04/2020 20:40:31</publishTime>
+    </File>
+    <File Include="images/img_slide.jpg">
+      <publishTime>12/04/2020 20:40:31</publishTime>
+    </File>
+    <File Include="images/img_slide1.jpg">
+      <publishTime>12/04/2020 20:40:31</publishTime>
+    </File>
+    <File Include="images/img_slide2.jpg">
+      <publishTime>12/04/2020 20:40:31</publishTime>
+    </File>
+    <File Include="images/img_tintuc.jpg">
+      <publishTime>12/04/2020 20:40:31</publishTime>
+    </File>
+    <File Include="images/img_tintuc2.jpg">
+      <publishTime>12/04/2020 20:40:31</publishTime>
+    </File>
+    <File Include="images/img_ung_ho.png">
+      <publishTime>12/04/2020 20:40:31</publishTime>
+    </File>
+    <File Include="images/img_video.jpg">
+      <publishTime>12/04/2020 20:40:31</publishTime>
+    </File>
+    <File Include="images/logo_header.png">
+      <publishTime>12/04/2020 20:40:31</publishTime>
+    </File>
+    <File Include="js/bootbox.js">
+      <publishTime>12/04/2020 20:40:31</publishTime>
+    </File>
+    <File Include="js/bootstrap.min.js">
+      <publishTime>12/04/2020 20:40:31</publishTime>
+    </File>
+    <File Include="js/jquery-1.9.1.min.js">
+      <publishTime>12/04/2020 20:40:31</publishTime>
+    </File>
+    <File Include="js/jquery-ui.js">
+      <publishTime>12/04/2020 20:40:31</publishTime>
+    </File>
+    <File Include="js/jquery.pager.js">
+      <publishTime>12/04/2020 20:40:31</publishTime>
+    </File>
+    <File Include="js/lightslider.js">
+      <publishTime>12/04/2020 20:40:31</publishTime>
+    </File>
+    <File Include="js/owl.carousel.min.js">
+      <publishTime>12/04/2020 20:40:31</publishTime>
+    </File>
+    <File Include="js/utility.js">
+      <publishTime>12/04/2020 20:40:31</publishTime>
+    </File>
+    <File Include="Scripts/_references.js">
+      <publishTime>12/04/2020 20:40:31</publishTime>
+    </File>
+    <File Include="Views/Article/ArticleAll.cshtml">
+      <publishTime>12/04/2020 20:40:31</publishTime>
+    </File>
+    <File Include="Views/Article/ArticleAllPartial.cshtml">
+      <publishTime>12/04/2020 20:40:31</publishTime>
+    </File>
+    <File Include="Views/Article/ArticleHomePartial.cshtml">
+      <publishTime>12/04/2020 20:40:31</publishTime>
+    </File>
+    <File Include="Views/Article/ArticleOneCatePartial.cshtml">
+      <publishTime>12/04/2020 20:40:31</publishTime>
+    </File>
+    <File Include="Views/Article/ArticleSearch.cshtml">
+      <publishTime>12/04/2020 20:40:31</publishTime>
+    </File>
+    <File Include="Views/Article/Detail.cshtml">
+      <publishTime>12/04/2020 20:40:31</publishTime>
+    </File>
+    <File Include="Views/Article/Index.cshtml">
+      <publishTime>12/04/2020 20:40:31</publishTime>
+    </File>
+    <File Include="Views/Article/OnlineSupport.cshtml">
+      <publishTime>12/04/2020 20:40:31</publishTime>
+    </File>
+    <File Include="Views/Article/OnlineSupportPartial.cshtml">
+      <publishTime>12/04/2020 20:40:31</publishTime>
+    </File>
+    <File Include="Views/Article/RelationArticlePartial.cshtml">
+      <publishTime>12/04/2020 20:40:31</publishTime>
+    </File>
+    <File Include="Views/Article/VideoImage.cshtml">
+      <publishTime>12/04/2020 20:40:31</publishTime>
+    </File>
+    <File Include="Views/Feedback/Index.cshtml">
+      <publishTime>12/04/2020 20:40:31</publishTime>
+    </File>
+    <File Include="Views/Home/About.cshtml">
+      <publishTime>12/04/2020 20:40:31</publishTime>
+    </File>
+    <File Include="Views/Home/ArticleHotPartial.cshtml">
+      <publishTime>12/04/2020 20:40:31</publishTime>
+    </File>
+    <File Include="Views/Home/ArticlePartial.cshtml">
+      <publishTime>12/04/2020 20:40:31</publishTime>
+    </File>
+    <File Include="Views/Home/Contact.cshtml">
+      <publishTime>12/04/2020 20:40:31</publishTime>
+    </File>
+    <File Include="Views/Home/Index.cshtml">
+      <publishTime>12/04/2020 20:40:31</publishTime>
+    </File>
+    <File Include="Views/Home/VideoPartial.cshtml">
+      <publishTime>12/04/2020 20:40:31</publishTime>
+    </File>
+    <File Include="Views/Partial/FeedbackPartial.cshtml">
+      <publishTime>12/04/2020 20:40:31</publishTime>
+    </File>
+    <File Include="Views/Partial/MenuArticle.cshtml">
+      <publishTime>12/04/2020 20:40:31</publishTime>
+    </File>
+    <File Include="Views/Partial/MenuArticleHome.cshtml">
+      <publishTime>12/04/2020 20:40:31</publishTime>
+    </File>
+    <File Include="Views/Partial/MenuFooterPartial.cshtml">
+      <publishTime>12/04/2020 20:40:31</publishTime>
+    </File>
+    <File Include="Views/Partial/MenuPartial.cshtml">
+      <publishTime>12/04/2020 20:40:31</publishTime>
+    </File>
+    <File Include="Views/Partial/MessageHistory.cshtml">
+      <publishTime>12/04/2020 20:40:31</publishTime>
+    </File>
+    <File Include="Views/Partial/MessageHistoryPartial.cshtml">
+      <publishTime>12/04/2020 20:40:31</publishTime>
+    </File>
+    <File Include="Views/Partial/ProgramPartial.cshtml">
+      <publishTime>12/04/2020 20:40:31</publishTime>
+    </File>
+    <File Include="Views/Program/DetailPartial.cshtml">
+      <publishTime>12/04/2020 20:40:31</publishTime>
+    </File>
+    <File Include="Views/Program/DetailPass.cshtml">
+      <publishTime>12/04/2020 20:40:31</publishTime>
+    </File>
+    <File Include="Views/Program/DetailPending.cshtml">
+      <publishTime>12/04/2020 20:40:31</publishTime>
+    </File>
+    <File Include="Views/Program/ProgramPass.cshtml">
+      <publishTime>12/04/2020 20:40:31</publishTime>
+    </File>
+    <File Include="Views/Program/ProgramPassPartial.cshtml">
+      <publishTime>12/04/2020 20:40:31</publishTime>
+    </File>
+    <File Include="Views/Program/ProgramProcess.cshtml">
+      <publishTime>12/04/2020 20:40:31</publishTime>
+    </File>
+    <File Include="Views/Shared/Error.cshtml">
+      <publishTime>12/04/2020 20:40:31</publishTime>
+    </File>
+    <File Include="Views/Shared/_Layout.cshtml">
+      <publishTime>12/04/2020 20:40:31</publishTime>
+    </File>
+    <File Include="Views/Shared/_LayoutProgram.cshtml">
+      <publishTime>12/04/2020 20:40:31</publishTime>
+    </File>
+    <File Include="Views/Web.config">
+      <publishTime>12/04/2020 20:40:31</publishTime>
+    </File>
+    <File Include="Views/_ViewStart.cshtml">
+      <publishTime>12/04/2020 20:40:31</publishTime>
+    </File>
+    <File Include="Web.config">
+      <publishTime>05/05/2021 22:11:47</publishTime>
+    </File>
+  </ItemGroup>
+</Project>

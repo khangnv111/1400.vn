@@ -4,7 +4,6 @@ using System.Linq;
 using System.Web;
 using System.Web.Mvc;
 using W1400.DataAccess.Factory;
-using NLog;
 using W1400.Utility;
 namespace WWW.Controllers
 {
